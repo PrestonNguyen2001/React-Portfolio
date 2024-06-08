@@ -8,6 +8,7 @@ import Portfolio from "./pages/Portfolio"
 import Contact from "./pages/Contact"
 import Resume from "./pages/Resume"
 import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
