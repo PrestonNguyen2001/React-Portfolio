@@ -7,10 +7,12 @@ import Dashboard from "./pages/Dashboard"
 import Portfolio from "./pages/Portfolio"
 import Contact from "./pages/Contact"
 import Resume from "./pages/Resume"
+import Header from "./components/Header"
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
