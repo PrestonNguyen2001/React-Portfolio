@@ -60,6 +60,23 @@ export default function About() {
             </div>
           </div>
         </div>
+
+        <div className="my-12">
+          <div className="flex flex-col items-center">
+            <h2 className="text-4xl font-semibold mb-6 text-center">
+              My Strengths
+            </h2>
+            <div className="text-lg text-gray-500 flex flex-col gap-4 text-center">
+              <p><strong>Proactive Learner:</strong> Continuously seeks out new knowledge and skills, staying updated with the latest technologies and best practices in software development.</p>
+              <p><strong>Strong Work Ethic:</strong> Demonstrated commitment and dedication through extensive experience in family business and current educational pursuits.</p>
+              <p><strong>Problem-Solving Abilities:</strong> Adept at troubleshooting and resolving technical issues, as well as creatively addressing challenges in project development.</p>
+              <p><strong>Collaborative Team Player:</strong> Works effectively in team settings, contributing positively to group projects and fostering a cooperative work environment.</p>
+              <p><strong>Adaptability:</strong> Quickly adapts to new tools, technologies, and environments, ensuring seamless integration and contribution to projects.</p>
+              <p><strong>Customer Service Oriented:</strong> Brings valuable experience in customer service, enhancing communication and interpersonal skills vital for understanding and addressing user needs.</p>
+              <p><strong>Attention to Detail:</strong> Ensures accuracy and precision in coding, documentation, and overall project execution, leading to high-quality deliverables.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
