@@ -8,6 +8,7 @@ import DashUsers from "../components/DashUsers";
 import DashComments from "../components/DashComments";
 import DashboardComp from "../components/DashboardComp";
 // import DashContacts from "../components/DashContacts"; // Import the new component
+import DashTimeline from "../components/DashTimeline";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -35,6 +36,8 @@ export default function Dashboard() {
       {tab === "comments" && <DashComments />}
       {/* contacts */}
       {/* {tab === "contacts" && <DashContacts />} Add the new tab */}
+      {/* timeline */}
+      {tab === "timeline" && <DashTimeline />}
       {/* dashboard comp */}
       {tab === "dash" && <DashboardComp />}
     </div>

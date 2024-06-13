@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Portfolio from "./pages/Portfolio";
+import Timeline from "./pages/Timeline";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
 import Header from "./components/Header";
@@ -15,19 +16,15 @@ import Preloader from "./components/Preloader";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [activeTab, setActiveTab] = useState("home");
 
   useEffect(() => {
     const handleLoad = () => {
-      console.log("handleLoad called");
-      // Optionally add a small delay to ensure visual transition
       setTimeout(() => {
         setIsLoaded(true);
         document.body.classList.add("loaded");
-        console.log("Body class list:", document.body.classList);
-      }, 1500); // 100ms delay
+      }, 1500);
     };
-
-    console.log("Adding event listeners for load");
 
     if (document.readyState === "complete") {
       handleLoad();
@@ -36,19 +33,33 @@ export default function App() {
     }
 
     return () => {
-      console.log("Removing event listeners for load");
       window.removeEventListener("load", handleLoad);
     };
   }, []);
 
-  console.log("isLoaded state before render:", isLoaded);
+  useEffect(() => {
+    const handleScroll = () => {
+      const aboutSection = document.getElementById("about");
+      const homeSection = document.getElementById("home");
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      if (aboutSection && scrollPosition >= aboutSection.offsetTop) {
+        setActiveTab("about");
+      } else if (homeSection && scrollPosition < aboutSection.offsetTop) {
+        setActiveTab("home");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
       <Preloader isLoaded={isLoaded} />
       <div className={`app-content ${isLoaded ? "visible" : "hidden"}`}>
         <BrowserRouter>
-          <Header />
+          <Header activeTab={activeTab} />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -59,6 +70,7 @@ export default function App() {
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/timeline" element={<Timeline />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
           <Footer />
