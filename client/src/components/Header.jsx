@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -7,7 +8,7 @@ import { toggleTheme } from "../redux/theme/themeSlice";
 import { signoutSuccess } from "../redux/user/userSlice";
 import { useEffect, useState } from "react";
 
-export default function Header() {
+export default function Header({ activeTab }) {
   const path = useLocation().pathname;
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,85 +49,109 @@ export default function Header() {
     navigate(`/search?${searchQuery}`);
   };
 
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <Navbar className="border-b-2">
-      <Link
-        to="/"
-        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
-      >
-        <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-          Preston&apos;s
-        </span>
-        Portfolio
-      </Link>
-      <form onSubmit={handleSubmit}>
-        <TextInput
-          type="text"
-          placeholder="Search..."
-          rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </form>
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-        <AiOutlineSearch />
-      </Button>
-      <div className="flex gap-2 md:order-2">
-        <Button
-          className="w-12 h-10 hidden sm:inline"
-          color="gray"
-          pill
-          onClick={() => dispatch(toggleTheme())}
+    <Navbar className="border-b-2 sticky top-0 z-50">
+      <div className="container mx-auto flex flex-wrap items-center justify-between">
+        <Link
+          to="/"
+          className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
         >
-          {theme === "light" ? <FaSun /> : <FaMoon />}
-        </Button>
-        {currentUser ? (
-          <Dropdown
-            arrowIcon={false}
-            inline
-            label={
-              <Avatar alt="user" img={currentUser.profilePicture} rounded />
-            }
+          <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+            Preston&apos;s
+          </span>
+          Portfolio
+        </Link>
+        <form onSubmit={handleSubmit} className="hidden lg:block">
+          <TextInput
+            type="text"
+            placeholder="Search..."
+            icon={AiOutlineSearch}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </form>
+        <div className="flex gap-2 md:order-2 items-center">
+          <Button
+            className="w-12 h-10 hidden sm:inline-flex"
+            color="gray"
+            pill
+            onClick={() => dispatch(toggleTheme())}
           >
-            <Dropdown.Header>
-              <span className="block text-sm">@{currentUser.username}</span>
-              <span className="block text-sm font-medium truncate">
-                {currentUser.email}
-              </span>
-            </Dropdown.Header>
-            <Link to={"/dashboard?tab=profile"}>
-              <Dropdown.Item>Profile</Dropdown.Item>
+            {theme === "light" ? <FaSun /> : <FaMoon />}
+          </Button>
+          {currentUser ? (
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <Avatar alt="user" img={currentUser.profilePicture} rounded />
+              }
+            >
+              <Dropdown.Header>
+                <span className="block text-sm">@{currentUser.username}</span>
+                <span className="block text-sm font-medium truncate">
+                  {currentUser.email}
+                </span>
+              </Dropdown.Header>
+              <Link to={"/dashboard?tab=profile"}>
+                <Dropdown.Item>Profile</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+            </Dropdown>
+          ) : (
+            <Link to="/sign-in">
+              <Button gradientDuoTone="purpleToBlue" outline>
+                Sign In
+              </Button>
             </Link>
-            <Dropdown.Divider />
-            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
-          </Dropdown>
-        ) : (
-          <Link to="/sign-in">
-            <Button gradientDuoTone="purpleToBlue" outline>
-              Sign In
-            </Button>
-          </Link>
-        )}
-        <Navbar.Toggle />
+          )}
+          <Navbar.Toggle />
+        </div>
+        <Navbar.Collapse>
+          <Navbar.Link active={path === "/"} as={"div"}>
+            <Link to="/" className={activeTab === "home" ? "active" : ""}>
+              Home
+            </Link>
+          </Navbar.Link>
+          <Navbar.Link active={path === "/about"} as={"div"}>
+            <a
+              href="#about"
+              onClick={(e) => handleSmoothScroll(e, "about")}
+              className={activeTab === "about" ? "active" : ""}
+            >
+              About
+            </a>
+          </Navbar.Link>
+          <Navbar.Link active={path === "/portfolio"} as={"div"}>
+            <Link to="/portfolio">Portfolio</Link>
+          </Navbar.Link>
+          <Navbar.Link active={path === "/timeline"} as={"div"}>
+            <Link to="/timeline">Timeline</Link>
+          </Navbar.Link>
+          <Navbar.Link active={path === "/resume"} as={"div"}>
+            <Link to="/resume">Resume</Link>
+          </Navbar.Link>
+          <Navbar.Link active={path === "/contact"} as={"div"}>
+            <Link to="/contact">Contact</Link>
+          </Navbar.Link>
+        </Navbar.Collapse>
       </div>
-      <Navbar.Collapse>
-        <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to="/">Home</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about">About</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === "/Portfolio"} as={"div"}>
-          <Link to="/portfolio">Portfolio</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === "/Resume"} as={"div"}>
-          <Link to="/resume">Resume</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === "/contact"} as={"div"}>
-          <Link to="/contact">Contact</Link>
-        </Navbar.Link>
-      </Navbar.Collapse>
     </Navbar>
   );
 }
+
+Header.propTypes = {
+  activeTab: PropTypes.string.isRequired,
+};
