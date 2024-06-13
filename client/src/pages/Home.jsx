@@ -4,9 +4,9 @@ import CallToAction from "../components/CallToAction";
 import Type from "../components/Type";
 import Home2 from "./Home2";
 import VanillaTilt from "vanilla-tilt";
-import profileImage from "../../../public/assets/images/ProfileImage.png";
-import heroShape1 from "../../../public/assets/images/hero-shape-1.png";
-import heroShape2 from "../../../public/assets/images/hero-shape-2.png";
+import profileImage from "../assets/images/ProfileImage.png";
+import heroShape1 from "../assets/images/hero-shape-1.png";
+import heroShape2 from "../assets/images/hero-shape-2.png";
 import About from "./About";
 
 export default function Home() {

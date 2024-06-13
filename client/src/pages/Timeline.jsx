@@ -4,10 +4,10 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import "./Timeline.css";
-import educationIcon from "../../../public/assets/svg/education.svg";
-import personalIcon from "../../../public/assets/svg/personal.svg";
-import workIcon from "../../../public/assets/svg/work.svg";
+import "../styles/Timeline.css";
+import educationIcon from "../assets/svg/education.svg";
+import personalIcon from "../assets/svg/personal.svg";
+import workIcon from "../assets/svg/work.svg";
 
 const Timeline = () => {
   const [timelineData, setTimelineData] = useState([]);

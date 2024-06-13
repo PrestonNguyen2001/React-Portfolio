@@ -1,35 +1,37 @@
 import { useState } from "react";
-import aboutImg from "../../../public/assets/images/about.png";
-import BootstrapIcon from "../../../public/assets/icons/bootstrap-original.svg";
-import CSSIcon from "../../../public/assets/icons/css3-original.svg";
-import FirebaseIcon from "../../../public/assets/icons/firebase-original.svg";
-import GitIcon from "../../../public/assets/icons/git-original.svg";
-import GitHubIcon from "../../../public/assets/icons/github-original.svg";
-import HandlebarsIcon from "../../../public/assets/icons/handlebars-original.svg";
-import HTMLIcon from "../../../public/assets/icons/html5-original.svg";
-import JSIcon from "../../../public/assets/icons/javascript-original.svg";
-import JestIcon from "../../../public/assets/icons/jest-plain.svg";
-import MongoDBIcon from "../../../public/assets/icons/mongodb-original.svg";
-import MongooseIcon from "../../../public/assets/icons/mongoose-original.svg";
-import MySQLIcon from "../../../public/assets/icons/mysql-original.svg";
-import NextJSIcon from "../../../public/assets/icons/nextjs-original.svg";
-import PostGreSQLIcon from "../../../public/assets/icons/postgresql-original.svg";
-import PostmanIcon from "../../../public/assets/icons/postman-original.svg";
-import PyCharmIcon from "../../../public/assets/icons/pycharm-original.svg";
-import PythonIcon from "../../../public/assets/icons/python-original.svg";
-import ReactIcon from "../../../public/assets/icons/react-original.svg";
-import ReactBootstrapIcon from "../../../public/assets/icons/reactbootstrap-original.svg";
-import ReduxIcon from "../../../public/assets/icons/redux-original.svg";
-import SequelizeIcon from "../../../public/assets/icons/sequelize-original.svg";
-import TailwindIcon from "../../../public/assets/icons/tailwindcss-original.svg";
-import TypeScriptIcon from "../../../public/assets/icons/typescript-original.svg";
-import UnityIcon from "../../../public/assets/icons/unity-original.svg";
-import UnrealEngineIcon from "../../../public/assets/icons/unrealengine-original.svg";
-import ViteIcon from "../../../public/assets/icons/vite-original.svg";
-import VSCodeIcon from "../../../public/assets/icons/vscode-original.svg";
-import GitLabIcon from "../../../public/assets/icons/gitlab-original.svg";
-import ExpressIcon from "../../../public/assets/icons/express-original.svg";
-import GraphqlIcon from "../../../public/assets/icons/graphql-plain.svg";
+import aboutImg from "../assets/images/about.png";
+import {
+  BootstrapIcon,
+  CSSIcon,
+  FirebaseIcon,
+  GitIcon,
+  GitHubIcon,
+  GitLabIcon,
+  HandlebarsIcon,
+  HTMLIcon,
+  JSIcon,
+  JestIcon,
+  MongoDBIcon,
+  MongooseIcon,
+  MySQLIcon,
+  NextJSIcon,
+  PostGreSQLIcon,
+  PostmanIcon,
+  PyCharmIcon,
+  PythonIcon,
+  ReactIcon,
+  ReactBootstrapIcon,
+  ReduxIcon,
+  SequelizeIcon,
+  TailwindIcon,
+  TypeScriptIcon,
+  UnityIcon,
+  UnrealEngineIcon,
+  ViteIcon,
+  VSCodeIcon,
+  ExpressIcon,
+  GraphqlIcon,
+} from "../assets/icons/icons.js";
 
 export default function About() {
   const [activeTab, setActiveTab] = useState("about");
