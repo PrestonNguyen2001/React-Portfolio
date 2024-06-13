@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "../assets/css/Preloader.css";
+import "../../../public/assets/css/Preloader.css";
 
 const Preloader = ({ isLoaded }) => {
   console.log("Preloader rendered with isLoaded:", isLoaded);
@@ -17,5 +17,3 @@ Preloader.propTypes = {
 };
 
 export default Preloader;
-
-

@@ -6,6 +6,8 @@ import {
   FaHeart,
   FaLanguage,
   FaListUl,
+  FaPrint,
+  FaDownload,
 } from "react-icons/fa";
 
 export default function Resume() {
@@ -29,6 +31,23 @@ export default function Resume() {
             </a>{" "}
             | Sterling, VA
           </p>
+          <div className="mt-4 flex justify-center space-x-4">
+            <button
+              className="p-2 bg-teal-500 text-white rounded hover:bg-teal-700"
+              onClick={() => window.print()}
+            >
+              <FaPrint className="mr-2" />
+              Print
+            </button>
+            <a
+              href="/client/src/assets/PrestonNguyenResume.pdf" // Replace with the actual path to your PDF
+              download
+              className="p-2 bg-teal-500 text-white rounded hover:bg-teal-700 flex items-center"
+            >
+              <FaDownload className="mr-2" />
+              Download
+            </a>
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
