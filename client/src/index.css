@@ -123,6 +123,7 @@ body.nav-active {
 \*-----------------------------------*/
 .container {
   padding-inline: 16px;
+  padding: 100px 0;
 }
 
 .title {
@@ -176,6 +177,7 @@ body.nav-active {
 .section {
   padding-block: var(--section-spacing);
   overflow-x: hidden;
+   padding: 100px 0;
 }
 
 /*-----------------------------------*\
@@ -519,6 +521,11 @@ body.nav-active {
 /*-----------------------------------*\
   #ABOUT
 \*-----------------------------------*/
+#about {
+  padding-block: 60px;
+margin-block: 60px;
+
+}
 .tab-container {
   border: 1px solid var(--border-eerie-black);
 }

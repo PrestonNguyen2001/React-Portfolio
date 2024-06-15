@@ -1,3 +1,6 @@
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import {
   FaBriefcase,
   FaBook,
@@ -10,11 +13,45 @@ import {
   FaDownload,
 } from "react-icons/fa";
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+};
+
 export default function Resume() {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
   return (
-    <div className="bg-light-background dark:bg-dark-background py-10">
+    <motion.div
+      ref={ref}
+      className="bg-light-background dark:bg-dark-background py-10"
+      initial="hidden"
+      animate={controls}
+      variants={containerVariants}
+    >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-8">
+        <motion.div className="text-center mb-8" variants={itemVariants}>
           <h1 className="text-5xl font-bold text-light-text dark:text-dark-text">
             PRESTON NGUYEN
           </h1>
@@ -48,9 +85,15 @@ export default function Resume() {
               Download
             </a>
           </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        </motion.div>
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+        >
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaBriefcase className="mr-2" /> SUMMARY
             </h2>
@@ -60,9 +103,12 @@ export default function Resume() {
               strong foundation in web development from coursework and personal
               projects.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaBook className="mr-2" /> EDUCATION
             </h2>
@@ -80,9 +126,12 @@ export default function Resume() {
               <br />
               2019 - 2021
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaBriefcase className="mr-2" /> EXPERIENCE
             </h2>
@@ -98,9 +147,12 @@ export default function Resume() {
               administrative support. This role developed my communication,
               problem-solving, and organizational skills.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaLanguage className="mr-2" /> LANGUAGES
             </h2>
@@ -111,9 +163,12 @@ export default function Resume() {
               <br />
               HTML/CSS - Intermediate
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaHeart className="mr-2" /> PASSIONS
             </h2>
@@ -123,9 +178,12 @@ export default function Resume() {
               <li>Personal Development</li>
               <li>Team Collaboration</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaStar className="mr-2" /> ACHIEVEMENTS
             </h2>
@@ -135,8 +193,12 @@ export default function Resume() {
               ethic and taught me valuable lessons in entrepreneurship and
               customer service.
             </p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          </motion.div>
+
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaListUl className="mr-2" /> STRENGTHS
             </h2>
@@ -185,9 +247,12 @@ export default function Resume() {
                 overall project execution, leading to high-quality deliverables.
               </li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <motion.div
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            variants={itemVariants}
+          >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
               <FaProjectDiagram className="mr-2" /> PROJECTS
             </h2>
@@ -232,9 +297,9 @@ export default function Resume() {
                 </p>
               </li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

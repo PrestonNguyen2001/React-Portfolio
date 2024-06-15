@@ -1,11 +1,55 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import Hero from "../components/Hero";
 import About from "./About";
 import Portfolio from "./Portfolio";
 import Timeline from "./Timeline";
 import Resume from "./Resume";
 import Contact from "./Contact";
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: "easeInOut",
+      when: "beforeChildren",
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const AnimatedSection = ({ children, id }) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+
+  return (
+    <motion.section
+      id={id}
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={sectionVariants}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
+AnimatedSection.propTypes = {
+  children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
+};
 
 export default function Home({ setHeroLoaded }) {
   const [heroLoaded, setHeroLoadedState] = useState(false);
@@ -29,26 +73,26 @@ export default function Home({ setHeroLoaded }) {
 
   return (
     <div id="home" className={`${!heroLoaded ? "hidden" : ""}`}>
-      <section className="section hero" id="hero">
+      <AnimatedSection id="hero">
         <Hero setHeroLoaded={setHeroLoadedState} />
-      </section>
+      </AnimatedSection>
       {heroLoaded && (
         <>
-          <section className="section about" id="about">
+          <AnimatedSection id="about">
             <About />
-          </section>
-          <section className="section portfolio" id="portfolio">
+          </AnimatedSection>
+          <AnimatedSection id="portfolio">
             <Portfolio />
-          </section>
-          <section className="section timeline" id="timeline">
+          </AnimatedSection>
+          <AnimatedSection id="timeline">
             <Timeline />
-          </section>
-          <section className="section resume" id="resume">
+          </AnimatedSection>
+          <AnimatedSection id="resume">
             <Resume />
-          </section>
-          <section className="section contact" id="contact">
+          </AnimatedSection>
+          <AnimatedSection id="contact">
             <Contact />
-          </section>
+          </AnimatedSection>
         </>
       )}
     </div>
