@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Preloader from "./components/Preloader";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopButton from "./buttons/ScrollToTopButton"; // Import the ScrollToTopButton
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -100,6 +101,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
           {isLoaded && heroLoaded && <Footer />}
+          <ScrollToTopButton /> {/* Add the ScrollToTopButton here */}
         </BrowserRouter>
       </div>
     </>
