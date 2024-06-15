@@ -13,9 +13,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import Preloader from "./components/Preloader";
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [heroLoaded, setHeroLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
 
   useEffect(() => {
@@ -39,14 +41,30 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const aboutSection = document.getElementById("about");
-      const homeSection = document.getElementById("home");
+      const sections = [
+        "hero",
+        "about",
+        "portfolio",
+        "timeline",
+        "resume",
+        "contact",
+      ];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
 
-      if (aboutSection && scrollPosition >= aboutSection.offsetTop) {
-        setActiveTab("about");
-      } else if (homeSection && scrollPosition < aboutSection.offsetTop) {
-        setActiveTab("home");
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const sectionTop = element.offsetTop;
+          const sectionHeight = element.offsetHeight;
+
+          if (
+            scrollPosition >= sectionTop &&
+            scrollPosition < sectionTop + sectionHeight
+          ) {
+            setActiveTab(section);
+            break;
+          }
+        }
       }
     };
 
@@ -59,9 +77,17 @@ export default function App() {
       <Preloader isLoaded={isLoaded} />
       <div className={`app-content ${isLoaded ? "visible" : "hidden"}`}>
         <BrowserRouter>
-          <Header activeTab={activeTab} />
+          <ScrollToTop />
+          {isLoaded && (
+            <Header activeTab={activeTab} setActiveTab={setActiveTab} />
+          )}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={
+                <Home setHeroLoaded={setHeroLoaded} heroLoaded={heroLoaded} />
+              }
+            />
             <Route path="/about" element={<About />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/sign-in" element={<SignIn />} />
@@ -73,7 +99,7 @@ export default function App() {
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
-          <Footer />
+          {isLoaded && heroLoaded && <Footer />}
         </BrowserRouter>
       </div>
     </>

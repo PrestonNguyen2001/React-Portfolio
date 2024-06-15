@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --fs--100: clamp(0.5788rem, 0.5509rem + 0.1392vw, 0.64rem);
+    --fs-100: clamp(0.6944rem, 0.6464rem + 0.2401vw, 0.8rem);
+    --fs-200: clamp(0.8331rem, 0.7573rem + 0.3793vw, 1rem);
+    --fs-300: clamp(1.00rem, calc(0.91rem + 0.43vw), 1.25rem);
+    --fs-400: clamp(1.20rem, calc(1.07rem + 0.63vw), 1.56rem);
+    --fs-500: clamp(1.44rem, calc(1.26rem + 0.89vw), 1.95rem);
+    --fs-600: clamp(1.73rem, calc(1.48rem + 1.24vw), 2.44rem);
+    --fs-700: clamp(2.07rem, calc(1.73rem + 1.70vw), 3.05rem);
+    --fs-800: clamp(2.49rem, calc(2.03rem + 2.31vw), 3.82rem);
+    --fs-900: clamp(2.99rem, calc(2.37rem + 3.10vw), 4.77rem);
+    --fs-1000: clamp(3.58rem, calc(2.76rem + 4.13vw), 5.96rem);
+
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --color-fg-default:#adbac7;
+  }
+
+  .dark {
+    --background: 222.2 84% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+html{
+  scroll-behavior: smooth;
+}
+
+/* It's being auto generated somehow, guess nextUI generates it */
+div[data-overlay-container="true"]{
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-family: inherit;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: .5rem;
+  z-index: 1;
+}
+.button.dark{
+  --glow-line-color: #fff;
+  --glow-blur-color: #fff;
+}
+
+.glow-effect {
+  --container-offset: 150px;
+  --glow-line-color: rgba(255, 255, 255, 1); /* Bright white glow */
+  --glow-blur-color: rgba(255, 255, 255, 0.7); /* Brighter white blur */
+  --glow-line-thickness: 3px;
+  --glow-line-size: 20px;
+  --animation-speed: 1200ms;
+  --glow-line-length: 20px;
+  position: relative;
+}
+
+.glow-container {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: calc(100% + var(--container-offset));
+  height: calc(100% + var(--container-offset));
+  inset: calc(var(--container-offset) / -2);
+}
+.glow-container:is(:focus, :focus-visible){
+  outline: none;
+}
+
+.glow-blur,
+.glow-line {
+  width: calc(100% - var(--container-offset));
+  height: calc(100% - var(--container-offset));
+  fill: transparent;
+  stroke: black;
+  stroke-width: 5px;
+  stroke-dasharray: var(--glow-line-length) calc(50px - var(--glow-line-length));
+}
+
+.glow-effect:is(:hover) :is(.glow-blur, .glow-line) {
+  stroke-dashoffset: -65px;
+  transition: stroke-dashoffset var(--animation-speed);
+}
+
+.glow-line {
+  stroke: var(--glow-line-color);
+  stroke-width: var(--glow-line-thickness);
+}
+
+.glow-blur {
+  filter: blur(var(--glow-line-size));
+  stroke: var(--glow-blur-color);
+  stroke-width: var(--glow-line-size);
+}
+
+.glow-effect:is(:hover) .glow-container {
+  animation: glow-visibility var(--animation-speed) ease-in;
+}
+.glow-effect[data-glow-animation="true"]{
+  --glow-line-length:50px;
+  --glow-line-size: 5px;
+  --glow-line-thickness: 2px;
+}
+.glow-effect[data-selected="true"] .glow-container{
+  opacity: 1;
+  animation: selected .3s ease-in-out;
+}
+.glow-effect[data-selected="true"]:is(:hover ) .glow-container{
+  animation: selected .3s ease-in-out;
+}
+.glow-effect:is(:focus-visible){
+  outline:none;
+  --glow-line-length:50px;
+  --glow-line-size: 5px;
+  --glow-line-thickness: 2px;
+}
+.glow-effect:is(:focus-visible) .glow-container {
+  opacity: 1;
+  animation: selected .3s ease-in-out;
+}
+@keyframes glow-visibility {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  25%,
+  75% {
+    opacity: 1;
+  }
+}
+
+@keyframes selected {
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* @layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+} */
+
+@media screen and (max-width: 768px) {
+  .glow-effect{
+    --glow-line-length:50px;
+    --glow-line-size: 5px;
+    --glow-line-thickness: 2px;
+  }
+  .glow-effect:is(:focus, :active) .glow-container {
+    opacity: 1;
+    animation: selected .3s ease-in-out;
+  }
+}
+
+.ContributionCalendar-label{
+  padding: .125rem .5rem .125rem 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-fg-default);
+  text-align: left;
+  fill: var(--color-fg-default);
+}

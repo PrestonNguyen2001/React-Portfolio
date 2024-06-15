@@ -10,15 +10,15 @@ export default {
     extend: {
       colors: {
         dark: {
-          background: "#0d1117",
-          text: "#c9d1d9",
+          background: "#0d1117", // Dark background color
+          text: "#c9d1d9", // Light text color for dark mode
           primary: "#58a6ff",
           secondary: "#1f6feb",
           accent: "#8b949e",
         },
         light: {
-          background: "#f0f6fc",
-          text: "#24292e",
+          background: "#f0f6fc", // Light background color
+          text: "#24292e", // Dark text color for light mode
           primary: "#0366d6",
           secondary: "#005cc5",
           accent: "#586069",
