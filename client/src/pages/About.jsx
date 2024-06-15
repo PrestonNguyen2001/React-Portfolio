@@ -1,5 +1,6 @@
 import { useState } from "react";
 import aboutImg from "../assets/images/about.png";
+import "../assets/css/About.css"; // Import the new about.css file
 import {
   BootstrapIcon,
   CSSIcon,
@@ -37,7 +38,6 @@ export default function About() {
   const [activeTab, setActiveTab] = useState("about");
 
   return (
-    <section className="section about min-h-screen flex justify-center">
       <div className="container">
         <div className="tab-container">
           <ul className="tab-btn-list">
@@ -64,11 +64,11 @@ export default function About() {
             <li className="tab-btn-item">
               <button
                 className={`tab-btn title h6 ${
-                  activeTab === "passions" ? "active" : ""
+                  activeTab === "interests" ? "active" : ""
                 }`}
-                onClick={() => setActiveTab("passions")}
+                onClick={() => setActiveTab("interests")}
               >
-                Passions
+                Interests
               </button>
             </li>
             <li className="tab-btn-item">
@@ -102,11 +102,11 @@ export default function About() {
                 </figure>
                 <div className="about-content">
                   <div className="about-details">
-                    <h2 className="h4 title section-title">
+                    <h2 className="h4 title section-title text-light-text dark:text-dark-text">
                       A very small stage in a vast cosmic.
                     </h2>
 
-                    <p className="section-text">
+                    <p className="section-text text-gray-600 dark:text-gray-300">
                       A very small stage in a vast cosmic arena great turbuslent
                       clouds encyclo-paedia galactica star stuff harvesting star
                       light the carbon in our apple pies realm of the galaxies
@@ -114,49 +114,49 @@ export default function About() {
 
                     <ul className="about-list">
                       <li className="about-item">
-                        <p className="list-title">Name</p>
-                        <span className="span title h5">Preston Nguyen</span>
+                        <p className="list-title text-light-text dark:text-dark-text">Name</p>
+                        <span className="span title h5 text-light-text dark:text-dark-text">Preston Nguyen</span>
                       </li>
 
                       <li className="about-item">
-                        <p className="list-title">Phone Number</p>
-                        <span className="span title h5">(703) -973-8176</span>
+                        <p className="list-title text-light-text dark:text-dark-text">Phone Number</p>
+                        <span className="span title h5 text-light-text dark:text-dark-text">(703) -973-8176</span>
                       </li>
 
                       <li className="about-item">
-                        <p className="list-title">Email Address</p>
-                        <span className="span title h5">
+                        <p className="list-title text-light-text dark:text-dark-text">Email Address</p>
+                        <span className="span title h5 text-light-text dark:text-dark-text">
                           prestonnguyen2001@gmail.com
                         </span>
                       </li>
 
                       <li className="about-item">
-                        <p className="list-title">Social Network</p>
+                        <p className="list-title text-light-text dark:text-dark-text">Social Network</p>
                         <div className="social-list">
                           <a
                             href="#"
-                            className="social-link h6"
+                            className="social-link h6 text-light-text dark:text-dark-text"
                             title="Facebook"
                           >
                             Fb.
                           </a>
                           <a
                             href="#"
-                            className="social-link h6"
+                            className="social-link h6 text-light-text dark:text-dark-text"
                             title="Behance"
                           >
                             Be.
                           </a>
                           <a
                             href="#"
-                            className="social-link h6"
+                            className="social-link h6 text-light-text dark:text-dark-text"
                             title="Linkedin"
                           >
                             Ln.
                           </a>
                           <a
                             href="#"
-                            className="social-link h6"
+                            className="social-link h6 text-light-text dark:text-dark-text"
                             title="Dribbble"
                           >
                             Dr.
@@ -172,23 +172,23 @@ export default function About() {
             {activeTab === "skills" && (
               <div className="skills-container">
                 <div className="skills-section">
-                  <h3 className="section-title">Languages</h3>
+                  <h3 className="section-title text-light-text dark:text-dark-text">Languages</h3>
                   <div className="skills-list">
                     <div className="skill-item">
                       <img src={PythonIcon} alt="Python" className="icon" />{" "}
-                      <span className="skill-text">Python</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Python</span>
                     </div>
                     <div className="skill-item">
                       <img src={CSSIcon} alt="CSS" className="icon" />{" "}
-                      <span className="skill-text">CSS</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">CSS</span>
                     </div>
                     <div className="skill-item">
                       <img src={HTMLIcon} alt="HTML" className="icon" />{" "}
-                      <span className="skill-text">HTML</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">HTML</span>
                     </div>
                     <div className="skill-item">
                       <img src={JSIcon} alt="JavaScript" className="icon" />{" "}
-                      <span className="skill-text">JavaScript</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">JavaScript</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -196,28 +196,28 @@ export default function About() {
                         alt="TypeScript"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">TypeScript</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">TypeScript</span>
                     </div>
                   </div>
                 </div>
                 <div className="skills-section">
-                  <h3 className="section-title">Databases & Cloud</h3>
+                  <h3 className="section-title text-light-text dark:text-dark-text">Databases & Cloud</h3>
                   <div className="skills-list">
                     <div className="skill-item">
                       <img src={FirebaseIcon} alt="Firebase" className="icon" />{" "}
-                      <span className="skill-text">Firebase</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Firebase</span>
                     </div>
                     <div className="skill-item">
                       <img src={MongoDBIcon} alt="MongoDB" className="icon" />{" "}
-                      <span className="skill-text">MongoDB</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">MongoDB</span>
                     </div>
                     <div className="skill-item">
                       <img src={MongooseIcon} alt="Mongoose" className="icon" />{" "}
-                      <span className="skill-text">Mongoose</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Mongoose</span>
                     </div>
                     <div className="skill-item">
                       <img src={MySQLIcon} alt="MySQL" className="icon" />{" "}
-                      <span className="skill-text">MySQL</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">MySQL</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -225,24 +225,24 @@ export default function About() {
                         alt="PostGreSQL"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">PostGreSQL</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">PostGreSQL</span>
                     </div>
                   </div>
                 </div>
                 <div className="skills-section">
-                  <h3 className="section-title">Libraries</h3>
+                  <h3 className="section-title text-light-text dark:text-dark-text">Libraries</h3>
                   <div className="skills-list">
                     <div className="skill-item">
                       <img src={ReactIcon} alt="React Js" className="icon" />{" "}
-                      <span className="skill-text">React Js</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">React Js</span>
                     </div>
                     <div className="skill-item">
                       <img src={ReduxIcon} alt="Redux" className="icon" />{" "}
-                      <span className="skill-text">Redux</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Redux</span>
                     </div>
                     <div className="skill-item">
                       <img src={GraphqlIcon} alt="Graphql" className="icon" />{" "}
-                      <span className="skill-text">Graphql</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Graphql</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -250,11 +250,11 @@ export default function About() {
                         alt="Sequelize"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">Sequelize</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Sequelize</span>
                     </div>
                     <div className="skill-item">
                       <img src={MongooseIcon} alt="Mongoose" className="icon" />{" "}
-                      <span className="skill-text">Mongoose</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Mongoose</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -262,12 +262,12 @@ export default function About() {
                         alt="Handlebars"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">Handlebars</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Handlebars</span>
                     </div>
                   </div>
                 </div>
                 <div className="skills-section">
-                  <h3 className="section-title">Frameworks</h3>
+                  <h3 className="section-title text-light-text dark:text-dark-text">Frameworks</h3>
                   <div className="skills-list">
                     <div className="skill-item">
                       <img
@@ -275,7 +275,7 @@ export default function About() {
                         alt="Bootstrap"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">Bootstrap</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Bootstrap</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -283,7 +283,7 @@ export default function About() {
                         alt="Tailwind CSS"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">Tailwind CSS</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Tailwind CSS</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -291,64 +291,64 @@ export default function About() {
                         alt="React Bootstrap"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">React Bootstrap</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">React Bootstrap</span>
                     </div>
                     <div className="skill-item">
                       <img src={NextJSIcon} alt="NextJS" className="icon" />{" "}
-                      <span className="skill-text">NextJS</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">NextJS</span>
                     </div>
                     <div className="skill-item">
                       <img src={ExpressIcon} alt="Express" className="icon" />{" "}
-                      <span className="skill-text">ExpressJS</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">ExpressJS</span>
                     </div>
                   </div>
                 </div>
                 <div className="skills-section">
-                  <h3 className="section-title">
+                  <h3 className="section-title text-light-text dark:text-dark-text">
                     Version Control & Deployment
                   </h3>
                   <div className="skills-list">
                     <div className="skill-item">
                       <img src={GitIcon} alt="Git" className="icon" />{" "}
-                      <span className="skill-text">Git</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Git</span>
                     </div>
                     <div className="skill-item">
                       <img src={GitHubIcon} alt="GitHub" className="icon" />{" "}
-                      <span className="skill-text">GitHub</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">GitHub</span>
                     </div>
                     <div className="skill-item">
                       <img src={GitLabIcon} alt="GitLab" className="icon" />{" "}
-                      <span className="skill-text">GitLab</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">GitLab</span>
                     </div>
 
                     <div className="skill-item">
                       <img src={PostmanIcon} alt="Postman" className="icon" />{" "}
-                      <span className="skill-text">Postman</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Postman</span>
                     </div>
                   </div>
                 </div>
                 <div className="skills-section">
-                  <h3 className="section-title">Others</h3>
+                  <h3 className="section-title text-light-text dark:text-dark-text">Others</h3>
                   <div className="skills-list">
                     <div className="skill-item">
                       <img src={JestIcon} alt="Jest" className="icon" />{" "}
-                      <span className="skill-text">Jest</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Jest</span>
                     </div>
                     <div className="skill-item">
                       <img src={PyCharmIcon} alt="PyCharm" className="icon" />{" "}
-                      <span className="skill-text">PyCharm</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">PyCharm</span>
                     </div>
                     <div className="skill-item">
                       <img src={ViteIcon} alt="Vite" className="icon" />{" "}
-                      <span className="skill-text">Vite</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Vite</span>
                     </div>
                     <div className="skill-item">
                       <img src={VSCodeIcon} alt="VS Code" className="icon" />{" "}
-                      <span className="skill-text">VS Code</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">VS Code</span>
                     </div>
                     <div className="skill-item">
                       <img src={UnityIcon} alt="Unity" className="icon" />{" "}
-                      <span className="skill-text">Unity</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Unity</span>
                     </div>
                     <div className="skill-item">
                       <img
@@ -356,15 +356,15 @@ export default function About() {
                         alt="Unreal Engine"
                         className="icon"
                       />{" "}
-                      <span className="skill-text">Unreal</span>
+                      <span className="skill-text text-light-text dark:text-dark-text">Unreal</span>
                     </div>
                   </div>
                 </div>
               </div>
             )}
-            {activeTab === "passions" && (
-              <div className="text-lg text-gray-500 flex flex-col gap-4 text-center">
-                {/* Content for Passions tab */}
+            {activeTab === "interests" && (
+              <div className="text-lg text-light-text dark:text-dark-text flex flex-col gap-4 text-center">
+                {/* Content for Interests tab */}
                 <p>Technology and Programming</p>
                 <p>Creative Problem-Solving</p>
                 <p>Personal Development</p>
@@ -373,7 +373,7 @@ export default function About() {
             )}
 
             {activeTab === "strengths" && (
-              <div className="text-lg text-gray-500 flex flex-col gap-4 text-center">
+              <div className="text-lg text-light-text dark:text-dark-text flex flex-col gap-4 text-center">
                 {/* Content for Strengths tab */}
                 <p>
                   <strong>Proactive Learner:</strong> Continuously seeks out new
@@ -416,6 +416,5 @@ export default function About() {
           </div>
         </div>
       </div>
-    </section>
   );
 }

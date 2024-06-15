@@ -1,0 +1,211 @@
+/*-----------------------------------*\
+  #ABOUT
+\*-----------------------------------*/
+
+.tab-container { border: 1px solid var(--border-eerie-black); }
+
+.tab-btn {
+  width: 100%;
+  padding-block: 16px;
+  border-block-end: 1px solid var(--border-eerie-black);
+  transition: var(--transition-1);
+}
+
+.tab-btn:is(:hover, :focus-visible, .active) { background: var(--bg-eerie-black); }
+
+.tab-content {
+  display: none;
+  padding: 30px;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fade 500ms linear forwards;
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.tab-content .grid-list {
+  display: grid;
+  gap: 30px;
+}
+
+.tab-content .section-title { margin-block-end: 30px; }
+
+.tab-content .section-text,
+.about-item:not(:last-child) { margin-block-end: 20px; }
+
+.about-item .span { line-height: 1.4; }
+
+.social-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.social-link { color: var(--text-white); }
+
+.skills-container {
+  display: grid;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.skills-section {
+  background-color: #1f2937; /* Tailwind's bg-gray-950 */
+  border-radius: 10px;
+  padding: 20px;
+  border: 2px solid #4ade80; /* Tailwind's border-lime-800 */
+  transition: border-color 0.5s;
+}
+
+.skills-section:hover {
+  border-color: #a3e635; /* Tailwind's border-lime-600 */
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fcd34d; /* Tailwind's text-amber-600 */
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #4b5563; /* Tailwind's border-gray-700 */
+  border-radius: 8px;
+  gap: 10px;
+  background-color: #111827; /* Tailwind's bg-gray-950 */
+}
+
+.skill-item img.icon {
+  width: 32px;
+  height: 32px;
+}
+
+.skill-text {
+  color: #d1d5db; /* Tailwind's text-gray-300 */
+  font-size: 1rem;
+}
+
+
+/*-----------------------------------*\
+  #ABOUT
+\*-----------------------------------*/
+.tab-container { border: 1px solid var(--border-eerie-black); }
+
+.tab-btn {
+  width: 100%;
+  padding-block: 16px;
+  border-block-end: 1px solid var(--border-eerie-black);
+  transition: var(--transition-1);
+}
+
+.tab-btn:is(:hover, :focus-visible, .active) { background: var(--bg-eerie-black); }
+
+.tab-content {
+  display: none;
+  padding: 30px;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fade 500ms linear forwards;
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.tab-content .grid-list {
+  display: grid;
+  gap: 30px;
+}
+
+.tab-content .section-title { margin-block-end: 30px; }
+
+.tab-content .section-text,
+.about-item:not(:last-child) { margin-block-end: 20px; }
+
+.about-item .span { line-height: 1.4; }
+
+.social-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.social-link { color: var(--text-white); }
+
+
+.skills-container {
+  display: grid;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.skills-section {
+  background-color: #1f2937; /* Tailwind's bg-gray-950 */
+  border-radius: 10px;
+  padding: 20px;
+  border: 2px solid #4ade80; /* Tailwind's border-lime-800 */
+  transition: border-color 0.5s;
+}
+
+.skills-section:hover {
+  border-color: #a3e635; /* Tailwind's border-lime-600 */
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fcd34d; /* Tailwind's text-amber-600 */
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #4b5563; /* Tailwind's border-gray-700 */
+  border-radius: 8px;
+  gap: 10px;
+  background-color: #111827; /* Tailwind's bg-gray-950 */
+}
+
+.skill-item img.icon {
+  width: 32px;
+  height: 32px;
+}
+
+.skill-text {
+  color: #d1d5db; /* Tailwind's text-gray-300 */
+  font-size: 1rem;
+}
+
