@@ -20,11 +20,14 @@ export default function Portfolio() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-10">
-      <h1 className="text-4xl font-bold text-white mb-8">
-        My Recent <strong className="text-purple-500">Works</strong>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-light-background dark:bg-black p-10">
+      <h1 className="mb-20 text-5xl font-bold text-light-text dark:text-dark-text">
+        PORTFOLIO
       </h1>
-      <p className="text-gray-300 mb-12">
+      <h2 className="text-4xl font-bold text-light-text dark:text-dark-text mb-8">
+        My Recent <strong className="text-purple-500">Works</strong>
+      </h2>
+      <p className="text-gray-600 dark:text-gray-300 mb-12">
         Here are a few projects I&apos;ve worked on recently.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
