@@ -9,6 +9,7 @@ import DashComments from "../components/Dashboard/DashComments";
 import DashboardComp from "../components/Dashboard/DashboardComp";
 // import DashContacts from "../components/DashContacts"; // Import the new component
 import DashTimeline from "../components/Dashboard/DashTimeline";
+import "../styles/Dashboard.css"; // Import the CSS file
 
 export default function Dashboard() {
   const location = useLocation();
@@ -21,25 +22,27 @@ export default function Dashboard() {
     }
   }, [location.search]);
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="md:w-56">
+    <div className="dashboard-container">
+      <div className="dashboard-sidebar">
         {/* Sidebar */}
         <DashSidebar />
       </div>
-      {/* profile... */}
-      {tab === "profile" && <DashProfile />}
-      {/* posts... */}
-      {tab === "posts" && <DashPosts />}
-      {/* users */}
-      {tab === "users" && <DashUsers />}
-      {/* comments  */}
-      {tab === "comments" && <DashComments />}
-      {/* contacts */}
-      {/* {tab === "contacts" && <DashContacts />} Add the new tab */}
-      {/* timeline */}
-      {tab === "timeline" && <DashTimeline />}
-      {/* dashboard comp */}
-      {tab === "dash" && <DashboardComp />}
+      <div className="dashboard-content">
+        {/* profile... */}
+        {tab === "profile" && <DashProfile />}
+        {/* posts... */}
+        {tab === "posts" && <DashPosts />}
+        {/* users */}
+        {tab === "users" && <DashUsers />}
+        {/* comments  */}
+        {tab === "comments" && <DashComments />}
+        {/* contacts */}
+        {/* {tab === "contacts" && <DashContacts />} Add the new tab */}
+        {/* timeline */}
+        {tab === "timeline" && <DashTimeline />}
+        {/* dashboard comp */}
+        {tab === "dash" && <DashboardComp />}
+      </div>
     </div>
   );
 }

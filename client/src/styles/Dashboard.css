@@ -1,0 +1,41 @@
+/* client/src/styles/Dashboard.css */
+
+/* General styles for the dashboard */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding-top: 4rem; /* Adjust this value to match the height of your header */
+}
+
+.dashboard-sidebar {
+  width: 100%;
+  max-width: 14rem;
+  position: fixed;
+  top: 4rem; /* Adjust this value to match the height of your header */
+  height: calc(100vh - 4rem); /* Adjust this value to match the height of your header */
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-content {
+  margin-left: 14rem;
+  padding: 1rem;
+  width: calc(100% - 14rem);
+  margin-top: 4rem; /* Adjust this value to match the height of your header */
+}
+
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    position: static;
+    height: auto;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 0;
+  }
+}

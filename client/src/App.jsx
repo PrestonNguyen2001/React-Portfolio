@@ -10,14 +10,14 @@ import Timeline from "./pages/Timeline";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
-import CreatePost from "./pages/CreatePost"; // Import the CreatePost component
+import CreatePost from "./pages/CreatePost";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import PrivateRoute from "./components/Dashboard/PrivateRoute";
 import OnlyAdminPrivateRoute from "./components/Dashboard/OnlyAdminPrivateRoute";
 import Preloader from "./components/Preloader/Preloader";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import ScrollToTopButton from "./buttons/ScrollToTopButton"; // Import the ScrollToTopButton
+import ScrollToTopButton from "./buttons/ScrollToTopButton";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -97,8 +97,7 @@ export default function App() {
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              {/* Add this line */}
+              <Route path="/dashboard/*" element={<Dashboard />} />
             </Route>
             <Route element={<OnlyAdminPrivateRoute />}>
               <Route path="/create-post" element={<CreatePost />} />
