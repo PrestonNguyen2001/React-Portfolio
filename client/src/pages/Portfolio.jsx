@@ -1,9 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import ProjectCard from "../components/Portfolio/ProjectCard"; // Adjust the path according to your folder structure
-import Project1 from "../assets/images/project-1.png";
-import Project2 from "../assets/images/project-2.png";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,6 +25,9 @@ const itemVariants = {
 export default function Portfolio() {
   const controls = useAnimation();
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [projects, setProjects] = useState([]); // Initialize as an empty array
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (inView) {
@@ -34,50 +35,24 @@ export default function Portfolio() {
     }
   }, [controls, inView]);
 
-  const projects = [
-    {
-      imgPath: Project1,
-      title: "Code Hunt",
-      description: "Description of project 1",
-      ghLink: "https://github.com/yourusername/project1",
-      demoLink: "https://demo-link1.com", // Optional
-    },
-    {
-      imgPath: Project2,
-      title: "Resume Builder",
-      description: "Description of project 2",
-      ghLink: "https://github.com/yourusername/project2",
-      demoLink: null,
-    },
-    {
-      imgPath: "#",
-      title: "Project 3",
-      description: "Description of project 3",
-      ghLink: "https://github.com/yourusername/project3",
-      demoLink: null,
-    },
-    {
-      imgPath: "#",
-      title: "Project 4",
-      description: "Description of project 4",
-      ghLink: "https://github.com/yourusername/project4",
-      demoLink: null,
-    },
-    {
-      imgPath: "#",
-      title: "Project 5",
-      description: "Description of project 5",
-      ghLink: "https://github.com/yourusername/project5",
-      demoLink: null,
-    },
-    {
-      imgPath: "3",
-      title: "Project 6",
-      description: "Description of project 6",
-      ghLink: "https://github.com/yourusername/project6",
-      demoLink: null,
-    },
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("/api/projects");
+        const data = await res.json();
+        if (res.ok) {
+          setProjects(data.projects || []); // Ensure projects is an array
+        } else {
+          setError("Failed to fetch projects");
+        }
+      } catch (error) {
+        setError("Error fetching projects");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <motion.div
@@ -105,22 +80,34 @@ export default function Portfolio() {
       >
         Here are a few projects I&apos;ve worked on recently.
       </motion.p>
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        variants={containerVariants}
-      >
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={index}
-            imgPath={project.imgPath}
-            title={project.title}
-            description={project.description}
-            ghLink={project.ghLink}
-            demoLink={project.demoLink}
-            variants={itemVariants}
-          />
-        ))}
-      </motion.div>
+      {loading ? (
+        <p className="text-gray-600 dark:text-gray-300">Loading projects...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
+      ) : (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+        >
+          {projects.length > 0 ? (
+            projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                imgPath={project.imgPath}
+                title={project.title}
+                description={project.description}
+                ghLink={project.ghLink}
+                demoLink={project.demoLink}
+                variants={itemVariants}
+              />
+            ))
+          ) : (
+            <p className="text-gray-600 dark:text-gray-300">
+              No projects available
+            </p>
+          )}
+        </motion.div>
+      )}
     </motion.div>
   );
 }

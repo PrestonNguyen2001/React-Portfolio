@@ -1,4 +1,5 @@
 // client/src/pages/Dashboard.jsx
+
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/Dashboard/DashSidebar";
@@ -7,7 +8,7 @@ import DashPosts from "../components/Dashboard/DashPosts";
 import DashUsers from "../components/Dashboard/DashUsers";
 import DashComments from "../components/Dashboard/DashComments";
 import DashboardComp from "../components/Dashboard/DashboardComp";
-// import DashContacts from "../components/DashContacts"; // Import the new component
+import DashProjects from "../components/Dashboard/DashProjects"; // Import the new component
 import DashTimeline from "../components/Dashboard/DashTimeline";
 import "../styles/Dashboard.css"; // Import the CSS file
 
@@ -36,8 +37,8 @@ export default function Dashboard() {
         {tab === "users" && <DashUsers />}
         {/* comments  */}
         {tab === "comments" && <DashComments />}
-        {/* contacts */}
-        {/* {tab === "contacts" && <DashContacts />} Add the new tab */}
+        {/* projects */}
+        {tab === "projects" && <DashProjects />} {/* Add the new tab */}
         {/* timeline */}
         {tab === "timeline" && <DashTimeline />}
         {/* dashboard comp */}

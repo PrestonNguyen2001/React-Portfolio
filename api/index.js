@@ -1,3 +1,5 @@
+// api/index.js
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -6,6 +8,7 @@ import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
 import timelineRoutes from "./routes/timeline.route.js";
+import projectRoutes from "./routes/project.route.js"; // Import project routes
 import cookieParser from "cookie-parser";
 import path from "path";
 
@@ -35,6 +38,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/timeline", timelineRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/projects", projectRoutes); // Use project routes
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

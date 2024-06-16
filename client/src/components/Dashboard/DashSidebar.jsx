@@ -1,4 +1,4 @@
-// client/src/components/DashSidebar.jsx
+// client/src/components/Dashboard/DashSidebar.jsx
 import { Sidebar } from "flowbite-react";
 import {
   HiUser,
@@ -8,6 +8,7 @@ import {
   HiAnnotation,
   HiChartPie,
   HiClock,
+  HiOutlineFolderOpen,
 } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -107,6 +108,15 @@ export default function DashSidebar() {
                   as="div"
                 >
                   Timeline
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=projects">
+                <Sidebar.Item
+                  active={tab === "projects"}
+                  icon={HiOutlineFolderOpen}
+                  as="div"
+                >
+                  Projects
                 </Sidebar.Item>
               </Link>
             </>
