@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar, Button, Dropdown } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
@@ -45,6 +45,31 @@ export default function Header({ activeTab, setActiveTab }) {
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 992);
+      if (window.innerWidth >= 992) {
+        setIsNavbarOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isNavbarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isNavbarOpen]);
 
   const handleSignout = async () => {
     try {
@@ -203,7 +228,7 @@ export default function Header({ activeTab, setActiveTab }) {
                 </Button>
               </Link>
             )}
-            {!isNavbarOpen && (
+            {!isLargeScreen && !isNavbarOpen && (
               <Button className="navbar-toggle" onClick={toggleNavbar}>
                 <FaBars />
               </Button>
