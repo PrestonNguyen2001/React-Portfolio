@@ -57,15 +57,24 @@ const itemVariants = {
 
 export default function About() {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [ref, inView] = useInView({ triggerOnce: false, threshold: 0.1 });
 
   useEffect(() => {
     if (inView) {
       controls.start("visible");
+    } else {
+      controls.start("hidden");
     }
   }, [controls, inView]);
 
   const [activeTab, setActiveTab] = useState("about");
+
+  useEffect(() => {
+    controls.start("hidden");
+    setTimeout(() => {
+      controls.start("visible");
+    }, 100);
+  }, [activeTab]);
 
   return (
     <motion.div

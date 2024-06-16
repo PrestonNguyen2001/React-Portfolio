@@ -101,7 +101,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
           {isLoaded && heroLoaded && <Footer />}
-          <ScrollToTopButton /> {/* Add the ScrollToTopButton here */}
+          <ScrollToTopButton /> 
         </BrowserRouter>
       </div>
     </>
