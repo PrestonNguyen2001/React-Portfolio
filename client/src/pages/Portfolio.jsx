@@ -2,6 +2,8 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import ProjectCard from "../components/ProjectCard"; // Adjust the path according to your folder structure
+import Project1 from "../assets/images/project-1.png";
+import Project2 from "../assets/images/project-2.png";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -34,20 +36,47 @@ export default function Portfolio() {
 
   const projects = [
     {
-      imgPath: "path_to_image1",
-      title: "Project 1",
+      imgPath: Project1,
+      title: "Code Hunt",
       description: "Description of project 1",
       ghLink: "https://github.com/yourusername/project1",
       demoLink: "https://demo-link1.com", // Optional
     },
     {
-      imgPath: "path_to_image2",
-      title: "Project 2",
+      imgPath: Project2,
+      title: "Resume Builder",
       description: "Description of project 2",
       ghLink: "https://github.com/yourusername/project2",
-      demoLink: null, // Optional
+      demoLink: null,
     },
-    // Add more projects as needed
+    {
+      imgPath: null,
+      title: "Project 3",
+      description: "Description of project 3",
+      ghLink: "https://github.com/yourusername/project3",
+      demoLink: null,
+    },
+    {
+      imgPath: null,
+      title: "Project 4",
+      description: "Description of project 4",
+      ghLink: "https://github.com/yourusername/project4",
+      demoLink: null,
+    },
+    {
+      imgPath: null,
+      title: "Project 5",
+      description: "Description of project 5",
+      ghLink: "https://github.com/yourusername/project5",
+      demoLink: null,
+    },
+    {
+      imgPath: null,
+      title: "Project 6",
+      description: "Description of project 6",
+      ghLink: "https://github.com/yourusername/project6",
+      demoLink: null,
+    },
   ];
 
   return (
