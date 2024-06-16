@@ -7,11 +7,14 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Portfolio from "./pages/Portfolio";
 import Timeline from "./pages/Timeline";
+import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
+import CreatePost from "./pages/CreatePost"; // Import the CreatePost component
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import PrivateRoute from "./components/Dashboard/PrivateRoute";
+import OnlyAdminPrivateRoute from "./components/Dashboard/OnlyAdminPrivateRoute";
 import Preloader from "./components/Preloader/Preloader";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import ScrollToTopButton from "./buttons/ScrollToTopButton"; // Import the ScrollToTopButton
@@ -95,13 +98,18 @@ export default function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
+              {/* Add this line */}
+            </Route>
+            <Route element={<OnlyAdminPrivateRoute />}>
+              <Route path="/create-post" element={<CreatePost />} />
             </Route>
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/timeline" element={<Timeline />} />
+            <Route path="/blogs" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
           {isLoaded && heroLoaded && <Footer />}
-          <ScrollToTopButton /> 
+          <ScrollToTopButton />
         </BrowserRouter>
       </div>
     </>

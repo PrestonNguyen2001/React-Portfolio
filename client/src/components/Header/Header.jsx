@@ -182,6 +182,13 @@ export default function Header({ activeTab, setActiveTab }) {
               </Link>
             </motion.div>
             <motion.div variants={item}>
+              <Link to="#blogs" onClick={(e) => handleSmoothScroll(e, "blogs")}>
+                <GlowingButton selectedPath={activeTab === "blogs"}>
+                  Blogs
+                </GlowingButton>
+              </Link>
+            </motion.div>
+            <motion.div variants={item}>
               <Link
                 to="#contact"
                 onClick={(e) => handleSmoothScroll(e, "contact")}

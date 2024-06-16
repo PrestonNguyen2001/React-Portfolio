@@ -2,7 +2,9 @@ import Post from "../models/post.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const create = async (req, res, next) => {
-  if (!req.user.isAdmin) {
+  console.log("Create post called, user:", req.user);
+  if (!req.user || !req.user.isAdmin) {
+    console.log("User is not allowed to create a post");
     return next(errorHandler(403, "You are not allowed to create a post"));
   }
   if (!req.body.title || !req.body.content) {
@@ -26,7 +28,8 @@ export const create = async (req, res, next) => {
   }
 };
 
-export const getposts = async (req, res, next) => {
+
+export const getPosts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
@@ -50,7 +53,6 @@ export const getposts = async (req, res, next) => {
     const totalPosts = await Post.countDocuments();
 
     const now = new Date();
-
     const oneMonthAgo = new Date(
       now.getFullYear(),
       now.getMonth() - 1,
@@ -71,7 +73,7 @@ export const getposts = async (req, res, next) => {
   }
 };
 
-export const deletepost = async (req, res, next) => {
+export const deletePost = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to delete this post"));
   }
@@ -83,7 +85,7 @@ export const deletepost = async (req, res, next) => {
   }
 };
 
-export const updatepost = async (req, res, next) => {
+export const updatePost = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to update this post"));
   }

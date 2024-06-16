@@ -7,6 +7,7 @@ import About from "./About";
 import Portfolio from "./Portfolio";
 import Timeline from "./Timeline";
 import Resume from "./Resume";
+import Blog from "./Blog";
 import Contact from "./Contact";
 
 const sectionVariants = {
@@ -89,6 +90,9 @@ export default function Home({ setHeroLoaded }) {
           </AnimatedSection>
           <AnimatedSection id="resume">
             <Resume />
+          </AnimatedSection>
+          <AnimatedSection id="blogs">
+            <Blog />
           </AnimatedSection>
           <AnimatedSection id="contact">
             <Contact />
