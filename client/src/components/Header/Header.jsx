@@ -4,11 +4,11 @@ import { Avatar, Button, Dropdown } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../redux/theme/themeSlice";
-import { signoutSuccess } from "../redux/user/userSlice";
+import { toggleTheme } from "../../redux/theme/themeSlice";
+import { signoutSuccess } from "../../redux/user/userSlice";
 import { motion } from "framer-motion";
-import GlowingButton from "../buttons/GlowingButton";
-import "../assets/css/Glow.css";
+import GlowingButton from "../../buttons/GlowingButton";
+import "../../styles/Glow.css";
 
 const container = {
   hide: {
@@ -102,7 +102,7 @@ export default function Header({ activeTab, setActiveTab }) {
             className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold"
             onClick={() => setActiveTab("home")}
           >
-            <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+            <span className="px-2 py-1 bg-gradient-to-r from-gray-700 via-gray-500 to-gray-300 rounded-lg text-white">
               Preston&apos;s
             </span>
             Portfolio
@@ -207,7 +207,6 @@ export default function Header({ activeTab, setActiveTab }) {
                 <FaBars />
               </Button>
             )}
-          
           </div>
         </motion.div>
       </div>

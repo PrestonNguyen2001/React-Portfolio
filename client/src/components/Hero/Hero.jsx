@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import VanillaTilt from "vanilla-tilt";
-import Type from "./Type";
-import profileImage from "../assets/images/ProfileImage.png";
-import heroShape1 from "../assets/images/hero-shape-1.png";
-import heroShape2 from "../assets/images/hero-shape-2.png";
+import Type from "../Type/Type";
+import profileImage from "../../assets/images/ProfileImage.png";
+import heroShape1 from "../../assets/images/hero-shape-1.png";
+import heroShape2 from "../../assets/images/hero-shape-2.png";
 
 export default function Hero({ setHeroLoaded }) {
   const tiltRef = useRef(null);
@@ -38,7 +38,7 @@ export default function Hero({ setHeroLoaded }) {
           <Type />
           <div className="wrapper">
             <Link
-              to="/search"
+              to="/portfolio"
               className="mt-20 btn bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-200 animate-bounce"
             >
               View All Posts

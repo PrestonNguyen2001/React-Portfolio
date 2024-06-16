@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import ProjectCard from "../components/ProjectCard"; // Adjust the path according to your folder structure
+import ProjectCard from "../components/Portfolio/ProjectCard"; // Adjust the path according to your folder structure
 import Project1 from "../assets/images/project-1.png";
 import Project2 from "../assets/images/project-2.png";
 
@@ -50,28 +50,28 @@ export default function Portfolio() {
       demoLink: null,
     },
     {
-      imgPath: null,
+      imgPath: "#",
       title: "Project 3",
       description: "Description of project 3",
       ghLink: "https://github.com/yourusername/project3",
       demoLink: null,
     },
     {
-      imgPath: null,
+      imgPath: "#",
       title: "Project 4",
       description: "Description of project 4",
       ghLink: "https://github.com/yourusername/project4",
       demoLink: null,
     },
     {
-      imgPath: null,
+      imgPath: "#",
       title: "Project 5",
       description: "Description of project 5",
       ghLink: "https://github.com/yourusername/project5",
       demoLink: null,
     },
     {
-      imgPath: null,
+      imgPath: "3",
       title: "Project 6",
       description: "Description of project 6",
       ghLink: "https://github.com/yourusername/project6",

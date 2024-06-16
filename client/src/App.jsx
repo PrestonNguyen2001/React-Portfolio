@@ -9,11 +9,11 @@ import Portfolio from "./pages/Portfolio";
 import Timeline from "./pages/Timeline";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
-import Preloader from "./components/Preloader";
-import ScrollToTop from "./components/ScrollToTop";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import PrivateRoute from "./components/Dashboard/PrivateRoute";
+import Preloader from "./components/Preloader/Preloader";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import ScrollToTopButton from "./buttons/ScrollToTopButton"; // Import the ScrollToTopButton
 
 export default function App() {

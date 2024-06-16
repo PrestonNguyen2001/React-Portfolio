@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Hero from "../components/Hero";
+import Hero from "../components/Hero/Hero";
 import About from "./About";
 import Portfolio from "./Portfolio";
 import Timeline from "./Timeline";
