@@ -3,14 +3,24 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Modal, Table, Button } from "flowbite-react";
+import { Modal, Table, Button, TextInput } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export default function DashProjects() {
   const { currentUser } = useSelector((state) => state.user);
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false); // Add modal state
   const [projectIdToDelete, setProjectIdToDelete] = useState("");
+  const [newProject, setNewProject] = useState({
+    // Add state for new project
+    title: "",
+    imgPath: "",
+    category: "",
+    description: "",
+    ghLink: "",
+    demoLink: "",
+  });
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -51,8 +61,46 @@ export default function DashProjects() {
     }
   };
 
+  const handleAddProject = async () => {
+    setShowAddModal(false);
+    try {
+      const res = await fetch(`/api/projects/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...newProject, userId: currentUser._id }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setProjects((prev) => [...prev, data]);
+        setNewProject({
+          title: "",
+          imgPath: "",
+          category: "",
+          description: "",
+          ghLink: "",
+          demoLink: "",
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleChange = (e) => {
+    setNewProject({ ...newProject, [e.target.id]: e.target.value });
+  };
+
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      {currentUser.isAdmin && (
+        <Button className="mb-4" onClick={() => setShowAddModal(true)}>
+          Add Project
+        </Button>
+      )}
       {currentUser.isAdmin && projects.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
@@ -140,6 +188,62 @@ export default function DashProjects() {
             </div>
           </div>
         </Modal.Body>
+      </Modal>
+      <Modal
+        show={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header>Add New Project</Modal.Header>
+        <Modal.Body>
+          <div className="flex flex-col gap-4">
+            <TextInput
+              id="title"
+              placeholder="Title"
+              onChange={handleChange}
+              value={newProject.title}
+            />
+            <TextInput
+              id="imgPath"
+              placeholder="Image URL"
+              onChange={handleChange}
+              value={newProject.imgPath}
+            />
+            <TextInput
+              id="category"
+              placeholder="Category"
+              onChange={handleChange}
+              value={newProject.category}
+            />
+            <textarea
+              id="description"
+              placeholder="Description"
+              rows="4"
+              onChange={handleChange}
+              value={newProject.description}
+              className="p-2 border border-gray-300 rounded-md"
+            />
+            <TextInput
+              id="ghLink"
+              placeholder="GitHub Link"
+              onChange={handleChange}
+              value={newProject.ghLink}
+            />
+            <TextInput
+              id="demoLink"
+              placeholder="Demo Link"
+              onChange={handleChange}
+              value={newProject.demoLink}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleAddProject}>Add Project</Button>
+          <Button color="gray" onClick={() => setShowAddModal(false)}>
+            Cancel
+          </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
