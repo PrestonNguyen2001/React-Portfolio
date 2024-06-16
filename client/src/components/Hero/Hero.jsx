@@ -6,6 +6,7 @@ import Type from "../Type/Type";
 import profileImage from "../../assets/images/ProfileImage.png";
 import heroShape1 from "../../assets/images/hero-shape-1.png";
 import heroShape2 from "../../assets/images/hero-shape-2.png";
+import "../../styles/Hero.css";
 
 export default function Hero({ setHeroLoaded }) {
   const tiltRef = useRef(null);

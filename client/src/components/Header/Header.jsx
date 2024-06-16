@@ -9,6 +9,7 @@ import { signoutSuccess } from "../../redux/user/userSlice";
 import { motion } from "framer-motion";
 import GlowingButton from "../../buttons/GlowingButton";
 import "../../styles/Glow.css";
+import "../../styles/Header.css";
 
 const container = {
   hide: {
