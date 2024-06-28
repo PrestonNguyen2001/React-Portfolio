@@ -2,9 +2,7 @@ import Post from "../models/post.model.js";
 import { errorHandler } from "../utils/error.js";
 
 export const create = async (req, res, next) => {
-  console.log("Create post called, user:", req.user);
   if (!req.user || !req.user.isAdmin) {
-    console.log("User is not allowed to create a post");
     return next(errorHandler(403, "You are not allowed to create a post"));
   }
   if (!req.body.title || !req.body.content) {
@@ -28,29 +26,43 @@ export const create = async (req, res, next) => {
   }
 };
 
-
 export const getPosts = async (req, res, next) => {
   try {
+    const { slug } = req.params;
+    console.log("Fetching post with slug:", slug); 
+
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
-    const posts = await Post.find({
+
+    const query = {
       ...(req.query.userId && { userId: req.query.userId }),
       ...(req.query.category && { category: req.query.category }),
-      ...(req.query.slug && { slug: req.query.slug }),
-      ...(req.query.postId && { _id: req.query.postId }),
       ...(req.query.searchTerm && {
         $or: [
           { title: { $regex: req.query.searchTerm, $options: "i" } },
           { content: { $regex: req.query.searchTerm, $options: "i" } },
         ],
       }),
-    })
+    };
+
+    if (slug) {
+      query.slug = slug;
+      const post = await Post.findOne(query);
+      if (!post) {
+        console.log("Post not found with slug:", slug);
+        return res.status(404).json({ message: "Post not found" });
+      }
+      console.log("Post found:", post); 
+      return res.status(200).json({ post });
+    }
+
+    const posts = await Post.find(query)
       .sort({ updatedAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
 
-    const totalPosts = await Post.countDocuments();
+    const totalPosts = await Post.countDocuments(query);
 
     const now = new Date();
     const oneMonthAgo = new Date(
@@ -69,6 +81,7 @@ export const getPosts = async (req, res, next) => {
       lastMonthPosts,
     });
   } catch (error) {
+    console.error("Error fetching posts:", error); 
     next(error);
   }
 };

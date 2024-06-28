@@ -11,6 +11,7 @@ import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import Resume from "./pages/Resume";
 import CreatePost from "./pages/CreatePost";
+import Post from "./pages/Post";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import PrivateRoute from "./components/Dashboard/PrivateRoute";
@@ -106,6 +107,7 @@ export default function App() {
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/posts/:slug" element={<Post />} />{" "}
           </Routes>
           {isLoaded && heroLoaded && <Footer />}
           <ScrollToTopButton />

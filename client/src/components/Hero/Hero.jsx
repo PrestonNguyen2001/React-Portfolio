@@ -27,7 +27,7 @@ export default function Hero({ setHeroLoaded }) {
   useEffect(() => {
     setTimeout(() => {
       setHeroLoaded(true);
-    }, 500); // Simulating hero section load
+    }, 500); 
   }, [setHeroLoaded]);
 
   return (
@@ -39,10 +39,10 @@ export default function Hero({ setHeroLoaded }) {
           <Type />
           <div className="wrapper">
             <Link
-              to="/portfolio"
+              to="/contact"
               className="mt-20 btn bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-200 animate-bounce"
             >
-              View All Posts
+              Hire Me
             </Link>
           </div>
         </div>

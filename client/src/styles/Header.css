@@ -103,6 +103,9 @@
 .navbar.close {
   animation: slideOut 500ms ease-out forwards;
 }
+.navbar-toggle {
+  background-color: inherit !important;
+}
 
 @keyframes slideOut {
   0% {
