@@ -29,7 +29,7 @@ export const create = async (req, res, next) => {
 export const getPosts = async (req, res, next) => {
   try {
     const { slug } = req.params;
-    console.log("Fetching post with slug:", slug); 
+    console.log("Fetching post with slug:", slug);
 
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
@@ -53,7 +53,7 @@ export const getPosts = async (req, res, next) => {
         console.log("Post not found with slug:", slug);
         return res.status(404).json({ message: "Post not found" });
       }
-      console.log("Post found:", post); 
+      console.log("Post found:", post);
       return res.status(200).json({ post });
     }
 
@@ -81,10 +81,11 @@ export const getPosts = async (req, res, next) => {
       lastMonthPosts,
     });
   } catch (error) {
-    console.error("Error fetching posts:", error); 
+    console.error("Error fetching posts:", error);
     next(error);
   }
 };
+
 
 export const deletePost = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {

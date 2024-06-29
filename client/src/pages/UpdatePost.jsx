@@ -1,5 +1,3 @@
-import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
 import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -10,21 +8,39 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function CreatePost() {
-  const { currentUser } = useSelector((state) => state.user);
-  const [formData, setFormData] = useState({});
+export default function UpdatePost() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
+  const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-  const [publishSuccess, setPublishSuccess] = useState(null);
-  const navigate = useNavigate();
+  const { postId } = useParams();
 
-  const quillRef = useRef(null); // Create a ref for ReactQuill
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`/api/posts/${postId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch post");
+        }
+        const data = await response.json();
+        setFormData(data.post);
+      } catch (error) {
+        setPublishError(error.message);
+      }
+    };
+
+    fetchPost();
+  }, [postId]);
 
   const handleUploadImage = async () => {
     if (!file) {
@@ -59,40 +75,28 @@ export default function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setPublishError(null);
-    setPublishSuccess(null);
-    if (!formData.title || !formData.content) {
-      setPublishError("Title and content are required");
-      return;
-    }
     try {
-      const res = await fetch(`/api/posts/create`, {
-        method: "POST",
+      const res = await fetch(`/api/posts/${postId}/${currentUser._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Ensure cookies are sent with the request
-        body: JSON.stringify({ ...formData, userId: currentUser._id }),
+        body: JSON.stringify(formData),
       });
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);
-      } else {
-        setPublishSuccess("Post created successfully");
-        navigate("/blogs");
+        return;
       }
+      navigate(`/posts/${data.slug}`);
     } catch (error) {
-      setPublishError(error.message);
+      setPublishError("Something went wrong");
     }
-  };
-
-  const handleQuillChange = (content) => {
-    setFormData({ ...formData, content });
   };
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
+      <h1 className="text-center text-3xl my-7 font-semibold">Update post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
           <TextInput
@@ -104,11 +108,13 @@ export default function CreatePost() {
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
+            value={formData.title || ""}
           />
           <Select
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
+            value={formData.category || "uncategorized"}
           >
             <option value="uncategorized">Select a category</option>
             <option value="javascript">JavaScript</option>
@@ -151,24 +157,21 @@ export default function CreatePost() {
           />
         )}
         <ReactQuill
-          ref={quillRef} // Attach the ref to ReactQuill
           theme="snow"
+          value={formData.content || ""}
           placeholder="Write something..."
           className="h-72 mb-12"
           required
-          onChange={handleQuillChange}
+          onChange={(value) => {
+            setFormData({ ...formData, content: value });
+          }}
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
-          Publish
+          Update post
         </Button>
         {publishError && (
           <Alert className="mt-5" color="failure">
             {publishError}
-          </Alert>
-        )}
-        {publishSuccess && (
-          <Alert className="mt-5" color="success">
-            {publishSuccess}
           </Alert>
         )}
       </form>

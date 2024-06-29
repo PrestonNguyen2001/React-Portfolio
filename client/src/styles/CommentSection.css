@@ -1,0 +1,63 @@
+.comment-section {
+  width: 100%;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 8px;
+  cursor: pointer;
+  background-color: inherit !important;
+  border: none !important;
+}
+
+.comment-form .textarea {
+  width: 100%;
+  transition: height 0.3s ease;
+  height: 40px;
+  background-color: inherit !important;
+  border: none !important;
+}
+
+.comment-form.expanded .textarea {
+  height: auto;
+  border: none !important;
+  border-color: none !important;
+}
+
+.button-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+
+.button {
+  display: inline-block;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 8px;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-icon {
+  font-size: 2rem;
+  color: #e53e3e;
+  margin-bottom: 16px;
+}
+
+.h-10 {
+  height: 40px;
+  width: 40px;
+}
+
+.align-top {
+  align-self: flex-start; /* Aligns the profile picture to the top */
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CommentSection from "../components/Comment/CommentSection";
 import "../styles/Post.css";
 
 const Post = () => {
@@ -35,15 +36,25 @@ const Post = () => {
     return <p>{error}</p>;
   }
 
+  const formattedDate = new Date(post.createdAt).toLocaleDateString();
+
   return (
     <div className="post-container">
       <h1 className="post-title">{post.title}</h1>
+      <p className="post-category">{post.category}</p>
+
       {post.image && (
         <img src={post.image} alt={post.title} className="post-image" />
       )}
-      <p className="post-category">Category: {post.category}</p>
-      <p className="post-content">{post.content}</p>
-      <p className="post-author">By: {post.userId}</p>
+      <div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full  text-xs">
+        <p className="post-author">By: {post.userId}</p>
+        <p className="post-date">Published on: {formattedDate}</p>
+      </div>
+
+      <div className="post-content-container">
+        <p className="post-content">{post.content}</p>
+      </div>
+      <CommentSection postId={post._id} />
     </div>
   );
 };

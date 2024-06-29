@@ -52,6 +52,7 @@ export default function App() {
         "portfolio",
         "timeline",
         "resume",
+        "blogs",
         "contact",
       ];
       const scrollPosition = window.scrollY + window.innerHeight / 2;

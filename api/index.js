@@ -6,6 +6,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
+import commentRoutes from "./routes/comment.route.js";
 import timelineRoutes from "./routes/timeline.route.js";
 import projectRoutes from "./routes/project.route.js";
 import cookieParser from "cookie-parser";
@@ -36,6 +37,7 @@ const startServer = async () => {
   app.use("/api/auth", authRoutes);
   app.use("/api/timeline", timelineRoutes);
   app.use("/api/posts", postRoutes);
+  app.use("/api/comment", commentRoutes);
   app.use("/api/projects", projectRoutes);
 
   // Error handling middleware
