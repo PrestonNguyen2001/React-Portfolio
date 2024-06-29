@@ -50,7 +50,7 @@ export default function DashboardComp() {
     };
     const fetchComments = async () => {
       try {
-        const res = await fetch("/api/comments?limit=5");
+        const res = await fetch("/api/comment/getcomments?limit=5");
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);
@@ -77,7 +77,7 @@ export default function DashboardComp() {
               <h3 className="text-gray-500 text-md uppercase">Total Users</h3>
               <p className="text-2xl">{totalUsers}</p>
             </div>
-            <HiOutlineUserGroup className="bg-teal-600  text-white rounded-full text-5xl p-3 shadow-lg" />
+            <HiOutlineUserGroup className="bg-teal-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">
@@ -95,7 +95,7 @@ export default function DashboardComp() {
               </h3>
               <p className="text-2xl">{totalComments}</p>
             </div>
-            <HiAnnotation className="bg-indigo-600  text-white rounded-full text-5xl p-3 shadow-lg" />
+            <HiAnnotation className="bg-indigo-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">
@@ -111,7 +111,7 @@ export default function DashboardComp() {
               <h3 className="text-gray-500 text-md uppercase">Total Posts</h3>
               <p className="text-2xl">{totalPosts}</p>
             </div>
-            <HiDocumentText className="bg-lime-600  text-white rounded-full text-5xl p-3 shadow-lg" />
+            <HiDocumentText className="bg-lime-600 text-white rounded-full text-5xl p-3 shadow-lg" />
           </div>
           <div className="flex gap-2 text-sm">
             <span className="text-green-500 flex items-center">

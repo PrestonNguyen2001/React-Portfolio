@@ -1,19 +1,16 @@
-/* client/src/styles/Dashboard.css */
-
-/* General styles for the dashboard */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  padding-top: 4rem; /* Adjust this value to match the height of your header */
+  padding-top: 4rem; 
 }
 
 .dashboard-sidebar {
   width: 100%;
   max-width: 14rem;
   position: fixed;
-  top: 4rem; /* Adjust this value to match the height of your header */
-  height: calc(100vh - 4rem); /* Adjust this value to match the height of your header */
+  top: 4rem;
+  height: calc(100vh - 4rem); 
   background-color: #f8f9fa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -22,7 +19,7 @@
   margin-left: 14rem;
   padding: 1rem;
   width: calc(100% - 14rem);
-  margin-top: 4rem; /* Adjust this value to match the height of your header */
+  margin-top: 1rem; 
 }
 
 @media (max-width: 768px) {
