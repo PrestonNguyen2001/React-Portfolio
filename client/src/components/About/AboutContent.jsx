@@ -1,6 +1,7 @@
 // client/src/components/AboutContent.jsx
 
 import { motion } from "framer-motion";
+import { BsFacebook, BsInstagram, BsTwitter, BsGithub } from "react-icons/bs";
 import aboutImg from "../../assets/images/about.png";
 
 const containerVariants = {
@@ -89,28 +90,28 @@ const AboutContent = () => (
                 className="social-link h6 text-light-text dark:text-dark-text"
                 title="Facebook"
               >
-                Fb.
+                <BsFacebook />
               </a>
               <a
                 href="#"
                 className="social-link h6 text-light-text dark:text-dark-text"
-                title="Behance"
+                title="Instagram"
               >
-                Be.
+                <BsInstagram />
               </a>
               <a
                 href="#"
                 className="social-link h6 text-light-text dark:text-dark-text"
-                title="Linkedin"
+                title="Twitter"
               >
-                Ln.
+                <BsTwitter />
               </a>
               <a
                 href="#"
                 className="social-link h6 text-light-text dark:text-dark-text"
-                title="Dribbble"
+                title="Github"
               >
-                Dr.
+                <BsGithub />
               </a>
             </div>
           </motion.li>

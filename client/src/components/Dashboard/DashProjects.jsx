@@ -1,34 +1,49 @@
-// client/src/components/Dashboard/DashProjects.jsx
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Modal, Table, Button, TextInput } from "flowbite-react";
+import {
+  Modal,
+  Table,
+  Button,
+  TextInput,
+  Alert,
+  FileInput,
+} from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../../firebase";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function DashProjects() {
   const { currentUser } = useSelector((state) => state.user);
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false); // Add modal state
+  const [showAddModal, setShowAddModal] = useState(false);
   const [projectIdToDelete, setProjectIdToDelete] = useState("");
-  const [newProject, setNewProject] = useState({
-    // Add state for new project
-    title: "",
-    imgPath: "",
-    category: "",
-    description: "",
-    ghLink: "",
-    demoLink: "",
-  });
+  const [newProject, setNewProject] = useState({});
+  const [file, setFile] = useState(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState(null);
+  const [imageUploadError, setImageUploadError] = useState(null);
+  const [addProjectError, setAddProjectError] = useState(null);
+  const [addProjectSuccess, setAddProjectSuccess] = useState(null);
+  const quillRef = useRef(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const res = await fetch("/api/projects");
         const data = await res.json();
+        console.log(data); // Log the data to check the response format
         if (res.ok) {
-          setProjects(data);
+          setProjects(data.projects || []);
         }
       } catch (error) {
         console.log(error.message);
@@ -61,8 +76,50 @@ export default function DashProjects() {
     }
   };
 
-  const handleAddProject = async () => {
-    setShowAddModal(false);
+  const handleUploadImage = async () => {
+    if (!file) {
+      setImageUploadError("Please select an image");
+      return;
+    }
+    setImageUploadError(null);
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + "-" + file.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImageUploadProgress(progress.toFixed(0));
+      },
+      (error) => {
+        setImageUploadError("Image upload failed");
+        setImageUploadProgress(null);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImageUploadProgress(null);
+          setImageUploadError(null);
+          setNewProject({ ...newProject, imgPath: downloadURL });
+        });
+      }
+    );
+  };
+
+  const handleAddProject = async (e) => {
+    e.preventDefault();
+    setAddProjectError(null);
+    setAddProjectSuccess(null);
+    if (
+      !newProject.title ||
+      !newProject.description ||
+      !newProject.imgPath ||
+      !newProject.ghLink
+    ) {
+      setAddProjectError("All required fields must be filled");
+      return;
+    }
     try {
       const res = await fetch(`/api/projects/create`, {
         method: "POST",
@@ -73,25 +130,19 @@ export default function DashProjects() {
       });
       const data = await res.json();
       if (!res.ok) {
-        console.log(data.message);
+        setAddProjectError(data.message);
       } else {
+        setAddProjectSuccess("Project added successfully");
         setProjects((prev) => [...prev, data]);
-        setNewProject({
-          title: "",
-          imgPath: "",
-          category: "",
-          description: "",
-          ghLink: "",
-          demoLink: "",
-        });
+        setNewProject({});
       }
     } catch (error) {
-      console.log(error.message);
+      setAddProjectError(error.message);
     }
   };
 
-  const handleChange = (e) => {
-    setNewProject({ ...newProject, [e.target.id]: e.target.value });
+  const handleQuillChange = (content) => {
+    setNewProject({ ...newProject, description: content });
   };
 
   return (
@@ -108,7 +159,8 @@ export default function DashProjects() {
               <Table.HeadCell>Date updated</Table.HeadCell>
               <Table.HeadCell>Project image</Table.HeadCell>
               <Table.HeadCell>Project title</Table.HeadCell>
-              <Table.HeadCell>Category</Table.HeadCell>
+              <Table.HeadCell>GitHub Link</Table.HeadCell>
+              <Table.HeadCell>Demo Link</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
@@ -121,7 +173,7 @@ export default function DashProjects() {
                     {new Date(project.updatedAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/project/${project.slug}`}>
+                    <Link to={`/project/${project._id}`}>
                       <img
                         src={project.imgPath}
                         alt={project.title}
@@ -132,12 +184,33 @@ export default function DashProjects() {
                   <Table.Cell>
                     <Link
                       className="font-medium text-gray-900 dark:text-white"
-                      to={`/project/${project.slug}`}
+                      to={`/project/${project._id}`}
                     >
                       {project.title}
                     </Link>
                   </Table.Cell>
-                  <Table.Cell>{project.category}</Table.Cell>
+                  <Table.Cell>
+                    <a
+                      href={project.ghLink}
+                      className="text-blue-500 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      GitHub
+                    </a>
+                  </Table.Cell>
+                  <Table.Cell>
+                    {project.demoLink && (
+                      <a
+                        href={project.demoLink}
+                        className="text-blue-500 hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Demo
+                      </a>
+                    )}
+                  </Table.Cell>
                   <Table.Cell>
                     <span
                       onClick={() => {
@@ -197,53 +270,97 @@ export default function DashProjects() {
       >
         <Modal.Header>Add New Project</Modal.Header>
         <Modal.Body>
-          <div className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleAddProject}>
             <TextInput
-              id="title"
+              type="text"
               placeholder="Title"
-              onChange={handleChange}
-              value={newProject.title}
+              required
+              id="title"
+              value={newProject.title || ""}
+              className="flex-1"
+              onChange={(e) =>
+                setNewProject({ ...newProject, title: e.target.value })
+              }
+            />
+            <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
+              <FileInput
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+              <Button
+                type="button"
+                gradientDuoTone="purpleToBlue"
+                size="sm"
+                outline
+                onClick={handleUploadImage}
+                disabled={imageUploadProgress}
+              >
+                {imageUploadProgress ? (
+                  <div className="w-16 h-16">
+                    <CircularProgressbar
+                      value={imageUploadProgress}
+                      text={`${imageUploadProgress || 0}%`}
+                    />
+                  </div>
+                ) : (
+                  "Upload Image"
+                )}
+              </Button>
+            </div>
+            {imageUploadError && (
+              <Alert color="failure">{imageUploadError}</Alert>
+            )}
+            {newProject.imgPath && (
+              <img
+                src={newProject.imgPath}
+                alt="upload"
+                className="w-full h-72 object-cover"
+              />
+            )}
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              placeholder="Write something..."
+              className="h-72 mb-12"
+              required
+              value={newProject.description || ""}
+              onChange={handleQuillChange}
             />
             <TextInput
-              id="imgPath"
-              placeholder="Image URL"
-              onChange={handleChange}
-              value={newProject.imgPath}
-            />
-            <TextInput
-              id="category"
-              placeholder="Category"
-              onChange={handleChange}
-              value={newProject.category}
-            />
-            <textarea
-              id="description"
-              placeholder="Description"
-              rows="4"
-              onChange={handleChange}
-              value={newProject.description}
-              className="p-2 border border-gray-300 rounded-md"
-            />
-            <TextInput
-              id="ghLink"
+              type="text"
               placeholder="GitHub Link"
-              onChange={handleChange}
-              value={newProject.ghLink}
+              required
+              id="ghLink"
+              value={newProject.ghLink || ""}
+              onChange={(e) =>
+                setNewProject({ ...newProject, ghLink: e.target.value })
+              }
             />
             <TextInput
+              type="text"
+              placeholder="Demo Link (optional)"
               id="demoLink"
-              placeholder="Demo Link"
-              onChange={handleChange}
-              value={newProject.demoLink}
+              value={newProject.demoLink || ""}
+              onChange={(e) =>
+                setNewProject({ ...newProject, demoLink: e.target.value })
+              }
             />
-          </div>
+            <Button type="submit" gradientDuoTone="purpleToPink">
+              Add Project
+            </Button>
+            {addProjectError && (
+              <Alert className="mt-5" color="failure">
+                {addProjectError}
+              </Alert>
+            )}
+            {addProjectSuccess && (
+              <Alert className="mt-5" color="success">
+                {addProjectSuccess}
+              </Alert>
+            )}
+          </form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={handleAddProject}>Add Project</Button>
-          <Button color="gray" onClick={() => setShowAddModal(false)}>
-            Cancel
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );

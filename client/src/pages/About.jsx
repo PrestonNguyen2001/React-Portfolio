@@ -40,7 +40,7 @@ export default function About() {
   return (
     <motion.div
       ref={ref}
-      className="container"
+      className="container "
       initial="hidden"
       animate={controls}
     >
