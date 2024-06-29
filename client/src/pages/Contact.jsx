@@ -39,7 +39,6 @@ export default function Contact() {
     e.preventDefault();
     try {
       const res = await fetch("/api/contact/create", {
-        // Updated the endpoint here
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
 import commentRoutes from "./routes/comment.route.js";
 import timelineRoutes from "./routes/timeline.route.js";
+import contactRoute from "./routes/contact.route.js";
 import projectRoutes from "./routes/project.route.js";
 import cookieParser from "cookie-parser";
 import path from "path";
@@ -39,6 +40,7 @@ const startServer = async () => {
   app.use("/api/posts", postRoutes);
   app.use("/api/comment", commentRoutes);
   app.use("/api/projects", projectRoutes);
+  app.use("/api/contact", contactRoute);
 
   // Error handling middleware
   app.use((err, req, res, next) => {
