@@ -136,48 +136,20 @@ export default function Resume() {
               <FaBriefcase className="mr-2" /> EXPERIENCE
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
-              <strong>Front Desk Receptionist</strong>
+              <strong>Administration Assistant</strong>
               <br />
               Presley Laurent
               <br />
               2014 - Present | Gainesville, VA
             </p>
             <p className="text-gray-600 dark:text-gray-300 mt-4">
-              Managed reception area, handled customer inquiries, and provided
-              administrative support. This role developed my communication,
-              problem-solving, and organizational skills.
+              Detail-oriented Administration Assistant with proven expertise in
+              managing office operations, scheduling, and communication. Adept
+              at handling administrative tasks such as document preparation,
+              data entry, and client correspondence. Demonstrates strong
+              organizational skills and the ability to multitask effectively,
+              ensuring smooth day-to-day office functions.
             </p>
-          </motion.div>
-
-          <motion.div
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
-            variants={itemVariants}
-          >
-            <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
-              <FaLanguage className="mr-2" /> LANGUAGES
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Python - Beginner
-              <br />
-              JavaScript - Intermediate
-              <br />
-              HTML/CSS - Intermediate
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
-            variants={itemVariants}
-          >
-            <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
-              <FaHeart className="mr-2" /> PASSIONS
-            </h2>
-            <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-4">
-              <li>Technology and Programming</li>
-              <li>Creative Problem-Solving</li>
-              <li>Personal Development</li>
-              <li>Team Collaboration</li>
-            </ul>
           </motion.div>
 
           <motion.div
@@ -200,7 +172,7 @@ export default function Resume() {
             variants={itemVariants}
           >
             <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-4 flex items-center">
-              <FaListUl className="mr-2" /> STRENGTHS
+              <FaListUl className="mr-2" /> EXPERTISE
             </h2>
             <ul className="list-disc list-inside text-gray-600 dark:text-gray-300">
               <li>
