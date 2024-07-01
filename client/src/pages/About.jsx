@@ -6,7 +6,6 @@ import AboutContent from "../components/About/AboutContent";
 import Skills from "../components/About/Skills";
 import Interests from "../components/About/Interests";
 import Strengths from "../components/About/Strengths";
-import "../styles/About.css";
 
 
 const itemVariants = {
