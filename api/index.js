@@ -42,6 +42,12 @@ const startServer = async () => {
   app.use("/api/projects", projectRoutes);
   app.use("/api/contact", contactRoute);
 
+  app.use(express.static(path.join(__dirname, "/client/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+  });
+
   // Error handling middleware
   app.use((err, req, res, next) => {
     console.error(err.stack); 
