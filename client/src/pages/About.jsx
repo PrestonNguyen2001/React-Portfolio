@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import "../styles/About.css";
+import "@styles/About.css";
 import AboutContent from "../components/About/AboutContent";
 import Skills from "../components/About/Skills";
 import Interests from "../components/About/Interests";
