@@ -10,7 +10,7 @@ export default {
     extend: {
       colors: {
         dark: {
-          background: "#0d1117", // Dark background color
+          background: "black", // Dark background color
           text: "#c9d1d9", // Light text color for dark mode
           primary: "#58a6ff",
           secondary: "#1f6feb",

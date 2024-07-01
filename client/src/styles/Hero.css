@@ -14,12 +14,11 @@
   text-align: left; /* Align text to the left */
 }
 
-.hero .container {
+.hero-container {
   display: flex;
+  padding-inline: 16px;
+  padding-inline: 16px;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 20px; /* Add some padding for better spacing */
 }
 
 .hero-content {
