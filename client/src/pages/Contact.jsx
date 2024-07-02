@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Alert, Button, TextInput, Textarea } from "flowbite-react";
+import config from "../config"; // Import the config file
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -38,7 +39,8 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/contact/create", {
+      const res = await fetch(`${config.apiUrl}/contact/create`, {
+        // Use the base URL from config
         method: "POST",
         headers: {
           "Content-Type": "application/json",

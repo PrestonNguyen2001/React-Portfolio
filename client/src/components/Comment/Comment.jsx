@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Button, Textarea } from "flowbite-react";
 import PropTypes from "prop-types";
 import "../../styles/CommentSection.css";
+import config from "../../config"; // Importing configuration for API URL
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
@@ -15,7 +16,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch(`/api/user/${comment.userId}`);
+        const res = await fetch(`${config.apiUrl}/user/${comment.userId}`);
         const data = await res.json();
         if (res.ok) {
           setUser(data);
@@ -34,15 +35,18 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`/api/comment/editComment/${comment._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content: editedContent,
-        }),
-      });
+      const res = await fetch(
+        `${config.apiUrl}/comment/editComment/${comment._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: editedContent,
+          }),
+        }
+      );
       if (res.ok) {
         setIsEditing(false);
         onEdit(comment, editedContent);

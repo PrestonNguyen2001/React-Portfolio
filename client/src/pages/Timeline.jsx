@@ -8,6 +8,7 @@ import "../styles/Timeline.css";
 import educationIcon from "../assets/svg/education.svg";
 import personalIcon from "../assets/svg/personal.svg";
 import workIcon from "../assets/svg/work.svg";
+import config from "../config"; // Import the config file
 
 const Timeline = () => {
   const [timelineData, setTimelineData] = useState([]);
@@ -15,7 +16,7 @@ const Timeline = () => {
   useEffect(() => {
     const fetchTimelineData = async () => {
       try {
-        const response = await fetch("/api/timeline");
+        const response = await fetch(`${config.apiUrl}/timeline`); // Use the base URL from config
         const data = await response.json();
         setTimelineData(data);
       } catch (error) {
