@@ -1,12 +1,12 @@
-const express = require("express");
-const { verifyToken } = require("../utils/verifyUser.js");
-const {
+import express from "express";
+import { verifyToken } from "../utils/verifyUser.js";
+import {
   create,
   deletePost,
   getPosts,
   updatePost,
-} = require("../controllers/post.controller.js");
-const Post = require("../models/post.model.js");
+} from "../controllers/post.controller.js";
+import Post from "../models/post.model.js";
 
 const router = express.Router();
 
@@ -26,4 +26,4 @@ router.get("/:slug", async (req, res, next) => {
 router.delete("/:postId/:userId", verifyToken, deletePost);
 router.put("/:postId/:userId", verifyToken, updatePost);
 
-module.exports = router;
+export default router;

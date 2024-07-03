@@ -1,11 +1,12 @@
-const express = require("express");
-const {
+// api/routes/timeline.route.js
+import express from "express";
+import {
   createEvent,
   updateEvent,
   deleteEvent,
   getEvents,
-} = require("../controllers/timeline.controller.js");
-const { verifyToken } = require("../utils/verifyUser.js");
+} from "../controllers/timeline.controller.js";
+import { verifyToken } from "../utils/verifyUser.js";
 
 const router = express.Router();
 
@@ -14,4 +15,4 @@ router.put("/:id", verifyToken, updateEvent);
 router.delete("/:id", verifyToken, deleteEvent);
 router.get("/", getEvents);
 
-module.exports = router;
+export default router;

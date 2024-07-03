@@ -1,11 +1,13 @@
-const express = require("express");
-const { verifyToken } = require("../utils/verifyUser.js");
-const {
+// api/routes/project.route.js
+
+import express from "express";
+import { verifyToken } from "../utils/verifyUser.js";
+import {
   createProject,
   getProjects,
   deleteProject,
   updateProject,
-} = require("../controllers/project.controller.js");
+} from "../controllers/project.controller.js";
 
 const router = express.Router();
 
@@ -14,4 +16,4 @@ router.get("/", getProjects);
 router.delete("/:projectId/:userId", verifyToken, deleteProject);
 router.put("/:projectId/:userId", verifyToken, updateProject);
 
-module.exports = router;
+export default router;
