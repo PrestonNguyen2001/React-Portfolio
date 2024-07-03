@@ -1,7 +1,9 @@
-const Project = require("../models/project.model.js");
-const { errorHandler } = require("../utils/error.js");
+// api/controllers/project.controller.js
 
-const createProject = async (req, res, next) => {
+import Project from "../models/project.model.js";
+import { errorHandler } from "../utils/error.js";
+
+export const createProject = async (req, res, next) => {
   if (!req.user.isAdmin) {
     return next(errorHandler(403, "You are not allowed to create a project"));
   }
@@ -25,7 +27,7 @@ const createProject = async (req, res, next) => {
   }
 };
 
-const getProjects = async (req, res, next) => {
+export const getProjects = async (req, res, next) => {
   try {
     const projects = await Project.find();
     res.status(200).json({ projects });
@@ -34,7 +36,7 @@ const getProjects = async (req, res, next) => {
   }
 };
 
-const deleteProject = async (req, res, next) => {
+export const deleteProject = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(
       errorHandler(403, "You are not allowed to delete this project")
@@ -48,7 +50,7 @@ const deleteProject = async (req, res, next) => {
   }
 };
 
-const updateProject = async (req, res, next) => {
+export const updateProject = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(
       errorHandler(403, "You are not allowed to update this project")
@@ -66,11 +68,4 @@ const updateProject = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-module.exports = {
-  createProject,
-  getProjects,
-  deleteProject,
-  updateProject,
 };

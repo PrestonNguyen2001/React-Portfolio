@@ -1,11 +1,11 @@
-const Contact = require("../models/contact.model.js");
-const { errorHandler } = require("../utils/error.js");
-const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
+import Contact from "../models/contact.model.js";
+import { errorHandler } from "../utils/error.js";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const createContact = async (req, res, next) => {
+export const createContact = async (req, res, next) => {
   const { name, email, message } = req.body;
 
   if (!name || !email || !message) {
@@ -45,8 +45,4 @@ const createContact = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-module.exports = {
-  createContact,
 };

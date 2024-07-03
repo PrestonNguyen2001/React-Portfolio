@@ -2,13 +2,18 @@
   command = "npm run build"
   publish = "client/dist"
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://react-devfolio-2b1f0a2540a0.herokuapp.com/"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[[redirects]]
-  from = "/api/*"
-  to = "https://us-central1-portfolio-baf72.cloudfunctions.net/api/:splat"
-  status = 200
-  force = true

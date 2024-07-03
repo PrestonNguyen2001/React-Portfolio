@@ -1,7 +1,7 @@
-const Post = require("../models/post.model.js");
-const { errorHandler } = require("../utils/error.js");
+import Post from "../models/post.model.js";
+import { errorHandler } from "../utils/error.js";
 
-const create = async (req, res, next) => {
+export const create = async (req, res, next) => {
   if (!req.user || !req.user.isAdmin) {
     return next(errorHandler(403, "You are not allowed to create a post"));
   }
@@ -26,7 +26,7 @@ const create = async (req, res, next) => {
   }
 };
 
-const getPosts = async (req, res, next) => {
+export const getPosts = async (req, res, next) => {
   try {
     const { slug } = req.params;
     console.log("Fetching post with slug:", slug);
@@ -86,7 +86,8 @@ const getPosts = async (req, res, next) => {
   }
 };
 
-const deletePost = async (req, res, next) => {
+
+export const deletePost = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to delete this post"));
   }
@@ -98,7 +99,7 @@ const deletePost = async (req, res, next) => {
   }
 };
 
-const updatePost = async (req, res, next) => {
+export const updatePost = async (req, res, next) => {
   if (!req.user.isAdmin || req.user.id !== req.params.userId) {
     return next(errorHandler(403, "You are not allowed to update this post"));
   }
@@ -119,11 +120,4 @@ const updatePost = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-module.exports = {
-  create,
-  getPosts,
-  deletePost,
-  updatePost,
 };

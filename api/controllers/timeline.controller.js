@@ -1,7 +1,8 @@
-const Timeline = require("../models/timeline.model.js");
-const { errorHandler } = require("../utils/error.js");
+// api/controllers/timeline.controller.js
+import Timeline from "../models/timeline.model.js";
+import { errorHandler } from "../utils/error.js";
 
-const createEvent = async (req, res, next) => {
+export const createEvent = async (req, res, next) => {
   try {
     const { date, icon, location, title, content } = req.body;
 
@@ -21,7 +22,7 @@ const createEvent = async (req, res, next) => {
   }
 };
 
-const updateEvent = async (req, res, next) => {
+export const updateEvent = async (req, res, next) => {
   try {
     const updatedEvent = await Timeline.findByIdAndUpdate(
       req.params.id,
@@ -35,7 +36,7 @@ const updateEvent = async (req, res, next) => {
   }
 };
 
-const deleteEvent = async (req, res, next) => {
+export const deleteEvent = async (req, res, next) => {
   try {
     await Timeline.findByIdAndDelete(req.params.id);
     res.status(200).json("Timeline event has been deleted");
@@ -45,7 +46,7 @@ const deleteEvent = async (req, res, next) => {
   }
 };
 
-const getEvents = async (req, res, next) => {
+export const getEvents = async (req, res, next) => {
   try {
     const events = await Timeline.find();
     res.status(200).json(events);
@@ -53,11 +54,4 @@ const getEvents = async (req, res, next) => {
     console.error("Error fetching timeline events:", error);
     next(error);
   }
-};
-
-module.exports = {
-  createEvent,
-  updateEvent,
-  deleteEvent,
-  getEvents,
 };
