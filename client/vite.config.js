@@ -31,7 +31,7 @@ export default defineConfig({
         },
       },
     },
-    chunkSizeWarningLimit: 1000, // Adjust this value as needed
+    chunkSizeWarningLimit: 1000,
   },
   resolve: {
     alias: {
