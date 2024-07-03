@@ -20,7 +20,11 @@ const CommentSection = ({ postId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`/api/comment/getPostComments/${postId}`);
+        const response = await fetch(
+          `${
+            import.meta.env.VITE_API_BASE_URL
+          }/comment/getPostComments/${postId}`
+        );
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
@@ -41,17 +45,20 @@ const CommentSection = ({ postId }) => {
     }
 
     try {
-      const response = await fetch("/api/comment/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content: comment,
-          postId,
-          userId: currentUser._id,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comment/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: comment,
+            postId,
+            userId: currentUser._id,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add comment");
@@ -74,9 +81,12 @@ const CommentSection = ({ postId }) => {
     }
 
     try {
-      const response = await fetch(`/api/comment/likeComment/${commentId}`, {
-        method: "PUT",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comment/likeComment/${commentId}`,
+        {
+          method: "PUT",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to like comment");
@@ -95,15 +105,20 @@ const CommentSection = ({ postId }) => {
 
   const handleEdit = async (comment, editedContent) => {
     try {
-      const response = await fetch(`/api/comment/editComment/${comment._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content: editedContent,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comment/editComment/${
+          comment._id
+        }`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: editedContent,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to edit comment");
@@ -126,9 +141,14 @@ const CommentSection = ({ postId }) => {
     }
 
     try {
-      const response = await fetch(`/api/comment/deleteComment/${commentId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/comment/deleteComment/${commentId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to delete comment");

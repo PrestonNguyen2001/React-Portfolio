@@ -27,7 +27,15 @@ export default function DashTimeline() {
     const fetchEvents = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/timeline`
+          `${import.meta.env.VITE_API_BASE_URL}/timeline`,
+          {
+            headers: {
+              Authorization: `Bearer ${document.cookie.replace(
+                /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+                "$1"
+              )}`,
+            },
+          }
         );
         const data = await res.json();
         if (res.ok) {

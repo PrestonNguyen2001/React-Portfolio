@@ -24,3 +24,5 @@ devicon-master
 *.sln
 *.sw?
 .env
+
+DOCUMENTATION.md

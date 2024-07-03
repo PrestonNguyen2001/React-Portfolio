@@ -40,7 +40,15 @@ export default function DashProjects() {
     const fetchProjects = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/projects`
+          `${import.meta.env.VITE_API_BASE_URL}/projects`,
+          {
+            headers: {
+              Authorization: `Bearer ${document.cookie.replace(
+                /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+                "$1"
+              )}`,
+            },
+          }
         );
         const data = await res.json();
         if (res.ok) {
@@ -64,6 +72,12 @@ export default function DashProjects() {
         }`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${document.cookie.replace(
+              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+              "$1"
+            )}`,
+          },
         }
       );
       const data = await res.json();
@@ -130,6 +144,10 @@ export default function DashProjects() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${document.cookie.replace(
+              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+              "$1"
+            )}`,
           },
           body: JSON.stringify({ ...newProject, userId: currentUser._id }),
         }
