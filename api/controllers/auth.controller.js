@@ -3,6 +3,22 @@ import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
+const createToken = (user) => {
+  return jwt.sign(
+    { id: user._id, isAdmin: user.isAdmin },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" } // Token expiry set to 1 hour for better security
+  );
+};
+
+const setCookie = (res, token) => {
+  res.cookie("access_token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Secure in production
+    sameSite: "strict", // Protects against CSRF
+  });
+};
+
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
@@ -38,20 +54,11 @@ export const signin = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(400, "Invalid Password!"));
     }
-    const token = jwt.sign(
-      { id: validUser._id, isAdmin: validUser.isAdmin },
-      process.env.JWT_SECRET
-    );
+    const token = createToken(validUser);
+    const { password, ...rest } = validUser._doc;
 
-    const { password: pass, ...rest } = validUser._doc;
-
-    res
-      .status(200)
-      .cookie("access_token", token, {
-        httpOnly: true,
-        sameSite: "strict", // Added for better security
-      })
-      .json(rest);
+    setCookie(res, token);
+    res.status(200).json(rest);
   } catch (error) {
     next(error);
   }
@@ -62,18 +69,11 @@ export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (user) {
-      const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
-        process.env.JWT_SECRET
-      );
+      const token = createToken(user);
       const { password, ...rest } = user._doc;
-      res
-        .status(200)
-        .cookie("access_token", token, {
-          httpOnly: true,
-          sameSite: "strict", // Added for better security
-        })
-        .json(rest);
+
+      setCookie(res, token);
+      res.status(200).json(rest);
     } else {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
@@ -88,18 +88,11 @@ export const google = async (req, res, next) => {
         profilePicture: googlePhotoUrl,
       });
       await newUser.save();
-      const token = jwt.sign(
-        { id: newUser._id, isAdmin: newUser.isAdmin },
-        process.env.JWT_SECRET
-      );
+      const token = createToken(newUser);
       const { password, ...rest } = newUser._doc;
-      res
-        .status(200)
-        .cookie("access_token", token, {
-          httpOnly: true,
-          sameSite: "strict", // Added for better security
-        })
-        .json(rest);
+
+      setCookie(res, token);
+      res.status(200).json(rest);
     }
   } catch (error) {
     next(error);
