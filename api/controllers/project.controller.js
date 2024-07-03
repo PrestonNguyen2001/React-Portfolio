@@ -1,5 +1,3 @@
-// api/controllers/project.controller.js
-
 import Project from "../models/project.model.js";
 import { errorHandler } from "../utils/error.js";
 

@@ -1,4 +1,3 @@
-// api/controllers/timeline.controller.js
 import Timeline from "../models/timeline.model.js";
 import { errorHandler } from "../utils/error.js";
 

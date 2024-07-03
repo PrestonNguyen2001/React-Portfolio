@@ -12,13 +12,11 @@ export const createContact = async (req, res, next) => {
     return next(errorHandler(400, "Please provide all required fields"));
   }
 
-  // Save contact info to the database
   const newContact = new Contact({ name, email, message });
 
   try {
     await newContact.save();
 
-    // Send email notification
     let transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
