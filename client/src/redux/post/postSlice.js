@@ -4,7 +4,9 @@ export const getPosts = createAsyncThunk(
   "post/getPosts",
   async ({ startIndex, limit, order }) => {
     const response = await fetch(
-      `/api/posts?startIndex=${startIndex}&limit=${limit}&order=${order}`
+      `${
+        import.meta.env.VITE_API_BASE_URL
+      }/posts?startIndex=${startIndex}&limit=${limit}&order=${order}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch posts");
