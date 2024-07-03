@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home/Home";
-import About from "./components/About/About";
-import SignIn from "./components/SignIn/SignIn";
-import SignUp from "./components/SignUp/SignUp";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Portfolio from "./components/Portfolio/Portfolio";
-import Timeline from "./components/Timeline/Timeline";
-import Blog from "./components/Blog/Blog";
-import Contact from "./components/Contact/Contact";
-import Resume from "./components/Resume/Resume";
-import CreatePost from "./components/Post/CreatePost";
-import Post from "./components/Post/Post";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import PrivateRoute from "./components/Dashboard/PrivateRoute";
-import OnlyAdminPrivateRoute from "./components/Dashboard/OnlyAdminPrivateRoute";
-import Preloader from "./components/Preloader/Preloader";
-import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
-import ScrollToTopButton from "./buttons/ScrollToTopButton";
+import {
+  Home,
+  About,
+  SignIn,
+  SignUp,
+  Dashboard,
+  Portfolio,
+  Timeline,
+  Blog,
+  Contact,
+  Resume,
+  CreatePost,
+  Post,
+  Header,
+  FooterCom as Footer,
+  PrivateRoute,
+  OnlyAdminPrivateRoute,
+  Preloader,
+  ScrollToTop,
+} from "./components";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -108,10 +109,9 @@ export default function App() {
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/posts/:slug" element={<Post />} />{" "}
+            <Route path="/posts/:slug" element={<Post />} />
           </Routes>
           {isLoaded && heroLoaded && <Footer />}
-          <ScrollToTopButton />
         </BrowserRouter>
       </div>
     </>
