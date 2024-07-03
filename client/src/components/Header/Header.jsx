@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../../redux/theme/themeSlice";
 import { signoutSuccess } from "../../redux/user/userSlice";
 import { motion } from "framer-motion";
-import GlowingButton from "../../buttons/GlowingButton";
+import GlowingButton from "./GlowingButton";
 import "../../styles/Glow.css";
 import "../../styles/Header.css";
 
@@ -73,9 +73,13 @@ export default function Header({ activeTab, setActiveTab }) {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch("/api/user/signout", {
-        method: "POST",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/signout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
@@ -86,6 +90,7 @@ export default function Header({ activeTab, setActiveTab }) {
       console.log(error.message);
     }
   };
+
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
@@ -116,7 +121,11 @@ export default function Header({ activeTab, setActiveTab }) {
 
   return (
     <div className="header-wrapper">
-      <div className={`header ${isNavbarOpen ? "active" : ""}`}>
+      <div
+        className={`header bg-slate-900 dark:bg-black ${
+          isNavbarOpen ? "active" : ""
+        }`}
+      >
         <motion.div
           variants={container}
           initial="hide"
@@ -133,7 +142,11 @@ export default function Header({ activeTab, setActiveTab }) {
             </span>
             Portfolio
           </Link>
-          <div className={`navbar ${isNavbarOpen ? "open" : ""}`}>
+          <div
+            className={`navbar bg-slate-900 dark:bg-black ${
+              isNavbarOpen ? "open" : ""
+            }`}
+          >
             <button className="navbar-close" onClick={toggleNavbar}>
               <FaTimes />
             </button>

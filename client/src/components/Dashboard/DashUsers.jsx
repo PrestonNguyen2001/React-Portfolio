@@ -13,7 +13,9 @@ export default function DashUsers() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/user/getusers`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/user/getusers`
+        );
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -33,7 +35,11 @@ export default function DashUsers() {
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
-      const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
+      const res = await fetch(
+        `${
+          import.meta.env.VITE_API_BASE_URL
+        }/user/getusers?startIndex=${startIndex}`
+      );
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
@@ -48,9 +54,12 @@ export default function DashUsers() {
 
   const handleDeleteUser = async () => {
     try {
-      const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/delete/${userIdToDelete}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
@@ -116,7 +125,7 @@ export default function DashUsers() {
           {showMore && (
             <button
               onClick={handleShowMore}
-              className="w-full text-teal-500 self-center text-sm py-7"
+              className="w-full text-teal-500 self-center"
             >
               Show more
             </button>

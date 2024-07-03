@@ -32,7 +32,7 @@ export default function Hero({ setHeroLoaded }) {
 
   return (
     <section className="section hero text-center animate-fadeIn" id="home">
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="absolute inset-0 bg-zinc-50 dark:bg-black opacity-50"></div>
       <div className="hero-container">
         <div className="hero-content">
           <h1 className="h1 title animate-slideInLeft">Preston Nguyen</h1>

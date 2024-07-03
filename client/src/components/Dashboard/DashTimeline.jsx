@@ -26,7 +26,9 @@ export default function DashTimeline() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch("/api/timeline");
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/timeline`
+        );
         const data = await res.json();
         if (res.ok) {
           setEvents(data);
@@ -43,15 +45,18 @@ export default function DashTimeline() {
   const handleDeleteEvent = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(`/api/timeline/${eventIdToDelete}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${document.cookie.replace(
-            /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-            "$1"
-          )}`,
-        },
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/timeline/${eventIdToDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${document.cookie.replace(
+              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+              "$1"
+            )}`,
+          },
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         console.error(data.message);
@@ -80,17 +85,20 @@ export default function DashTimeline() {
       return;
     }
     try {
-      const res = await fetch(`/api/timeline/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${document.cookie.replace(
-            /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-            "$1"
-          )}`,
-        },
-        body: JSON.stringify(newEvent),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/timeline/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${document.cookie.replace(
+              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+              "$1"
+            )}`,
+          },
+          body: JSON.stringify(newEvent),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setAddEventError(data.message);
@@ -119,17 +127,20 @@ export default function DashTimeline() {
       return;
     }
     try {
-      const res = await fetch(`/api/timeline/${eventToEdit._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${document.cookie.replace(
-            /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-            "$1"
-          )}`,
-        },
-        body: JSON.stringify(eventToEdit),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/timeline/${eventToEdit._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${document.cookie.replace(
+              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
+              "$1"
+            )}`,
+          },
+          body: JSON.stringify(eventToEdit),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setEditEventError(data.message);
@@ -229,7 +240,10 @@ export default function DashTimeline() {
         <p>You have no events yet!</p>
       )}
       {currentUser.isAdmin && (
-        <Button className="mb-4 w-full mt-2" onClick={() => setShowAddModal(true)}>
+        <Button
+          className="mb-4 w-full mt-2"
+          onClick={() => setShowAddModal(true)}
+        >
           Add Event
         </Button>
       )}

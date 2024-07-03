@@ -39,9 +39,10 @@ export default function DashProjects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("/api/projects");
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/projects`
+        );
         const data = await res.json();
-        console.log(data); // Log the data to check the response format
         if (res.ok) {
           setProjects(data.projects || []);
         }
@@ -58,7 +59,9 @@ export default function DashProjects() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/projects/${projectIdToDelete}/${currentUser._id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/projects/${projectIdToDelete}/${
+          currentUser._id
+        }`,
         {
           method: "DELETE",
         }
@@ -121,13 +124,16 @@ export default function DashProjects() {
       return;
     }
     try {
-      const res = await fetch(`/api/projects/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...newProject, userId: currentUser._id }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/projects/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...newProject, userId: currentUser._id }),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setAddProjectError(data.message);

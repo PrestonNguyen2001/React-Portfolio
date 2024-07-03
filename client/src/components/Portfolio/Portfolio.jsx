@@ -38,7 +38,9 @@ export default function Portfolio() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("/api/projects");
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/projects`
+        );
         const data = await res.json();
         if (res.ok) {
           setProjects(data.projects || []); // Ensure projects is an array
@@ -57,7 +59,7 @@ export default function Portfolio() {
   return (
     <motion.div
       ref={ref}
-      className="container min-h-screen flex flex-col items-center justify-center bg-light-background dark:bg-black p-10"
+      className="container min-h-screen flex flex-col items-center justify-center  p-10"
       initial="hidden"
       animate={controls}
       variants={containerVariants}

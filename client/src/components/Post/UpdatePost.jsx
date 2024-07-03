@@ -28,7 +28,9 @@ export default function UpdatePost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/api/posts/${postId}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
@@ -76,13 +78,18 @@ export default function UpdatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/posts/${postId}/${currentUser._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
+          currentUser._id
+        }`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);

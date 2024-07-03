@@ -8,9 +8,9 @@ import DashPosts from "./DashPosts";
 import DashUsers from "./DashUsers";
 import DashComments from "./DashComments";
 import DashboardComp from "./DashboardComp";
-import DashProjects from "./DashProjects"; // Import the new component
+import DashProjects from "./DashProjects";
 import DashTimeline from "./DashTimeline";
-import "../../styles/Dashboard.css"; // Import the CSS file
+import "../../styles/Dashboard.css"; 
 
 export default function Dashboard() {
   const location = useLocation();

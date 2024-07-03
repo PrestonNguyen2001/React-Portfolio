@@ -66,14 +66,17 @@ export default function CreatePost() {
       return;
     }
     try {
-      const res = await fetch(`/api/posts/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Ensure cookies are sent with the request
-        body: JSON.stringify({ ...formData, userId: currentUser._id }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // Ensure cookies are sent with the request
+          body: JSON.stringify({ ...formData, userId: currentUser._id }),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);

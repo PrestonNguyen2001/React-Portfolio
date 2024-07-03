@@ -12,7 +12,9 @@ const Post = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/api/posts/${slug}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/posts/${slug}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
