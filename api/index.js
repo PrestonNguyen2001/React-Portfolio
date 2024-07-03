@@ -1,82 +1,100 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import cors from "cors";
-import userRoutes from "./routes/user.route.js";
-import authRoutes from "./routes/auth.route.js";
-import postRoutes from "./routes/post.route.js";
-import commentRoutes from "./routes/comment.route.js";
-import timelineRoutes from "./routes/timeline.route.js";
-import contactRoute from "./routes/contact.route.js";
-import projectRoutes from "./routes/project.route.js";
-import cookieParser from "cookie-parser";
-import path from "path";
+import User from "../models/user.model.js";
+import bcryptjs from "bcryptjs";
+import { errorHandler } from "../utils/error.js";
+import jwt from "jsonwebtoken";
 
-dotenv.config();
-
-const startServer = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("Connected to MongoDB!");
-  } catch (err) {
-    console.error("Failed to connect to MongoDB:", err);
-    process.exit(1);
-  }
-
-  const __dirname = path.resolve();
-  const app = express();
-
-  // Configure CORS
-  app.use(
-    cors({
-      origin: "https://preston-devfolio.netlify.app",
-      credentials: true,
-    })
+const createToken = (user) => {
+  return jwt.sign(
+    { id: user._id, isAdmin: user.isAdmin },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" } // Token expiry set to 1 hour for better security
   );
+};
 
-  app.use(express.json());
-  app.use(cookieParser());
-
-  // Add security headers
-  app.use((req, res, next) => {
-    res.header("Cross-Origin-Opener-Policy", "same-origin");
-    res.header("Cross-Origin-Embedder-Policy", "require-corp");
-    next();
-  });
-
-  app.use("/api/user", userRoutes);
-  app.use("/api/auth", authRoutes);
-  app.use("/api/timeline", timelineRoutes);
-  app.use("/api/posts", postRoutes);
-  app.use("/api/comment", commentRoutes);
-  app.use("/api/projects", projectRoutes);
-  app.use("/api/contact", contactRoute);
-
-  app.use(express.static(path.join(__dirname, "/client/dist")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-  });
-
-  // Error handling middleware
-  app.use((err, req, res, next) => {
-    console.error(err.stack);
-    const statusCode = err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-    res.status(statusCode).json({
-      success: false,
-      statusCode,
-      message,
-    });
-  });
-
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}!`);
+const setCookie = (res, token) => {
+  res.cookie("access_token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Secure in production
+    sameSite: "strict", // Protects against CSRF
   });
 };
 
-startServer();
+export const signup = async (req, res, next) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return next(errorHandler(400, "All fields are required!"));
+  }
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const newUser = new User({
+    username,
+    email,
+    password: hashedPassword,
+  });
+  try {
+    await newUser.save();
+    res.json("Signup successful");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const signin = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(errorHandler(400, "All fields are required!"));
+  }
+
+  try {
+    const validUser = await User.findOne({ email });
+    if (!validUser) {
+      return next(errorHandler(404, "User Not Found!"));
+    }
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if (!validPassword) {
+      return next(errorHandler(400, "Invalid Password!"));
+    }
+    const token = createToken(validUser);
+    const { password, ...rest } = validUser._doc;
+
+    setCookie(res, token);
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const google = async (req, res, next) => {
+  const { name, email, googlePhotoUrl } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = createToken(user);
+      const { password, ...rest } = user._doc;
+
+      setCookie(res, token);
+      res.status(200).json(rest);
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const newUser = new User({
+        username:
+          name.toLowerCase().split(" ").join("") +
+          Math.random().toString(9).slice(-4),
+        email,
+        password: hashedPassword,
+        profilePicture: googlePhotoUrl,
+      });
+      await newUser.save();
+      const token = createToken(newUser);
+      const { password, ...rest } = newUser._doc;
+
+      setCookie(res, token);
+      res.status(200).json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
