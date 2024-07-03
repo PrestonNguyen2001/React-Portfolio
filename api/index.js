@@ -1,16 +1,16 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const userRoutes = require("./routes/user.route.js");
-const authRoutes = require("./routes/auth.route.js");
-const postRoutes = require("./routes/post.route.js");
-const commentRoutes = require("./routes/comment.route.js");
-const timelineRoutes = require("./routes/timeline.route.js");
-const contactRoute = require("./routes/contact.route.js");
-const projectRoutes = require("./routes/project.route.js");
-const cookieParser = require("cookie-parser");
-const path = require("path");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import userRoutes from "./routes/user.route.js";
+import authRoutes from "./routes/auth.route.js";
+import postRoutes from "./routes/post.route.js";
+import commentRoutes from "./routes/comment.route.js";
+import timelineRoutes from "./routes/timeline.route.js";
+import contactRoute from "./routes/contact.route.js";
+import projectRoutes from "./routes/project.route.js";
+import cookieParser from "cookie-parser";
+import path from "path";
 
 dotenv.config();
 
@@ -29,9 +29,23 @@ const startServer = async () => {
   const __dirname = path.resolve();
   const app = express();
 
+  // Configure CORS
+  app.use(
+    cors({
+      origin: "https://preston-devfolio.netlify.app",
+      credentials: true,
+    })
+  );
+
   app.use(express.json());
   app.use(cookieParser());
-  app.use(cors());
+
+  // Add security headers
+  app.use((req, res, next) => {
+    res.header("Cross-Origin-Opener-Policy", "same-origin");
+    res.header("Cross-Origin-Embedder-Policy", "require-corp");
+    next();
+  });
 
   app.use("/api/user", userRoutes);
   app.use("/api/auth", authRoutes);
