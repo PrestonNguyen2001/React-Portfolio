@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Hero from "../components/Hero/Hero";
-import About from "./About";
-import Portfolio from "./Portfolio";
-import Timeline from "./Timeline";
-import Resume from "./Resume";
-import Blog from "./Blog";
-import Contact from "./Contact";
+import Hero from "../Hero/Hero";
+import About from "../About/About";
+import Portfolio from "../Portfolio/Portfolio";
+import Timeline from "../Timeline/Timeline";
+import Resume from "../Resume/Resume";
+import Blog from "../Blog/Blog";
+import Contact from "../Contact/Contact";
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 50 },

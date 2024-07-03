@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import ProjectCard from "../components/Portfolio/ProjectCard"; // Adjust the path according to your folder structure
+import ProjectCard from "./ProjectCard"; // Adjust the path according to your folder structure
 
 const containerVariants = {
   hidden: { opacity: 0 },

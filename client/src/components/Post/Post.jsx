@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CommentSection from "../components/Comment/CommentSection";
-import "../styles/Post.css";
+import CommentSection from "../Comment/CommentSection";
+import "../../styles/Post.css";
 
 const Post = () => {
   const { slug } = useParams();

@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import "@styles/About.css";
-import AboutContent from "../components/About/AboutContent";
-import Skills from "../components/About/Skills";
-import Interests from "../components/About/Interests";
-import Strengths from "../components/About/Strengths";
-
+import AboutContent from "./AboutContent";
+import Skills from "./Skills";
+import Interests from "./Interests";
+import Strengths from "./Strengths";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },

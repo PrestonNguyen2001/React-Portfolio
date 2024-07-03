@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert, Button, TextInput, Textarea } from "flowbite-react";
-import config from "../config"; // Import the config file
+import config from "../../config"; // Import the config file
 
 export default function Contact() {
   const [name, setName] = useState("");

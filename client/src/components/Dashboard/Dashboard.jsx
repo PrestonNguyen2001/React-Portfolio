@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import DashSidebar from "../components/Dashboard/DashSidebar";
-import DashProfile from "../components/Dashboard/DashProfile";
-import DashPosts from "../components/Dashboard/DashPosts";
-import DashUsers from "../components/Dashboard/DashUsers";
-import DashComments from "../components/Dashboard/DashComments";
-import DashboardComp from "../components/Dashboard/DashboardComp";
-import DashProjects from "../components/Dashboard/DashProjects"; // Import the new component
-import DashTimeline from "../components/Dashboard/DashTimeline";
-import "../styles/Dashboard.css"; // Import the CSS file
+import DashSidebar from "./DashSidebar";
+import DashProfile from "./DashProfile";
+import DashPosts from "./DashPosts";
+import DashUsers from "./DashUsers";
+import DashComments from "./DashComments";
+import DashboardComp from "./DashboardComp";
+import DashProjects from "./DashProjects"; // Import the new component
+import DashTimeline from "./DashTimeline";
+import "../../styles/Dashboard.css"; // Import the CSS file
 
 export default function Dashboard() {
   const location = useLocation();
