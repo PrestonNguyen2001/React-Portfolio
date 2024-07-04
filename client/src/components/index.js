@@ -21,8 +21,8 @@ import Timeline from "./Timeline/Timeline";
 import Type from "./Type/Type";
 import CreatePost from "./BlogPost/CreatePost";
 import UpdatePost from "./BlogPost/UpdatePost";
-import OnlyAdminPrivateRoute from "./PrivateRoute/OnlyAdminPrivateRoute";
-import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import OnlyAdminPrivateRoute from "./Routes/OnlyAdminPrivateRoute";
+import PrivateRoute from "./Routes/PrivateRoute";
 
 export {
   About,
