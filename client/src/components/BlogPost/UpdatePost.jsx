@@ -20,7 +20,7 @@ export default function UpdatePost() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-  const { postId } = useParams();
+  const { postId } = useParams(); // Ensure postId is obtained here
 
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
@@ -28,7 +28,7 @@ export default function UpdatePost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        console.log("Fetching post with ID:", postId); // Log postId being fetched
+        console.log("Fetching post with ID:", postId);
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`
         );
@@ -36,10 +36,10 @@ export default function UpdatePost() {
           throw new Error("Failed to fetch post");
         }
         const data = await response.json();
-        console.log("Fetched post data:", data); // Log fetched data
+        console.log("Fetched post data:", data);
         setFormData(data.post);
       } catch (error) {
-        console.error("Error fetching post:", error); // Log error
+        console.error("Error fetching post:", error);
         setPublishError(error.message);
       }
     };
@@ -65,13 +65,13 @@ export default function UpdatePost() {
         setImageUploadProgress(progress.toFixed(0));
       },
       (error) => {
-        console.error("Error during image upload:", error); // Log error
+        console.error("Error during image upload:", error);
         setImageUploadError("Image upload failed");
         setImageUploadProgress(null);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("Image uploaded successfully, URL:", downloadURL); // Log download URL
+          console.log("Image uploaded successfully, URL:", downloadURL);
           setImageUploadProgress(null);
           setImageUploadError(null);
           setFormData({ ...formData, image: downloadURL });
@@ -86,11 +86,8 @@ export default function UpdatePost() {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        console.error("No token found, redirecting to login");
-        navigate("/sign-in"); // Redirect to login if no token is found
-        return;
+        throw new Error("No token found in local storage");
       }
-      console.log("Token retrieved from localStorage:", token);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
           currentUser._id
@@ -104,9 +101,7 @@ export default function UpdatePost() {
           body: JSON.stringify(formData),
         }
       );
-      console.log("Fetch response status:", res.status);
       const data = await res.json();
-      console.log("Fetch response data:", data);
       if (!res.ok) {
         console.error("Error updating post:", data.message);
         setPublishError(data.message);
@@ -119,7 +114,6 @@ export default function UpdatePost() {
       setPublishError("Something went wrong");
     }
   };
-
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">

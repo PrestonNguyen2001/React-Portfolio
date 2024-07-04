@@ -62,39 +62,33 @@ export default function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setPublishError(null);
-    setPublishSuccess(null);
-    if (!formData.title || !formData.content) {
-      setPublishError("Title and content are required");
-      return;
-    }
+    console.log("Submitting updated post data:", formData);
     try {
-      console.log("Submitting post data:", formData); // Log form data
-      const token = localStorage.getItem("token"); // Get token from localStorage or Redux
+      const token = localStorage.getItem("token");
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
+        `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
+          currentUser._id
+        }`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Include the token in the headers
+            Authorization: `Bearer ${token}`,
           },
-          credentials: "include", // Ensure cookies are sent with the request
-          body: JSON.stringify({ ...formData, userId: currentUser._id }),
+          body: JSON.stringify(formData),
         }
       );
       const data = await res.json();
       if (!res.ok) {
-        console.error("Post creation error:", data.message); // Log error message
+        console.error("Error updating post:", data.message);
         setPublishError(data.message);
-      } else {
-        console.log("Post created successfully:", data); // Log success message
-        setPublishSuccess("Post created successfully");
-        navigate("/blogs");
+        return;
       }
+      console.log("Post updated successfully, new slug:", data.slug);
+      navigate(`/posts/${data.slug}`);
     } catch (error) {
-      console.error("Error during post creation:", error); // Log catch error
-      setPublishError(error.message);
+      console.error("Something went wrong during post update:", error);
+      setPublishError("Something went wrong");
     }
   };
 

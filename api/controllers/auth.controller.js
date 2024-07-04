@@ -54,33 +54,25 @@ export const signin = async (req, res, next) => {
   }
 
   try {
-    const validUser = await User.findOne({ email }).lean();
-    if (!validUser) {
+    const user = await User.findOne({ email }).lean();
+    if (!user) {
       console.log("User not found:", email);
       return next(errorHandler(404, "User Not Found!"));
     }
 
     console.log("User found:", validUser);
 
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
-    if (!validPassword) {
-      console.log("Invalid password for user:", email);
-      return next(errorHandler(400, "Invalid Password!"));
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return next(errorHandler(400, "Invalid password"));
     }
 
-    console.log("Password is valid for user:", email);
-
-    const token = createToken(validUser);
-    const { password, ...rest } = validUser;
-
-    setCookie(res, token);
-    res.status(200).json(rest);
+    const token = createToken(user);
+    res.status(200).json({ user, token });
   } catch (error) {
-    console.log("Error during sign-in:", error);
     next(error);
   }
 };
-
 export const google = async (req, res, next) => {
   const { name, email, googlePhotoUrl } = req.body;
   console.log("Google sign-in request data:", { name, email, googlePhotoUrl });

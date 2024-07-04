@@ -17,7 +17,8 @@ const userSlice = createSlice({
     },
     signInSuccess: (state, action) => {
       console.log("Sign in success", action.payload);
-      state.currentUser = action.payload;
+       state.currentUser = action.payload.user;
+       localStorage.setItem("token", action.payload.token);
       state.loading = false;
       state.error = null;
     },
@@ -60,7 +61,8 @@ const userSlice = createSlice({
     },
     signoutSuccess: (state) => {
       console.log("Sign out success");
-      state.currentUser = null;
+     state.currentUser = null;
+     localStorage.removeItem("token"); 
       state.error = null;
       state.loading = false;
     },
