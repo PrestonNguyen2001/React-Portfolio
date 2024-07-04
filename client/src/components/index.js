@@ -10,7 +10,7 @@ import Hero from "./Hero/Hero";
 import Home from "./Home/Home";
 import OAuth from "./OAuth/OAuth";
 import Portfolio from "./Portfolio/Portfolio";
-import Post from "./Post/Post";
+import Post from "./BlogPost/Post";
 import Preloader from "./Preloader/Preloader";
 import Resume from "./Resume/Resume";
 import ScrollToTop from "./ScrollToTop/ScrollToTop";

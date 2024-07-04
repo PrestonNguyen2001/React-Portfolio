@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "./error.js";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.cookies.access_token;
-  console.log("Token from cookies:", token); // Log the token received from cookies
+  const token = req.headers.authorization?.split(" ")[1]; // Get token from Authorization header
+  console.log("Token from headers:", token); // Log the token received from headers
   if (!token) {
     console.log("No token found");
     return next(errorHandler(401, "You are not authenticated"));

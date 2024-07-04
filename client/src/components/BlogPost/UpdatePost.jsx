@@ -84,6 +84,7 @@ export default function UpdatePost() {
     e.preventDefault();
     console.log("Submitting updated post data:", formData); // Log formData being submitted
     try {
+      const token = localStorage.getItem("token"); // Get token from localStorage or Redux
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
           currentUser._id
@@ -92,6 +93,7 @@ export default function UpdatePost() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the headers
           },
           body: JSON.stringify(formData),
         }

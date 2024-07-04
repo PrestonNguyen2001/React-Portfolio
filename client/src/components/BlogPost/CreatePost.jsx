@@ -70,12 +70,14 @@ export default function CreatePost() {
     }
     try {
       console.log("Submitting post data:", formData); // Log form data
+      const token = localStorage.getItem("token"); // Get token from localStorage or Redux
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include the token in the headers
           },
           credentials: "include", // Ensure cookies are sent with the request
           body: JSON.stringify({ ...formData, userId: currentUser._id }),
