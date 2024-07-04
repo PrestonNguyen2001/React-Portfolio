@@ -38,6 +38,8 @@ export default function DashProjects() {
 
   useEffect(() => {
     const fetchProjects = async () => {
+       setLoading(true);
+       setError("");
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/projects`,

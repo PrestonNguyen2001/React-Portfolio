@@ -54,30 +54,24 @@ export const signin = async (req, res, next) => {
   }
 
   try {
-    const validUser = await User.findOne({ email }).lean();
-    if (!validUser) {
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
       console.log("User not found:", email);
       return next(errorHandler(404, "User Not Found!"));
     }
 
-    console.log("User found:", validUser);
+    console.log("User found:", user);
 
-    // Ensure validUser.password is defined before using it
-    if (!validUser.password) {
-      console.log("Password field not found for user:", email);
-      return next(errorHandler(500, "User password not found"));
-    }
-
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
-    if (!validPassword) {
+    const isPasswordValid = bcryptjs.compareSync(password, user.password);
+    if (!isPasswordValid) {
       console.log("Invalid password for user:", email);
       return next(errorHandler(400, "Invalid Password!"));
     }
 
     console.log("Password is valid for user:", email);
 
-    const token = createToken(validUser);
-    const { password, ...rest } = validUser;
+    const token = createToken(user);
+    const { password, ...rest } = user.toObject();
 
     setCookie(res, token);
     res.status(200).json(rest);
@@ -86,7 +80,6 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const google = async (req, res, next) => {
   const { name, email, googlePhotoUrl } = req.body;

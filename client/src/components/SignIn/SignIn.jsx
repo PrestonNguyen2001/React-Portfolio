@@ -8,6 +8,7 @@ import {
   signInFailure,
 } from "../../redux/user/userSlice";
 import OAuth from "../OAuth/OAuth";
+import { saveToken } from "../../utils/authUtils"; 
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -47,6 +48,7 @@ export default function SignIn() {
       }
 
       if (res.ok) {
+        saveToken(data.token);
         dispatch(signInSuccess(data));
         console.log("Sign-in successful:", data);
         navigate("/");

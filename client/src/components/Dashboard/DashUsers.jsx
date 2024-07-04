@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { getToken } from "../../utils/authUtils";
 
 export default function DashUsers() {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,7 +19,7 @@ export default function DashUsers() {
       setLoading(true);
       setError("");
       try {
-        const token = localStorage.getItem("token");
+        const token = getToken();
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/user/getusers`,
           {
@@ -52,7 +53,7 @@ export default function DashUsers() {
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(
         `${
           import.meta.env.VITE_API_BASE_URL
@@ -83,7 +84,7 @@ export default function DashUsers() {
     setLoading(true);
     setError("");
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/user/delete/${userIdToDelete}`,
         {
