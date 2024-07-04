@@ -30,7 +30,6 @@ const startServer = async () => {
   const __dirname = path.resolve();
   const app = express();
 
-  // Configure CORS
   const allowedOrigins = [
     "https://preston-devfolio.netlify.app",
     "http://localhost:5173",
@@ -39,7 +38,6 @@ const startServer = async () => {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
           const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
@@ -55,7 +53,6 @@ const startServer = async () => {
   app.use(express.json());
   app.use(cookieParser());
 
-  // Add security headers
   app.use((req, res, next) => {
     res.header("Cross-Origin-Opener-Policy", "same-origin");
     res.header("Cross-Origin-Embedder-Policy", "require-corp");
@@ -77,7 +74,6 @@ const startServer = async () => {
     res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
   });
 
-  // Error handling middleware
   app.use((err, req, res, next) => {
     console.error("Error stack:", err.stack);
     const statusCode = err.statusCode || 500;

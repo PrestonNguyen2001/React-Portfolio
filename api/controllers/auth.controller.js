@@ -7,18 +7,18 @@ const createToken = (user) => {
   const token = jwt.sign(
     { id: user._id, isAdmin: user.isAdmin },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" } // Token expiry set to 1 hour for better security
+    { expiresIn: "1h" }
   );
-  console.log("Generated token:", token); // Log token for debugging
+  console.log("Generated token:", token);
   return token;
 };
 
 const setCookie = (res, token) => {
   const isProduction = process.env.NODE_ENV === "production";
-  console.log("Setting token:", token); // Log token for debugging
+  console.log("Setting token:", token);
   res.cookie("access_token", token, {
     httpOnly: true,
-    secure: isProduction, // Ensure this is true in production
+    secure: isProduction,
     sameSite: isProduction ? "None" : "Lax",
   });
 };
@@ -54,7 +54,7 @@ export const signin = async (req, res, next) => {
   }
 
   try {
-    const validUser = await User.findOne({ email }).lean(); // Use lean for a plain JavaScript object
+    const validUser = await User.findOne({ email }).lean();
     if (!validUser) {
       console.log("User not found:", email);
       return next(errorHandler(404, "User Not Found!"));
@@ -85,12 +85,11 @@ export const google = async (req, res, next) => {
   const { name, email, googlePhotoUrl } = req.body;
   console.log("Google sign-in request data:", { name, email, googlePhotoUrl });
   try {
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (user) {
       console.log("User already exists:", user);
       const token = createToken(user);
       const { password, ...rest } = user._doc;
-
       setCookie(res, token);
       res.status(200).json(rest);
     } else {
@@ -111,7 +110,6 @@ export const google = async (req, res, next) => {
       await newUser.save();
       const token = createToken(newUser);
       const { password, ...rest } = newUser._doc;
-
       setCookie(res, token);
       res.status(200).json(rest);
     }
