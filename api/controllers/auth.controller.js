@@ -15,7 +15,7 @@ const setCookie = (res, token) => {
   res.cookie("access_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production", // Secure in production
-    sameSite: "strict", // Protects against CSRF
+    sameSite: "None", // Set to None for cross-site cookies
   });
 };
 
