@@ -32,7 +32,7 @@ export default function SignIn() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-          credentials: "include", // Include credentials in the request
+          credentials: "include", // Ensure credentials are included
         }
       );
       const data = await res.json();

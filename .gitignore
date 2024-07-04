@@ -26,3 +26,5 @@ devicon-master
 .env
 
 DOCUMENTATION.md
+# Local Netlify folder
+.netlify

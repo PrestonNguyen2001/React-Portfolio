@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import postRoutes from "./routes/post.route.js";
@@ -9,7 +10,6 @@ import commentRoutes from "./routes/comment.route.js";
 import timelineRoutes from "./routes/timeline.route.js";
 import contactRoute from "./routes/contact.route.js";
 import projectRoutes from "./routes/project.route.js";
-import cookieParser from "cookie-parser";
 import path from "path";
 
 dotenv.config();
@@ -30,9 +30,22 @@ const startServer = async () => {
   const app = express();
 
   // Configure CORS
+  const allowedOrigins = [
+    "https://preston-devfolio.netlify.app",
+    "http://localhost:5173",
+  ];
+
   app.use(
     cors({
-      origin: "https://preston-devfolio.netlify.app",
+      origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+          const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
+          return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+      },
       credentials: true,
     })
   );

@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
+import { errorHandler } from "../utils/error.js";
 
 const createToken = (user) => {
   return jwt.sign(
@@ -12,10 +12,11 @@ const createToken = (user) => {
 };
 
 const setCookie = (res, token) => {
+  const isProduction = process.env.NODE_ENV === "production";
   res.cookie("access_token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Secure in production
-    sameSite: "None", // Set to None for cross-site cookies
+    secure: isProduction, // Secure in production
+    sameSite: isProduction ? "None" : "Lax", // Adjust based on environment
   });
 };
 
@@ -42,24 +43,34 @@ export const signin = async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
+    console.log("Missing email or password");
     return next(errorHandler(400, "All fields are required!"));
   }
 
   try {
-    const validUser = await User.findOne({ email });
+    const validUser = await User.findOne({ email }).lean(); // Use lean for a plain JavaScript object
     if (!validUser) {
+      console.log("User not found:", email);
       return next(errorHandler(404, "User Not Found!"));
     }
+
+    console.log("User found:", validUser);
+
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) {
+      console.log("Invalid password for user:", email);
       return next(errorHandler(400, "Invalid Password!"));
     }
+
+    console.log("Password is valid for user:", email);
+
     const token = createToken(validUser);
-    const { password, ...rest } = validUser._doc;
+    const { password, ...rest } = validUser;
 
     setCookie(res, token);
     res.status(200).json(rest);
   } catch (error) {
+    console.log("Error during sign-in:", error);
     next(error);
   }
 };
