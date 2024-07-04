@@ -71,7 +71,7 @@ export const signin = async (req, res, next) => {
     console.log("Password is valid for user:", email);
 
     const token = createToken(user);
-    const { password, ...rest } = user.toObject();
+    const { password: userPassword, ...rest } = user.toObject(); // Rename password to userPassword to avoid conflicts
 
     setCookie(res, token);
     res.status(200).json(rest);

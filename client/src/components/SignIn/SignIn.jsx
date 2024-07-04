@@ -8,7 +8,7 @@ import {
   signInFailure,
 } from "../../redux/user/userSlice";
 import OAuth from "../OAuth/OAuth";
-import { saveToken } from "../../utils/authUtils"; 
+import { saveToken } from "../../utils/authUtils";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -27,8 +27,8 @@ export default function SignIn() {
     }
     try {
       dispatch(signInStart());
-      console.log("Starting sign-in process...");
-      console.log("Form data:", formData);
+      // console.log("Starting sign-in process...");
+      // console.log("Form data:", formData);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/signin`,
         {
@@ -38,8 +38,8 @@ export default function SignIn() {
           credentials: "include", // Ensure credentials are included
         }
       );
-      console.log("Response status:", res.status);
-      console.log("Response headers:", [...res.headers]);
+      // console.log("Response status:", res.status);
+      // console.log("Response headers:", [...res.headers]);
 
       const data = await res.json();
       console.log("Response data:", data);
@@ -88,6 +88,7 @@ export default function SignIn() {
                 placeholder="name@company.com"
                 id="email"
                 onChange={handleChange}
+                autoComplete="email"
               />
             </div>
             <div>
@@ -97,6 +98,7 @@ export default function SignIn() {
                 placeholder="************"
                 id="password"
                 onChange={handleChange}
+                autoComplete="current-password" // corrected property name
               />
             </div>
             <Button
