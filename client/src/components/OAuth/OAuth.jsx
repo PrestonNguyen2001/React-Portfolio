@@ -24,7 +24,8 @@ export default function OAuth() {
         `${import.meta.env.VITE_API_BASE_URL}/auth/google`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json",
+         },
           body: JSON.stringify({
             name: resultsFromGoogle.user.displayName,
             email: resultsFromGoogle.user.email,

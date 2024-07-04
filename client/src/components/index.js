@@ -19,8 +19,8 @@ import SignUp from "./SignUp/SignUp";
 import ThemeProvider from "./ThemeProvider/ThemeProvider";
 import Timeline from "./Timeline/Timeline";
 import Type from "./Type/Type";
-import CreatePost from "./Post/CreatePost";
-import UpdatePost from "./Post/UpdatePost";
+import CreatePost from "./BlogPost/CreatePost";
+import UpdatePost from "./BlogPost/UpdatePost";
 import OnlyAdminPrivateRoute from "./PrivateRoute/OnlyAdminPrivateRoute";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
