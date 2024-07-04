@@ -1,5 +1,5 @@
 import About from "./About/About";
-import Blog from "./BlogPost/Blog";
+import Blog from "./Blog/Blog";
 import CallToAction from "./CallToAction/CallToAction";
 import Comment from "./Comment/Comment";
 import Contact from "./Contact/Contact";
