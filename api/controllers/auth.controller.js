@@ -77,7 +77,7 @@ export const signin = async (req, res, next) => {
     res.status(200).json(rest);
   } catch (error) {
     console.log("Error during sign-in:", error);
-    next(error);
+    next(errorHandler(500, "Internal Server Error"));
   }
 };
 
