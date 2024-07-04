@@ -82,9 +82,15 @@ export default function UpdatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting updated post data:", formData); // Log formData being submitted
+    console.log("Submitting updated post data:", formData);
     try {
-      const token = localStorage.getItem("token"); // Get token from localStorage or Redux
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found, redirecting to login");
+        navigate("/sign-in"); // Redirect to login if no token is found
+        return;
+      }
+      console.log("Token retrieved from localStorage:", token);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
           currentUser._id
@@ -93,24 +99,27 @@ export default function UpdatePost() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Include the token in the headers
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         }
       );
+      console.log("Fetch response status:", res.status);
       const data = await res.json();
+      console.log("Fetch response data:", data);
       if (!res.ok) {
-        console.error("Error updating post:", data.message); // Log error message
+        console.error("Error updating post:", data.message);
         setPublishError(data.message);
         return;
       }
-      console.log("Post updated successfully, new slug:", data.slug); // Log success
+      console.log("Post updated successfully, new slug:", data.slug);
       navigate(`/posts/${data.slug}`);
     } catch (error) {
-      console.error("Something went wrong during post update:", error); // Log error
+      console.error("Something went wrong during post update:", error);
       setPublishError("Something went wrong");
     }
   };
+
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
