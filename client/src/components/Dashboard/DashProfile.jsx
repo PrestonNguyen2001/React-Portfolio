@@ -238,6 +238,7 @@ export default function DashProfile() {
           placeholder="username"
           defaultValue={currentUser.username}
           onChange={handleChange}
+          autoComplete="username" // added autoComplete attribute
         />
         <TextInput
           type="email"
@@ -245,12 +246,14 @@ export default function DashProfile() {
           placeholder="email"
           defaultValue={currentUser.email}
           onChange={handleChange}
+          autoComplete="email" // added autoComplete attribute
         />
         <TextInput
           type="password"
           id="password"
           placeholder="password"
           onChange={handleChange}
+          autoComplete="new-password" // added autoComplete attribute
         />
         <Button
           type="submit"

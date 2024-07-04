@@ -8,6 +8,7 @@ import {
 } from "react-icons/hi";
 import { Button, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { getAuthHeaders } from "../../utils/authUtils";
 
 export default function DashboardComp() {
   const [users, setUsers] = useState([]);
@@ -21,25 +22,22 @@ export default function DashboardComp() {
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
 
-  console.log("Current User:", currentUser);
-  console.log("Is Admin:", currentUser?.isAdmin);
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/user/getusers?limit=5`,
           {
-            credentials: "include",
+            headers: getAuthHeaders(),
           }
         );
-        console.log("Fetch users response:", res);
         const data = await res.json();
-        console.log("Fetch users data:", data);
         if (res.ok) {
           setUsers(data.users);
           setTotalUsers(data.totalUsers);
           setLastMonthUsers(data.lastMonthUsers);
+        } else {
+          console.error("Error fetching users:", data.message);
         }
       } catch (error) {
         console.error("Error fetching users:", error.message);
@@ -51,16 +49,16 @@ export default function DashboardComp() {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/posts?limit=5`,
           {
-            credentials: "include",
+            headers: getAuthHeaders(),
           }
         );
-        console.log("Fetch posts response:", res);
         const data = await res.json();
-        console.log("Fetch posts data:", data);
         if (res.ok) {
           setPosts(data.posts);
           setTotalPosts(data.totalPosts);
           setLastMonthPosts(data.lastMonthPosts);
+        } else {
+          console.error("Error fetching posts:", data.message);
         }
       } catch (error) {
         console.error("Error fetching posts:", error.message);
@@ -72,16 +70,16 @@ export default function DashboardComp() {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/comment/getcomments?limit=5`,
           {
-            credentials: "include",
+            headers: getAuthHeaders(),
           }
         );
-        console.log("Fetch comments response:", res);
         const data = await res.json();
-        console.log("Fetch comments data:", data);
         if (res.ok) {
           setComments(data.comments);
           setTotalComments(data.totalComments);
           setLastMonthComments(data.lastMonthComments);
+        } else {
+          console.error("Error fetching comments:", data.message);
         }
       } catch (error) {
         console.error("Error fetching comments:", error.message);
@@ -89,12 +87,9 @@ export default function DashboardComp() {
     };
 
     if (currentUser?.isAdmin) {
-      console.log("Fetching dashboard data...");
       fetchUsers();
       fetchPosts();
       fetchComments();
-    } else {
-      console.log("Current user is not admin, skipping data fetch.");
     }
   }, [currentUser]);
 
