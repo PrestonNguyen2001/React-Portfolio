@@ -10,11 +10,16 @@ export default function OAuth() {
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleGoogleClick = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
+
     try {
+      console.log("Starting Google sign-in process...");
       const resultsFromGoogle = await signInWithPopup(auth, provider);
+      console.log("Google sign-in result:", resultsFromGoogle);
+
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/google`,
         {
@@ -27,17 +32,24 @@ export default function OAuth() {
           }),
         }
       );
-      console.log(res);
+      console.log("Response status:", res.status);
+      console.log("Response headers:", res.headers);
+
       const data = await res.json();
+      console.log("Response data:", data);
+
       if (res.ok) {
+        console.log("Google sign-in successful:", data);
         dispatch(signInSuccess(data));
         navigate("/");
+      } else {
+        console.log("Google sign-in failed with status:", res.status);
       }
-      console.log(data);
     } catch (error) {
-      console.error(error);
+      console.error("Google sign-in error:", error);
     }
   };
+
   return (
     <Button
       type="button"

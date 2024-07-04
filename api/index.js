@@ -16,6 +16,7 @@ dotenv.config();
 
 const startServer = async () => {
   try {
+    console.log("Connecting to MongoDB...");
     await mongoose.connect(process.env.MONGO, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -42,6 +43,7 @@ const startServer = async () => {
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
           const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
+          console.warn(msg);
           return callback(new Error(msg), false);
         }
         return callback(null, true);
@@ -71,14 +73,16 @@ const startServer = async () => {
   app.use(express.static(path.join(__dirname, "/client/dist")));
 
   app.get("*", (req, res) => {
+    console.log("Serving index.html for:", req.originalUrl);
     res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
   });
 
   // Error handling middleware
   app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error("Error stack:", err.stack);
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error";
+    console.error("Error status code:", statusCode, "Message:", message);
     res.status(statusCode).json({
       success: false,
       statusCode,
@@ -93,6 +97,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-
-

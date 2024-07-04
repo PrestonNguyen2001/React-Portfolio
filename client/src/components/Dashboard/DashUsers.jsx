@@ -10,65 +10,84 @@ export default function DashUsers() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        console.log("Fetching users...");
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/user/getusers`
+          `${import.meta.env.VITE_API_BASE_URL}/user/getusers`,
+          { credentials: "include" }
         );
+        console.log("Fetch users response:", res);
         const data = await res.json();
+        console.log("Fetch users data:", data);
         if (res.ok) {
           setUsers(data.users);
           if (data.users.length < 9) {
             setShowMore(false);
           }
+        } else {
+          console.error("Error fetching users:", data.message);
         }
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching users:", error.message);
       }
     };
     if (currentUser.isAdmin) {
       fetchUsers();
+    } else {
+      console.log("Current user is not admin, skipping user fetch.");
     }
   }, [currentUser._id]);
 
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
+      console.log("Fetching more users starting from index:", startIndex);
       const res = await fetch(
         `${
           import.meta.env.VITE_API_BASE_URL
-        }/user/getusers?startIndex=${startIndex}`
+        }/user/getusers?startIndex=${startIndex}`,
+        { credentials: "include" }
       );
+      console.log("Fetch more users response:", res);
       const data = await res.json();
+      console.log("Fetch more users data:", data);
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
         if (data.users.length < 9) {
           setShowMore(false);
         }
+      } else {
+        console.error("Error fetching more users:", data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Error fetching more users:", error.message);
     }
   };
 
   const handleDeleteUser = async () => {
     try {
+      console.log("Deleting user with ID:", userIdToDelete);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/user/delete/${userIdToDelete}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
+      console.log("Delete user response:", res);
       const data = await res.json();
+      console.log("Delete user data:", data);
       if (res.ok) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
         setShowModal(false);
       } else {
-        console.log(data.message);
+        console.error("Error deleting user:", data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Error deleting user:", error.message);
     }
   };
 

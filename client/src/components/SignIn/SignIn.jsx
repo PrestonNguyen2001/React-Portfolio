@@ -26,6 +26,8 @@ export default function SignIn() {
     }
     try {
       dispatch(signInStart());
+      console.log("Starting sign-in process...");
+      console.log("Form data:", formData);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/signin`,
         {
@@ -35,22 +37,29 @@ export default function SignIn() {
           credentials: "include", // Ensure credentials are included
         }
       );
-      console.log(res);
+      console.log("Response status:", res.status);
+      console.log("Response headers:", [...res.headers]);
+
       const data = await res.json();
+      console.log("Response data:", data);
       if (data.success === false) {
         dispatch(signInFailure(data.message));
       }
 
       if (res.ok) {
         dispatch(signInSuccess(data));
-        console.log(data);
+        console.log("Sign-in successful:", data);
         navigate("/");
+      } else {
+        console.log("Sign-in failed with status:", res.status);
+        dispatch(signInFailure(data.message));
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
-      console.error(error);
+      console.error("Sign-in error:", error);
     }
   };
+
   return (
     <div className="min-h-screen mt-20">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-20">

@@ -28,6 +28,7 @@ export default function UpdatePost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        console.log("Fetching post with ID:", postId); // Log postId being fetched
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}`
         );
@@ -35,8 +36,10 @@ export default function UpdatePost() {
           throw new Error("Failed to fetch post");
         }
         const data = await response.json();
+        console.log("Fetched post data:", data); // Log fetched data
         setFormData(data.post);
       } catch (error) {
+        console.error("Error fetching post:", error); // Log error
         setPublishError(error.message);
       }
     };
@@ -62,11 +65,13 @@ export default function UpdatePost() {
         setImageUploadProgress(progress.toFixed(0));
       },
       (error) => {
+        console.error("Error during image upload:", error); // Log error
         setImageUploadError("Image upload failed");
         setImageUploadProgress(null);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("Image uploaded successfully, URL:", downloadURL); // Log download URL
           setImageUploadProgress(null);
           setImageUploadError(null);
           setFormData({ ...formData, image: downloadURL });
@@ -77,6 +82,7 @@ export default function UpdatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting updated post data:", formData); // Log formData being submitted
     try {
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
@@ -92,11 +98,14 @@ export default function UpdatePost() {
       );
       const data = await res.json();
       if (!res.ok) {
+        console.error("Error updating post:", data.message); // Log error message
         setPublishError(data.message);
         return;
       }
+      console.log("Post updated successfully, new slug:", data.slug); // Log success
       navigate(`/posts/${data.slug}`);
     } catch (error) {
+      console.error("Something went wrong during post update:", error); // Log error
       setPublishError("Something went wrong");
     }
   };
@@ -111,7 +120,6 @@ export default function UpdatePost() {
             placeholder="Title"
             required
             id="title"
-            className="flex-1"
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }

@@ -41,14 +41,17 @@ export default function CreatePost() {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`); // Log upload progress
         setImageUploadProgress(progress.toFixed(0));
       },
       (error) => {
+        console.error("Image upload error:", error); // Log upload error
         setImageUploadError("Image upload failed");
         setImageUploadProgress(null);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL); // Log download URL
           setImageUploadProgress(null);
           setImageUploadError(null);
           setFormData({ ...formData, image: downloadURL });
@@ -66,6 +69,7 @@ export default function CreatePost() {
       return;
     }
     try {
+      console.log("Submitting post data:", formData); // Log form data
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
         {
@@ -79,12 +83,15 @@ export default function CreatePost() {
       );
       const data = await res.json();
       if (!res.ok) {
+        console.error("Post creation error:", data.message); // Log error message
         setPublishError(data.message);
       } else {
+        console.log("Post created successfully:", data); // Log success message
         setPublishSuccess("Post created successfully");
         navigate("/blogs");
       }
     } catch (error) {
+      console.error("Error during post creation:", error); // Log catch error
       setPublishError(error.message);
     }
   };

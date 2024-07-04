@@ -11,17 +11,31 @@ import workIcon from "../../assets/svg/work.svg";
 
 const Timeline = () => {
   const [timelineData, setTimelineData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTimelineData = async () => {
       try {
+        console.log("Fetching timeline data...");
         const response = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/timeline`
         );
+        console.log("Response status:", response.status);
+        console.log("Response headers:", [...response.headers]);
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
         const data = await response.json();
+        console.log("Timeline data received:", data);
         setTimelineData(data);
       } catch (error) {
         console.error("Error fetching timeline data:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -40,6 +54,14 @@ const Timeline = () => {
         return null;
     }
   };
+
+  if (loading) {
+    return <p>Loading timeline data...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading timeline data: {error}</p>;
+  }
 
   return (
     <div className="container mx-auto px-4 simple-clean-container">

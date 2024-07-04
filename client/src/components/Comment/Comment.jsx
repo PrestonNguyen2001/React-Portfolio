@@ -15,24 +15,39 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
+        console.log(`Fetching user data for userId: ${comment.userId}`);
         const res = await fetch(`/api/user/${comment.userId}`);
         const data = await res.json();
+        console.log("User data fetched:", data);
         if (res.ok) {
           setUser(data);
+        } else {
+          console.error(
+            "Failed to fetch user data:",
+            res.status,
+            res.statusText
+          );
         }
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching user data:", error.message);
       }
     };
     getUser();
   }, [comment]);
 
   const handleEdit = () => {
+    console.log("Editing comment:", comment._id);
     setIsEditing(true);
     setEditedContent(comment.content);
   };
 
   const handleSave = async () => {
+    console.log(
+      "Saving edited comment:",
+      comment._id,
+      "Content:",
+      editedContent
+    );
     try {
       const res = await fetch(`/api/comment/editComment/${comment._id}`, {
         method: "PUT",
@@ -44,11 +59,14 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
         }),
       });
       if (res.ok) {
+        console.log("Comment saved successfully");
         setIsEditing(false);
         onEdit(comment, editedContent);
+      } else {
+        console.error("Failed to save comment:", res.status, res.statusText);
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Error saving comment:", error.message);
     }
   };
 
@@ -103,7 +121,10 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
             <div className="flex items-center pt-2 text-xs border-t dark:border-gray-700 max-w-fit gap-2">
               <button
                 type="button"
-                onClick={() => onLike(comment._id)}
+                onClick={() => {
+                  console.log("Liking comment:", comment._id);
+                  onLike(comment._id);
+                }}
                 className={`text-gray-400 hover:text-blue-500 ${
                   currentUser &&
                   comment.likes.includes(currentUser._id) &&
@@ -130,7 +151,10 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => onDelete(comment._id)}
+                      onClick={() => {
+                        console.log("Deleting comment:", comment._id);
+                        onDelete(comment._id);
+                      }}
                       className="text-gray-400 hover:text-red-500"
                     >
                       Delete

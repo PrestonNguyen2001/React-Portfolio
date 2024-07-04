@@ -16,11 +16,15 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
+      console.log("Form validation failed: ", formData);
       return setErrorMessage("Please fill in all fields.");
     }
     try {
       setLoading(true);
       setErrorMessage(null);
+      console.log("Starting sign-up process...");
+      console.log("Form data:", formData);
+
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/signup`,
         {
@@ -30,19 +34,32 @@ export default function SignUp() {
           credentials: "include", // Include credentials in the request
         }
       );
+      console.log("Response status:", res.status);
+      console.log("Response headers:", [...res.headers]);
+
       const data = await res.json();
+      console.log("Response data:", data);
+
       if (data.success === false) {
+        console.log("Sign-up failed with message:", data.message);
+        setLoading(false);
         return setErrorMessage(data.message);
       }
       setLoading(false);
       if (res.ok) {
+        console.log("Sign-up successful:", data);
         navigate("/sign-in");
+      } else {
+        console.log("Sign-up failed with status:", res.status);
+        setErrorMessage(data.message);
       }
     } catch (error) {
+      console.error("Sign-up error:", error);
       setErrorMessage(error.message);
       setLoading(false);
     }
   };
+
   return (
     <div className="min-h-screen mt-20">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-20">

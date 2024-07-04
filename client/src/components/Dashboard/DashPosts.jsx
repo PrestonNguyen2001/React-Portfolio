@@ -13,15 +13,20 @@ export default function DashPosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`);
-        console.log(res);
+        console.log("Fetching posts...");
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`, {
+          credentials: "include",
+        });
+        console.log("Fetch posts response:", res);
         const data = await res.json();
+        console.log("Fetch posts data:", data);
         if (res.ok) {
           setPosts(data.posts || []);
+        } else {
+          console.error("Error fetching posts:", data.message);
         }
-        console.log(data);
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching posts:", error.message);
       }
     };
     fetchPosts();
@@ -30,22 +35,26 @@ export default function DashPosts() {
   const handleDeletePost = async () => {
     setShowModal(false);
     try {
+      console.log("Deleting post with ID:", postIdToDelete);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postIdToDelete}/${
           currentUser._id
         }`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
+      console.log("Delete post response:", res);
       const data = await res.json();
+      console.log("Delete post data:", data);
       if (res.ok) {
         setPosts((prev) => prev.filter((post) => post._id !== postIdToDelete));
       } else {
-        console.log(data.message);
+        console.error("Error deleting post:", data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      console.error("Error deleting post:", error.message);
     }
   };
 

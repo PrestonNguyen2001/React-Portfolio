@@ -20,64 +20,81 @@ export default function DashboardComp() {
   const [lastMonthPosts, setLastMonthPosts] = useState(0);
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
-  console.log(currentUser.isAdmin);
-  console.log(currentUser.isAdmin === true);
-  console.log(currentUser.isAdmin === false);
+
+  console.log("Current User:", currentUser);
+  console.log("Is Admin:", currentUser?.isAdmin);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/user/getusers?limit=5`
+          `${import.meta.env.VITE_API_BASE_URL}/user/getusers?limit=5`,
+          {
+            credentials: "include",
+          }
         );
-        console.log(res);
+        console.log("Fetch users response:", res);
         const data = await res.json();
+        console.log("Fetch users data:", data);
         if (res.ok) {
           setUsers(data.users);
           setTotalUsers(data.totalUsers);
           setLastMonthUsers(data.lastMonthUsers);
         }
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching users:", error.message);
       }
     };
+
     const fetchPosts = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/posts?limit=5`
+          `${import.meta.env.VITE_API_BASE_URL}/posts?limit=5`,
+          {
+            credentials: "include",
+          }
         );
-        console.log(res);
+        console.log("Fetch posts response:", res);
         const data = await res.json();
+        console.log("Fetch posts data:", data);
         if (res.ok) {
           setPosts(data.posts);
           setTotalPosts(data.totalPosts);
           setLastMonthPosts(data.lastMonthPosts);
         }
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching posts:", error.message);
       }
     };
+
     const fetchComments = async () => {
       try {
         const res = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/comment/getcomments?limit=5`
+          `${import.meta.env.VITE_API_BASE_URL}/comment/getcomments?limit=5`,
+          {
+            credentials: "include",
+          }
         );
-        console.log(res);
+        console.log("Fetch comments response:", res);
         const data = await res.json();
+        console.log("Fetch comments data:", data);
         if (res.ok) {
           setComments(data.comments);
           setTotalComments(data.totalComments);
           setLastMonthComments(data.lastMonthComments);
         }
       } catch (error) {
-        console.log(error.message);
+        console.error("Error fetching comments:", error.message);
       }
     };
-    if (currentUser.isAdmin) {
+
+    if (currentUser?.isAdmin) {
+      console.log("Fetching dashboard data...");
       fetchUsers();
       fetchPosts();
       fetchComments();
+    } else {
+      console.log("Current user is not admin, skipping data fetch.");
     }
   }, [currentUser]);
 

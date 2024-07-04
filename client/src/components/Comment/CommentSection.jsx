@@ -20,6 +20,7 @@ const CommentSection = ({ postId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
+        console.log(`Fetching comments for postId: ${postId}`);
         const response = await fetch(
           `${
             import.meta.env.VITE_API_BASE_URL
@@ -29,6 +30,7 @@ const CommentSection = ({ postId }) => {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
         const data = await response.json();
+        console.log("Comments fetched:", data);
         setComments(data);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -45,6 +47,7 @@ const CommentSection = ({ postId }) => {
     }
 
     try {
+      console.log("Submitting new comment:", comment);
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/comment/create`,
         {
@@ -65,12 +68,14 @@ const CommentSection = ({ postId }) => {
       }
 
       const newComment = await response.json();
+      console.log("New comment added:", newComment);
       setComments([newComment, ...comments]);
       setComment("");
       setCommentError(null);
       setIsFormExpanded(false);
     } catch (error) {
       setCommentError(error.message);
+      console.error("Error adding comment:", error);
     }
   };
 
@@ -81,6 +86,7 @@ const CommentSection = ({ postId }) => {
     }
 
     try {
+      console.log("Liking comment:", commentId);
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/comment/likeComment/${commentId}`,
         {
@@ -93,6 +99,7 @@ const CommentSection = ({ postId }) => {
       }
 
       const updatedComment = await response.json();
+      console.log("Comment liked:", updatedComment);
       setComments(
         comments.map((comment) =>
           comment._id === commentId ? updatedComment : comment
@@ -105,6 +112,12 @@ const CommentSection = ({ postId }) => {
 
   const handleEdit = async (comment, editedContent) => {
     try {
+      console.log(
+        "Editing comment:",
+        comment._id,
+        "New content:",
+        editedContent
+      );
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/comment/editComment/${
           comment._id
@@ -125,6 +138,7 @@ const CommentSection = ({ postId }) => {
       }
 
       const updatedComment = await response.json();
+      console.log("Comment edited:", updatedComment);
       setComments(
         comments.map((c) => (c._id === comment._id ? updatedComment : c))
       );
@@ -141,6 +155,7 @@ const CommentSection = ({ postId }) => {
     }
 
     try {
+      console.log("Deleting comment:", commentId);
       const response = await fetch(
         `${
           import.meta.env.VITE_API_BASE_URL
@@ -154,6 +169,7 @@ const CommentSection = ({ postId }) => {
         throw new Error("Failed to delete comment");
       }
 
+      console.log("Comment deleted:", commentId);
       setComments(comments.filter((comment) => comment._id !== commentId));
     } catch (error) {
       console.error("Error deleting comment:", error);
