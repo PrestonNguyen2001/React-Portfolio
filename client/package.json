@@ -31,7 +31,8 @@
     "react-vertical-timeline-component": "^3.6.0",
     "redux-persist": "^6.0.0",
     "typewriter-effect": "^2.18.2",
-    "vanilla-tilt": "^1.8.1"
+    "vanilla-tilt": "^1.8.1",
+    "vite": "^5.3.3"
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
