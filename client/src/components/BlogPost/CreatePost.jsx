@@ -62,15 +62,13 @@ export default function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting updated post data:", formData);
+    console.log("Submitting new post data:", formData);
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/posts/${postId}/${
-          currentUser._id
-        }`,
+        `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
         {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -80,14 +78,14 @@ export default function CreatePost() {
       );
       const data = await res.json();
       if (!res.ok) {
-        console.error("Error updating post:", data.message);
+        console.error("Error creating post:", data.message);
         setPublishError(data.message);
         return;
       }
-      console.log("Post updated successfully, new slug:", data.slug);
+      console.log("Post created successfully, new slug:", data.slug);
       navigate(`/posts/${data.slug}`);
     } catch (error) {
-      console.error("Something went wrong during post update:", error);
+      console.error("Something went wrong during post creation:", error);
       setPublishError("Something went wrong");
     }
   };
