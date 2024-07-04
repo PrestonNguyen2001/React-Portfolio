@@ -20,6 +20,10 @@ export default function DashboardComp() {
   const [lastMonthPosts, setLastMonthPosts] = useState(0);
   const [lastMonthComments, setLastMonthComments] = useState(0);
   const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser);
+  console.log(currentUser.isAdmin);
+  console.log(currentUser.isAdmin === true);
+  console.log(currentUser.isAdmin === false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,6 +31,7 @@ export default function DashboardComp() {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/user/getusers?limit=5`
         );
+        console.log(res);
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -42,6 +47,7 @@ export default function DashboardComp() {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/posts?limit=5`
         );
+        console.log(res);
         const data = await res.json();
         if (res.ok) {
           setPosts(data.posts);
@@ -57,6 +63,7 @@ export default function DashboardComp() {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/comment/getcomments?limit=5`
         );
+        console.log(res);
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);

@@ -14,10 +14,12 @@ export default function DashPosts() {
     const fetchPosts = async () => {
       try {
         const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`);
+        console.log(res);
         const data = await res.json();
         if (res.ok) {
           setPosts(data.posts || []);
         }
+        console.log(data);
       } catch (error) {
         console.log(error.message);
       }

@@ -20,25 +20,6 @@ const setCookie = (res, token) => {
   });
 };
 
-export const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
-    return next(errorHandler(400, "All fields are required!"));
-  }
-  const hashedPassword = bcryptjs.hashSync(password, 10);
-  const newUser = new User({
-    username,
-    email,
-    password: hashedPassword,
-  });
-  try {
-    await newUser.save();
-    res.json("Signup successful");
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -74,6 +55,60 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+export const signup = async (req, res, next) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return next(errorHandler(400, "All fields are required!"));
+  }
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const newUser = new User({
+    username,
+    email,
+    password: hashedPassword,
+  });
+  try {
+    await newUser.save();
+    res.json("Signup successful");
+  } catch (error) {
+    next(error);
+  }
+};
+
+// export const signin = async (req, res, next) => {
+//   const { email, password } = req.body;
+
+//   if (!email || !password) {
+//     console.log("Missing email or password");
+//     return next(errorHandler(400, "All fields are required!"));
+//   }
+
+//   try {
+//     const validUser = await User.findOne({ email }).lean(); // Use lean for a plain JavaScript object
+//     if (!validUser) {
+//       console.log("User not found:", email);
+//       return next(errorHandler(404, "User Not Found!"));
+//     }
+
+//     console.log("User found:", validUser);
+
+//     const validPassword = bcryptjs.compareSync(password, validUser.password);
+//     if (!validPassword) {
+//       console.log("Invalid password for user:", email);
+//       return next(errorHandler(400, "Invalid Password!"));
+//     }
+
+//     console.log("Password is valid for user:", email);
+
+//     const token = createToken(validUser);
+//     const { password, ...rest } = validUser;
+
+//     setCookie(res, token);
+//     res.status(200).json(rest);
+//   } catch (error) {
+//     console.log("Error during sign-in:", error);
+//     next(error);
+//   }
+// };
 
 export const google = async (req, res, next) => {
   const { name, email, googlePhotoUrl } = req.body;

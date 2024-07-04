@@ -27,11 +27,13 @@ export default function OAuth() {
           }),
         }
       );
+      console.log(res);
       const data = await res.json();
       if (res.ok) {
         dispatch(signInSuccess(data));
         navigate("/");
       }
+      console.log(data);
     } catch (error) {
       console.error(error);
     }

@@ -35,6 +35,7 @@ export default function SignIn() {
           credentials: "include", // Ensure credentials are included
         }
       );
+      console.log(res);
       const data = await res.json();
       if (data.success === false) {
         dispatch(signInFailure(data.message));
@@ -42,10 +43,12 @@ export default function SignIn() {
 
       if (res.ok) {
         dispatch(signInSuccess(data));
+        console.log(data);
         navigate("/");
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
+      console.error(error);
     }
   };
   return (
