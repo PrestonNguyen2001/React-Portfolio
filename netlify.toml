@@ -2,9 +2,6 @@
   command = "npm install && npm run build"
   publish = "client/dist"
 
-[context.production.environment]
-  NODE_VERSION = "16.x"
-
 [[headers]]
   for = "/*"
   [headers.values]
