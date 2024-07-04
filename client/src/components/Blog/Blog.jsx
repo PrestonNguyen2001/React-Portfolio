@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../../redux/post/postSlice";
 import { motion, useAnimation } from "framer-motion";
-import { FaBook } from "react-icons/fa";
 import { useInView } from "react-intersection-observer";
-
 import BlogPost from "./BlogPost";
 import "../../styles/Blog.css";
 
@@ -48,6 +46,11 @@ const Blog = () => {
     }
   }, [controls, inView]);
 
+  // Log the posts only once when the component is initially rendered
+  useEffect(() => {
+    console.log("Posts being passed to BlogPost:", posts);
+  }, [posts]);
+
   const handleLoadMore = () => {
     setStartIndex((prevIndex) => prevIndex + limit);
   };
@@ -66,15 +69,21 @@ const Blog = () => {
         <p>Posts in Last Month: {lastMonthPosts}</p>
       </div>
       <motion.div className="blog-posts" variants={containerVariants}>
-        {posts.map((post) => (
-          <motion.div
-            key={post._id}
-            className="blog-post"
-            variants={itemVariants}
-          >
-            <BlogPost post={post} />
-          </motion.div>
-        ))}
+        {posts.map((post) => {
+          if (!post.slug) {
+            console.error("Error: Post data is missing or incomplete:", post);
+            return null;
+          }
+          return (
+            <motion.div
+              key={post._id}
+              className="blog-post"
+              variants={itemVariants}
+            >
+              <BlogPost post={post} />
+            </motion.div>
+          );
+        })}
       </motion.div>
       {startIndex + limit < totalPosts && (
         <motion.button

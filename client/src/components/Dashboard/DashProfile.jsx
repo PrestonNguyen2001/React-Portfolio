@@ -1,4 +1,3 @@
-// client/src/components/Dashboard/DashProfile.jsx
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -37,6 +36,7 @@ export default function DashProfile() {
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const dispatch = useDispatch();
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -44,6 +44,7 @@ export default function DashProfile() {
       setImageFileUrl(URL.createObjectURL(file));
     }
   };
+
   useEffect(() => {
     if (imageFile) {
       uploadImage();
@@ -62,7 +63,6 @@ export default function DashProfile() {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
         setImageFileUploadProgress(progress.toFixed(0));
       },
       (error) => {
@@ -100,6 +100,13 @@ export default function DashProfile() {
       setUpdateUserError("Please wait for image to upload");
       return;
     }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUpdateUserError("No authentication token found");
+      return;
+    }
+
     try {
       dispatch(updateStart());
       const res = await fetch(
@@ -108,6 +115,7 @@ export default function DashProfile() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
         }
@@ -128,12 +136,21 @@ export default function DashProfile() {
 
   const handleDeleteUser = async () => {
     setShowModal(false);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUpdateUserError("No authentication token found");
+      return;
+    }
+
     try {
       dispatch(deleteUserStart());
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
       const data = await res.json();

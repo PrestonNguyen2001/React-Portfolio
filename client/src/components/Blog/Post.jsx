@@ -12,18 +12,8 @@ const Post = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const token = localStorage.getItem("token"); 
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/posts/${slug}`,
-          {
-            method: "get",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // Include the token in the headers
-            },
-            credentials: "include", // Ensure cookies are sent with the request
-            body: JSON.stringify({ ...formData, userId: currentUser._id }),
-          }
+          `${import.meta.env.VITE_API_BASE_URL}/posts/${slug}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch post");
