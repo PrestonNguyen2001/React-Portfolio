@@ -62,6 +62,12 @@ export const signin = async (req, res, next) => {
 
     console.log("User found:", validUser);
 
+    // Ensure validUser.password is defined before using it
+    if (!validUser.password) {
+      console.log("Password field not found for user:", email);
+      return next(errorHandler(500, "User password not found"));
+    }
+
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) {
       console.log("Invalid password for user:", email);
@@ -80,6 +86,7 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+
 
 export const google = async (req, res, next) => {
   const { name, email, googlePhotoUrl } = req.body;
