@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button, Textarea } from "flowbite-react";
 import PropTypes from "prop-types";
 import "../../styles/CommentSection.css";
+import { getToken } from "../../utils/authUtils";
 
 const CommentForm = ({ postId, onNewComment }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -21,12 +22,19 @@ const CommentForm = ({ postId, onNewComment }) => {
 
     try {
       console.log("Submitting new comment:", comment);
+      const token = getToken();
+      if (!token) {
+        setCommentError("No authentication token found");
+        return;
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/comment/create`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             content: comment,

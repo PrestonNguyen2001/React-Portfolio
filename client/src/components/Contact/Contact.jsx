@@ -55,7 +55,7 @@ export default function Contact() {
       }
 
       setSubmitError(null);
-      alert("Message sent successfully!");
+      alert("Email sent successfully!");
       setName("");
       setEmail("");
       setMessage("");

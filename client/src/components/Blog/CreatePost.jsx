@@ -13,6 +13,7 @@ import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/authUtils";
 
 export default function CreatePost() {
   const { currentUser } = useSelector((state) => state.user);
@@ -64,7 +65,12 @@ export default function CreatePost() {
     e.preventDefault();
     console.log("Submitting new post data:", formData);
     try {
-      const token = localStorage.getItem("access_token");
+      const token = getToken();
+      if (!token) {
+        setPublishError("No authentication token found");
+        return;
+      }
+
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
         {

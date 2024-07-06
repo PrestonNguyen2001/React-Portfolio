@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Button, Textarea } from "flowbite-react";
 import PropTypes from "prop-types";
 import "../../styles/CommentSection.css";
+import { getToken } from "../../utils/authUtils";
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
@@ -35,6 +36,35 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
     getUser();
   }, [comment.userId]);
 
+  const handleLike = async () => {
+    try {
+      console.log("Liking comment:", comment._id);
+      const token = getToken();
+      if (!token) {
+        console.error("No authentication token found");
+        return;
+      }
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comment/likeComment/${
+          comment._id
+        }`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Failed to like comment");
+      }
+      onLike(comment._id);
+    } catch (error) {
+      console.error("Error liking comment:", error);
+    }
+  };
+
   const handleEdit = () => {
     setIsEditing(true);
     setEditedContent(comment.content);
@@ -42,21 +72,59 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
 
   const handleSave = async () => {
     try {
-      const res = await fetch(`/api/comment/editComment/${comment._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: editedContent }),
-      });
-      if (res.ok) {
-        setIsEditing(false);
-        onEdit(comment._id, editedContent);
-      } else {
-        console.error("Failed to save comment:", res.status, res.statusText);
+      const token = getToken();
+      if (!token) {
+        console.error("No authentication token found");
+        return;
       }
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comment/editComment/${
+          comment._id
+        }`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ content: editedContent }),
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Failed to edit comment");
+      }
+      setIsEditing(false);
+      onEdit(comment._id, editedContent);
     } catch (error) {
-      console.error("Error saving comment:", error.message);
+      console.error("Error editing comment:", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      console.log("Deleting comment:", comment._id);
+      const token = getToken();
+      if (!token) {
+        console.error("No authentication token found");
+        return;
+      }
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/comment/deleteComment/${
+          comment._id
+        }`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Failed to delete comment");
+      }
+      onDelete(comment._id);
+    } catch (error) {
+      console.error("Error deleting comment:", error);
     }
   };
 
@@ -111,7 +179,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
             <div className="flex items-center pt-2 text-xs border-t dark:border-gray-700 max-w-fit gap-2">
               <button
                 type="button"
-                onClick={() => onLike(comment._id)}
+                onClick={handleLike}
                 className={`text-gray-400 hover:text-blue-500 ${
                   currentUser &&
                   comment.likes.includes(currentUser._id) &&
@@ -138,7 +206,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => onDelete(comment._id)}
+                      onClick={handleDelete}
                       className="text-gray-400 hover:text-red-500"
                     >
                       Delete

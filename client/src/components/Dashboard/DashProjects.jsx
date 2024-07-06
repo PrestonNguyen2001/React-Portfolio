@@ -1,3 +1,4 @@
+// client/src/components/Dashboard/DashProjects.jsx
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -21,10 +22,12 @@ import {
 import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { getToken } from "../../utils/authUtils";
 
 export default function DashProjects() {
   const { currentUser } = useSelector((state) => state.user);
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [projectIdToDelete, setProjectIdToDelete] = useState("");
@@ -38,28 +41,30 @@ export default function DashProjects() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-       setLoading(true);
-       setError("");
+      setLoading(true);
+      setAddProjectError("");
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/projects`,
           {
             headers: {
-              Authorization: `Bearer ${document.cookie.replace(
-                /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-                "$1"
-              )}`,
+              Authorization: `Bearer ${getToken()}`,
             },
           }
         );
         const data = await res.json();
         if (res.ok) {
           setProjects(data.projects || []);
+        } else {
+          setAddProjectError(data.message);
         }
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
+
     if (currentUser.isAdmin) {
       fetchProjects();
     }
@@ -75,10 +80,7 @@ export default function DashProjects() {
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${document.cookie.replace(
-              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-              "$1"
-            )}`,
+            Authorization: `Bearer ${getToken()}`,
           },
         }
       );
@@ -146,10 +148,7 @@ export default function DashProjects() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${document.cookie.replace(
-              /(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/,
-              "$1"
-            )}`,
+            Authorization: `Bearer ${getToken()}`,
           },
           body: JSON.stringify({ ...newProject, userId: currentUser._id }),
         }

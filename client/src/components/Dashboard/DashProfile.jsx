@@ -22,6 +22,7 @@ import {
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { getToken } from "../../utils/authUtils";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -101,7 +102,7 @@ export default function DashProfile() {
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       setUpdateUserError("No authentication token found");
       return;
@@ -136,7 +137,7 @@ export default function DashProfile() {
 
   const handleDeleteUser = async () => {
     setShowModal(false);
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) {
       setUpdateUserError("No authentication token found");
       return;

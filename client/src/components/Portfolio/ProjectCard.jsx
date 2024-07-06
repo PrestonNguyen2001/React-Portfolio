@@ -14,6 +14,8 @@ const ProjectCard = ({
     <motion.div
       className="bg-light-background dark:bg-gray-800 rounded-lg shadow-glow p-5 text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-glow-hover"
       variants={variants}
+      initial="hidden"
+      animate="visible"
     >
       <motion.img
         src={imgPath}
@@ -41,6 +43,8 @@ const ProjectCard = ({
           href={ghLink}
           className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition"
           variants={variants}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           GitHub
         </motion.a>
@@ -49,6 +53,8 @@ const ProjectCard = ({
             href={demoLink}
             className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition"
             variants={variants}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Demo
           </motion.a>
