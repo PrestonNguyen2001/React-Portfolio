@@ -2,8 +2,11 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "./error.js";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  console.log("Token from headers:", token);
+  console.log("Starting token verification");
+
+  const token =
+    req.cookies.access_token || req.headers.authorization?.split(" ")[1];
+  console.log("Token from cookies or headers:", token);
 
   if (!token) {
     console.log("No token found");

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { getAuthHeaders } from "../../utils/authUtils";
 
 export default function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -14,7 +15,13 @@ export default function DashPosts() {
     const fetchPosts = async () => {
       try {
         console.log("Fetching posts...");
+        const headers = getAuthHeaders();
+        console.log("Auth headers:", headers);
         const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`, {
+          headers: {
+            "Content-Type": "application/json",
+            ...getAuthHeaders(),
+          },
           credentials: "include",
         });
         console.log("Fetch posts response:", res);
@@ -36,6 +43,8 @@ export default function DashPosts() {
     setShowModal(false);
     try {
       console.log("Deleting post with ID:", postIdToDelete);
+      const headers = getAuthHeaders();
+      console.log("Auth headers:", headers);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postIdToDelete}/${
           currentUser._id
@@ -43,6 +52,7 @@ export default function DashPosts() {
         {
           method: "DELETE",
           credentials: "include",
+          headers,
         }
       );
       console.log("Delete post response:", res);

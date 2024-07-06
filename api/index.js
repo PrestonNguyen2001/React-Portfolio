@@ -49,15 +49,20 @@ const startServer = async () => {
       credentials: true,
     })
   );
+  console.log("CORS policy set with allowed origins:", allowedOrigins);
 
   app.use(express.json());
+  console.log("Express JSON middleware added");
+
   app.use(cookieParser());
+  console.log("Cookie parser middleware added");
 
   app.use((req, res, next) => {
     res.header("Cross-Origin-Opener-Policy", "same-origin");
     res.header("Cross-Origin-Embedder-Policy", "require-corp");
     next();
   });
+  console.log("Custom headers set for Cross-Origin policies");
 
   app.use("/api/user", userRoutes);
   app.use("/api/auth", authRoutes);
@@ -66,8 +71,13 @@ const startServer = async () => {
   app.use("/api/comment", commentRoutes);
   app.use("/api/projects", projectRoutes);
   app.use("/api/contact", contactRoute);
+  console.log("API routes added");
 
   app.use(express.static(path.join(__dirname, "/client/dist")));
+  console.log(
+    "Serving static files from:",
+    path.join(__dirname, "/client/dist")
+  );
 
   app.get("*", (req, res) => {
     console.log("Serving index.html for:", req.originalUrl);
@@ -85,6 +95,7 @@ const startServer = async () => {
       message,
     });
   });
+  console.log("Error handling middleware added");
 
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {

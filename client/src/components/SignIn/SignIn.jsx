@@ -18,17 +18,23 @@ export default function SignIn() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+    console.log("Form data updated:", { [e.target.id]: e.target.value.trim() });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted with data:", formData);
+
     if (!formData.email || !formData.password) {
-      return dispatch(signInFailure("Please fill in all fields"));
+      const errorMsg = "Please fill in all fields";
+      dispatch(signInFailure(errorMsg));
+      console.log("Sign-in error:", errorMsg);
+      return;
     }
+
     try {
       dispatch(signInStart());
-      // console.log("Starting sign-in process...");
-      // console.log("Form data:", formData);
+      console.log("Sign-in process started...");
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/signin`,
         {
@@ -38,23 +44,25 @@ export default function SignIn() {
           credentials: "include", // Ensure credentials are included
         }
       );
-      // console.log("Response status:", res.status);
-      // console.log("Response headers:", [...res.headers]);
 
       const data = await res.json();
+      console.log("Response status:", res.status);
       console.log("Response data:", data);
+
       if (data.success === false) {
         dispatch(signInFailure(data.message));
+        console.log("Sign-in failed:", data.message);
+        return;
       }
 
       if (res.ok) {
-        saveToken(data.token);
         dispatch(signInSuccess(data));
+        saveToken(data.token);
         console.log("Sign-in successful:", data);
         navigate("/");
       } else {
-        console.log("Sign-in failed with status:", res.status);
         dispatch(signInFailure(data.message));
+        console.log("Sign-in failed with status:", res.status, data.message);
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
@@ -98,7 +106,7 @@ export default function SignIn() {
                 placeholder="************"
                 id="password"
                 onChange={handleChange}
-                autoComplete="current-password" // corrected property name
+                autoComplete="current-password"
               />
             </div>
             <Button

@@ -64,7 +64,7 @@ export default function CreatePost() {
     e.preventDefault();
     console.log("Submitting new post data:", formData);
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("access_token");
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/create`,
         {

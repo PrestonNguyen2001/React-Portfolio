@@ -8,6 +8,17 @@ export default function OnlyAdminPrivateRoute() {
   console.log("OnlyAdminPrivateRoute - currentUser:", currentUser);
   console.log("OnlyAdminPrivateRoute - isAdmin:", currentUser?.isAdmin);
 
+  if (currentUser && currentUser.isAdmin) {
+    console.log("Access granted - rendering Outlet");
+  } else {
+    if (!currentUser) {
+      console.log("Access denied - no user logged in");
+    } else if (!currentUser.isAdmin) {
+      console.log("Access denied - user is not an admin");
+    }
+    console.log("Navigating to sign-in page");
+  }
+
   return currentUser && currentUser.isAdmin ? (
     <Outlet />
   ) : (

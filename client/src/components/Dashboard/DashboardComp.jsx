@@ -24,6 +24,7 @@ export default function DashboardComp() {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      console.log("Fetching users...");
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/user/getusers?limit=5`,
@@ -31,11 +32,14 @@ export default function DashboardComp() {
             headers: getAuthHeaders(),
           }
         );
+        console.log("Fetch users response:", res);
         const data = await res.json();
+        console.log("Fetch users data:", data);
         if (res.ok) {
           setUsers(data.users);
           setTotalUsers(data.totalUsers);
           setLastMonthUsers(data.lastMonthUsers);
+          console.log("Users, Total Users, Last Month Users set successfully");
         } else {
           console.error("Error fetching users:", data.message);
         }
@@ -45,6 +49,7 @@ export default function DashboardComp() {
     };
 
     const fetchPosts = async () => {
+      console.log("Fetching posts...");
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/posts?limit=5`,
@@ -52,11 +57,14 @@ export default function DashboardComp() {
             headers: getAuthHeaders(),
           }
         );
+        console.log("Fetch posts response:", res);
         const data = await res.json();
+        console.log("Fetch posts data:", data);
         if (res.ok) {
           setPosts(data.posts);
           setTotalPosts(data.totalPosts);
           setLastMonthPosts(data.lastMonthPosts);
+          console.log("Posts, Total Posts, Last Month Posts set successfully");
         } else {
           console.error("Error fetching posts:", data.message);
         }
@@ -66,6 +74,7 @@ export default function DashboardComp() {
     };
 
     const fetchComments = async () => {
+      console.log("Fetching comments...");
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/comment/getcomments?limit=5`,
@@ -73,11 +82,16 @@ export default function DashboardComp() {
             headers: getAuthHeaders(),
           }
         );
+        console.log("Fetch comments response:", res);
         const data = await res.json();
+        console.log("Fetch comments data:", data);
         if (res.ok) {
           setComments(data.comments);
           setTotalComments(data.totalComments);
           setLastMonthComments(data.lastMonthComments);
+          console.log(
+            "Comments, Total Comments, Last Month Comments set successfully"
+          );
         } else {
           console.error("Error fetching comments:", data.message);
         }
@@ -87,9 +101,12 @@ export default function DashboardComp() {
     };
 
     if (currentUser?.isAdmin) {
+      console.log("Current user is admin, fetching data...");
       fetchUsers();
       fetchPosts();
       fetchComments();
+    } else {
+      console.log("Current user is not admin or not logged in");
     }
   }, [currentUser]);
 

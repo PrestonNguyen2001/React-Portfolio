@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { getToken } from "../../utils/authUtils"; // Ensure getToken is imported correctly
+import { getAuthHeaders } from "../../utils/authUtils";
 
 export default function DashUsers() {
   const { currentUser } = useSelector((state) => state.user);
@@ -16,64 +16,78 @@ export default function DashUsers() {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      console.log("Fetching users...");
       setLoading(true);
       setError("");
       try {
-        const token = getToken();
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/user/getusers`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
+              ...getAuthHeaders(),
             },
             credentials: "include",
           }
         );
+        console.log("Fetch users response:", res);
         const data = await res.json();
+        console.log("Fetch users data:", data);
         if (res.ok) {
           setUsers(data.users);
           setShowMore(data.users.length >= 9);
+          console.log("Users and Show More set successfully");
         } else {
+          console.error("Error fetching users:", data.message);
           setError(data.message);
         }
       } catch (error) {
+        console.error("Error fetching users:", error.message);
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
+
     if (currentUser.isAdmin) {
+      console.log("Current user is admin, fetching users...");
       fetchUsers();
+    } else {
+      console.log("Current user is not admin or not logged in");
     }
   }, [currentUser]);
 
   const handleShowMore = async () => {
     const startIndex = users.length;
+    console.log("Fetching more users from index:", startIndex);
     setLoading(true);
     setError("");
     try {
-      const token = getToken();
       const res = await fetch(
         `${
           import.meta.env.VITE_API_BASE_URL
         }/user/getusers?startIndex=${startIndex}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
+            ...getAuthHeaders(),
           },
           credentials: "include",
         }
       );
+      console.log("Fetch more users response:", res);
       const data = await res.json();
+      console.log("Fetch more users data:", data);
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
         setShowMore(data.users.length >= 9);
+        console.log("More users and Show More set successfully");
       } else {
+        console.error("Error fetching more users:", data.message);
         setError(data.message);
       }
     } catch (error) {
+      console.error("Error fetching more users:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -81,29 +95,34 @@ export default function DashUsers() {
   };
 
   const handleDeleteUser = async () => {
+    console.log("Deleting user with ID:", userIdToDelete);
     setLoading(true);
     setError("");
     try {
-      const token = getToken();
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/user/delete/${userIdToDelete}`,
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
+            ...getAuthHeaders(),
           },
           credentials: "include",
         }
       );
+      console.log("Delete user response:", res);
       const data = await res.json();
+      console.log("Delete user data:", data);
       if (res.ok) {
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
         setShowModal(false);
+        console.log("User deleted and modal closed successfully");
       } else {
+        console.error("Error deleting user:", data.message);
         setError(data.message);
       }
     } catch (error) {
+      console.error("Error deleting user:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -154,6 +173,7 @@ export default function DashUsers() {
                           onClick={() => {
                             setShowModal(true);
                             setUserIdToDelete(user._id);
+                            console.log("Set userIdToDelete to:", user._id);
                           }}
                           className="font-medium text-red-500 hover:underline cursor-pointer"
                         >

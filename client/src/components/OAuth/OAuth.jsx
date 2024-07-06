@@ -2,14 +2,18 @@ import { Button } from "flowbite-react";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../../firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInSuccess } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { saveToken } from "../../utils/authUtils"; // Import saveToken
 
 export default function OAuth() {
+  const currentUser = useSelector((state) => state.user.currentUser);
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const state = useSelector((state) => state);
+  console.log("Initial Redux state:", state);
 
   const handleGoogleClick = async () => {
     const provider = new GoogleAuthProvider();
@@ -19,6 +23,7 @@ export default function OAuth() {
       console.log("Starting Google sign-in process...");
       const resultsFromGoogle = await signInWithPopup(auth, provider);
       console.log("Google sign-in result:", resultsFromGoogle);
+      console.log("Google user:", resultsFromGoogle.user);
 
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/google`,
@@ -30,6 +35,7 @@ export default function OAuth() {
             email: resultsFromGoogle.user.email,
             googlePhotoUrl: resultsFromGoogle.user.photoURL,
           }),
+          credentials: "include",
         }
       );
       console.log("Response status:", res.status);
@@ -40,7 +46,10 @@ export default function OAuth() {
 
       if (res.ok) {
         console.log("Google sign-in successful:", data);
+        saveToken(data.token); // Save token to cookies
+        console.log("Token saved:", data.token); // Debugging line
         dispatch(signInSuccess(data));
+        console.log("Current user after sign-in:", currentUser); // Debugging line
         navigate("/");
       } else {
         console.log("Google sign-in failed with status:", res.status);
