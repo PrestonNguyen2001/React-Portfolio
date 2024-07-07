@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && npm run build"
+  command = "npm install && npm run build --prefix client"
   publish = "client/dist"
 
 [[headers]]
@@ -10,11 +10,22 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://react-devfolio-2b1f0a2540a0.herokuapp.com/api/:splat"
+  to = "https://devfolio-clone-40a1008691ba.herokuapp.com/api/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
+  status = 200
+
+[dev]
+  command = "npm run dev --prefix client"
+  targetPort = 5173
+  framework = "#custom"
+  autoLaunch = true
+
+[dev.redirects]
+  from = "/api/*"
+  to = "http://localhost:3002/api/:splat"
   status = 200

@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: "http://localhost:3002", // Ensure this matches your backend server port
+        changeOrigin: true,
         secure: false,
       },
     },
@@ -17,7 +18,7 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: "./index.html",
+        main: path.resolve(__dirname, "index.html"),
       },
       output: {
         manualChunks(id) {
@@ -38,5 +39,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "@styles": path.resolve(__dirname, "./src/styles"),
     },
+  },
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(
+      process.env.NODE_ENV || "development"
+    ),
   },
 });
