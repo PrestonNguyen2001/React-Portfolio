@@ -1,4 +1,3 @@
-// client/src/components/Dashboard/DashPosts.jsx
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button, Modal } from "flowbite-react";
@@ -89,23 +88,21 @@ export default function DashPosts() {
             <div key={post._id} className="mb-4">
               <h2>{post.title}</h2>
               <p>{post.content}</p>
-              <div className="flex gap-2">
-                <Button
-                  color="failure"
-                  onClick={() => {
-                    setShowModal(true);
-                    setPostIdToDelete(post._id);
-                  }}
-                >
-                  Delete
-                </Button>
-                <Button
-                  color="info"
-                  onClick={() => navigate(`/update-post/${post._id}`)}
-                >
-                  Edit
-                </Button>
-              </div>
+              <Button
+                color="failure"
+                onClick={() => {
+                  setShowModal(true);
+                  setPostIdToDelete(post._id);
+                }}
+              >
+                Delete
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => navigate(`/update-post/${post._id}`)}
+              >
+                Edit
+              </Button>
             </div>
           ))}
         </>

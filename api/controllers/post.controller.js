@@ -34,9 +34,6 @@ export const create = async (req, res, next) => {
 
 export const getPosts = async (req, res, next) => {
   try {
-    const { slug } = req.params;
-    console.log("Fetching post with slug:", slug);
-
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
@@ -51,17 +48,6 @@ export const getPosts = async (req, res, next) => {
         ],
       }),
     };
-
-    if (slug) {
-      query.slug = slug;
-      const post = await Post.findOne(query);
-      if (!post) {
-        console.log("Post not found with slug:", slug);
-        return res.status(404).json({ message: "Post not found" });
-      }
-      console.log("Post found:", post);
-      return res.status(200).json({ post });
-    }
 
     console.log("Fetching posts with query:", query);
     const posts = await Post.find(query)
@@ -98,6 +84,23 @@ export const getPosts = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error fetching posts:", error);
+    next(error);
+  }
+};
+
+export const getPostBySlug = async (req, res, next) => {
+  try {
+    const { slug } = req.params;
+    console.log("Fetching post with slug:", slug);
+    const post = await Post.findOne({ slug });
+    if (!post) {
+      console.log("Post not found with slug:", slug);
+      return res.status(404).json({ message: "Post not found" });
+    }
+    console.log("Post found:", post);
+    res.status(200).json({ post });
+  } catch (error) {
+    console.error("Error fetching post:", error);
     next(error);
   }
 };
