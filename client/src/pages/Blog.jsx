@@ -1,29 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../redux/post/postSlice";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import BlogPost from "../components/Blog/BlogPost";
 import "../styles/Blog.css";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeInOut" },
-  },
-};
+import { MovingCards } from "../components/Effects/MovingCards"; // Adjust the path according to your folder structure
 
 const Blog = () => {
   const dispatch = useDispatch();
@@ -33,20 +12,11 @@ const Blog = () => {
   const [startIndex, setStartIndex] = useState(0);
   const limit = 9;
   const order = "desc";
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   useEffect(() => {
     dispatch(getPosts({ startIndex, limit, order }));
   }, [dispatch, startIndex, limit, order]);
 
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-
-  // Log the posts only once when the component is initially rendered
   useEffect(() => {
     console.log("Posts being passed to BlogPost:", posts);
   }, [posts]);
@@ -55,46 +25,35 @@ const Blog = () => {
     setStartIndex((prevIndex) => prevIndex + limit);
   };
 
+  const blogItems = posts.map((post) => ({
+    quote: post.description,
+    name: post.title,
+    title: "Blog Post",
+    image: post.image,
+    link: `/posts/${post.slug}`,
+  }));
+
   return (
-    <motion.div
-      ref={ref}
-      className="blog-container"
-      initial="hidden"
-      animate={controls}
-      variants={containerVariants}
-    >
-      <h1 className="blog-title">Blogs</h1>
+    <section id="blogs" className="py-20">
+      <h1 className="heading">
+        Latest
+        <span className="text-purple"> Blogs</span>
+      </h1>
       <div className="blog-stats">
         <p>Total Posts: {totalPosts}</p>
         <p>Posts in Last Month: {lastMonthPosts}</p>
       </div>
-      <motion.div className="blog-posts" variants={containerVariants}>
-        {posts.map((post) => {
-          if (!post.slug) {
-            console.error("Error: Post data is missing or incomplete:", post);
-            return null;
-          }
-          return (
-            <motion.div
-              key={post._id}
-              className="blog-post"
-              variants={itemVariants}
-            >
-              <BlogPost post={post} />
-            </motion.div>
-          );
-        })}
-      </motion.div>
+      <div className="flex flex-col items-center max-lg:mt-10">
+        <div className="h-[60vh] md:h-[40rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden mb-10">
+          <MovingCards items={blogItems} direction="right" speed="slow" />
+        </div>
+      </div>
       {startIndex + limit < totalPosts && (
-        <motion.button
-          onClick={handleLoadMore}
-          className="load-more-button"
-          variants={itemVariants}
-        >
+        <button onClick={handleLoadMore} className="load-more-button">
           Load More
-        </motion.button>
+        </button>
       )}
-    </motion.div>
+    </section>
   );
 };
 
