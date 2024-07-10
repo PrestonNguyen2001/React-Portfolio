@@ -65,8 +65,8 @@ const Timeline = () => {
 
   return (
     <div className="container mx-auto px-4 simple-clean-container">
-      <h1 className="text-3xl font-bold text-center my-8 simple-clean-title">
-        Timeline
+      <h1 className="heading">
+        My <span className="text-purple">Journey</span>
       </h1>
       <VerticalTimeline>
         {timelineData.map((item, index) => (

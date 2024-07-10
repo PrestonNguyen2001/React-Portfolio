@@ -33,7 +33,6 @@ const startServer = async () => {
   const allowedOrigins = [
     "https://preston-devfolio.netlify.app",
     "http://localhost:5173",
-    "https://test-devfolio.netlify.app",
   ];
 
   app.use(
@@ -98,7 +97,7 @@ const startServer = async () => {
   });
   console.log("Error handling middleware added");
 
-  const PORT = process.env.PORT || 3002;
+  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}!`);
   });

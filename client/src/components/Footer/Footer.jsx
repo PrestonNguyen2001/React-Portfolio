@@ -8,7 +8,6 @@ export default function FooterCom() {
       container
       className="border-t-2 bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text"
     >
-      
       <div className="w-full max-w-7xl mx-auto">
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
           <div className="mt-5">

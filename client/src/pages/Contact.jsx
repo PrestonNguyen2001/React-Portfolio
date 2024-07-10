@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Alert, Button, TextInput, Textarea } from "flowbite-react";
+import { Alert, TextInput, Textarea } from "flowbite-react";
+import MagicButton from "../components/Hero/MagicButton";
+import { FaLocationArrow } from "react-icons/fa6";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -65,81 +67,93 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Contact</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-white"
-          >
-            Name
-          </label>
-          <TextInput
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onBlur={(e) => handleBlur(e.target)}
-            className="mt-1 rounded-md w-full text-black"
+    <section className="relative pb-36 pt-24 " id="contact">
+      {/* Background Grid */}
+      <div className="absolute inset-0 flex items-center justify-center h-80 ">
+        <img
+          src="/footer-grid.svg"
+          alt="grid"
+          className="w-full h-full object-cover opacity-50"
+        />
+      </div>
+      <h1 className="heading">
+        Contact <span className="text-purple">Me</span>
+      </h1>
+      <div className="mt-20 relative container mx-auto p-4 z-10 ">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-white"
+            >
+              Name
+            </label>
+            <TextInput
+              type="text"
+              name="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onBlur={(e) => handleBlur(e.target)}
+              className="mt-1 rounded-md w-full"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-white"
+            >
+              Email
+            </label>
+            <TextInput
+              type="email"
+              name="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={(e) => handleBlur(e.target)}
+              className="mt-1 rounded-md w-full"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
+          </div>
+          <div className="mb-3">
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-white"
+            >
+              Message
+            </label>
+            <Textarea
+              name="message"
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onBlur={(e) => handleBlur(e.target)}
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+              rows="4"
+            />
+            {errors.message && (
+              <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+            )}
+          </div>
+          <MagicButton
+            title="Submit"
+            icon={<FaLocationArrow />}
+            position="right"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md"
           />
-          {errors.name && (
-            <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+          {submitError && (
+            <Alert className="mt-5" color="failure">
+              {submitError}
+            </Alert>
           )}
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-white"
-          >
-            Email
-          </label>
-          <TextInput
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={(e) => handleBlur(e.target)}
-            className="mt-1 rounded-md w-full text-black"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-          )}
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="message"
-            className="block text-sm font-medium text-white"
-          >
-            Message
-          </label>
-          <Textarea
-            name="message"
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onBlur={(e) => handleBlur(e.target)}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full text-black"
-            rows="4"
-          />
-          {errors.message && (
-            <p className="text-red-500 text-xs mt-1">{errors.message}</p>
-          )}
-        </div>
-        <Button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md"
-        >
-          Submit
-        </Button>
-        {submitError && (
-          <Alert className="mt-5" color="failure">
-            {submitError}
-          </Alert>
-        )}
-      </form>
-    </div>
+        </form>
+      </div>
+    </section>
   );
 }
