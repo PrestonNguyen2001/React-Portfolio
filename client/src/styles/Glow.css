@@ -178,6 +178,39 @@ div[data-overlay-container="true"]{
   opacity: 1;
   animation: selected .3s ease-in-out;
 }
+
+.no-transform {
+  transform: none !important;
+}
+
+.glowing-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px; /* Set fixed width based on the longest text */
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  background-color: #161A31;
+  color: white;
+  transition: none; /* Remove any transitions */
+  margin: 0; /* Ensure no margin shift */
+  text-align: center; /* Center text */
+}
+
+.glowing-button:hover,
+.glowing-button:focus,
+.glowing-button:active {
+  background-color: #10132E; /* Ensure background color changes don't affect layout */
+}
+
+.glowing-button .icon {
+  margin-right: 8px; /* Ensure consistent spacing */
+}
+
 @keyframes glow-visibility {
   0%,
   100% {

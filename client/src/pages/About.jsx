@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import "@styles/About.css";
-import AboutContent from "../components/About/AboutContent";
+import "../styles/About.css";
+import Summary from "../components/About/Summary";
 import Skills from "../components/About/Skills";
 import Interests from "../components/About/Interests";
 import Strengths from "../components/About/Strengths";
@@ -40,18 +40,19 @@ export default function About() {
   return (
     <motion.div
       ref={ref}
-      className="container "
+      className="relative z-20 py-20 w-full bg-white dark:bg-black-100"
       initial="hidden"
       animate={controls}
     >
+      <h1 className="heading">
+        About <span className="text-purple">Me</span>
+      </h1>
       <motion.h1
         className="h2 mb-20 title text-center text-light-text dark:text-dark-text"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-      >
-        About Me
-      </motion.h1>
+      ></motion.h1>
       <div className="tab-container">
         <ul className="tab-btn-list">
           <li className="tab-btn-item">
@@ -62,7 +63,7 @@ export default function About() {
               onClick={() => setActiveTab("about")}
               variants={itemVariants}
             >
-              About Me
+              Summary
             </motion.button>
           </li>
           <li className="tab-btn-item">
@@ -101,7 +102,7 @@ export default function About() {
         </ul>
 
         <div className="tab-content active">
-          {activeTab === "about" && <AboutContent />}
+          {activeTab === "about" && <Summary />}
           {activeTab === "skills" && <Skills />}
           {activeTab === "interests" && <Interests />}
           {activeTab === "strengths" && <Strengths />}

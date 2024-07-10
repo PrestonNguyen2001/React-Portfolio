@@ -1,6 +1,6 @@
-// client/src/components/Strengths.jsx
-
 import { motion } from "framer-motion";
+import strengthsData from "../../data/strengthsData";
+import { Button } from "../Effects/MovingBorders.jsx";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,46 +23,46 @@ const itemVariants = {
 
 const Strengths = () => (
   <motion.div
-    className="text-lg text-light-text dark:text-dark-text flex flex-col gap-4 text-center"
+    className="strengths-container"
     initial="hidden"
     animate="visible"
     variants={containerVariants}
   >
-    <motion.p variants={itemVariants}>
-      <strong>Proactive Learner:</strong> Continuously seeks out new knowledge
-      and skills, staying updated with the latest technologies and best
-      practices in software development.
-    </motion.p>
-    <motion.p variants={itemVariants}>
-      <strong>Strong Work Ethic:</strong> Demonstrated commitment and dedication
-      through extensive experience in family business and current educational
-      pursuits.
-    </motion.p>
-    <motion.p variants={itemVariants}>
-      <strong>Problem-Solving Abilities:</strong> Adept at troubleshooting and
-      resolving technical issues, as well as creatively addressing challenges in
-      project development.
-    </motion.p>
-    <motion.p variants={itemVariants}>
-      <strong>Collaborative Team Player:</strong> Works effectively in team
-      settings, contributing positively to group projects and fostering a
-      cooperative work environment.
-    </motion.p>
-    <motion.p variants={itemVariants}>
-      <strong>Adaptability:</strong> Quickly adapts to new tools, technologies,
-      and environments, ensuring seamless integration and contribution to
-      projects.
-    </motion.p>
-    <motion.p variants={itemVariants}>
-      <strong>Customer Service Oriented:</strong> Brings valuable experience in
-      customer service, enhancing communication and interpersonal skills vital
-      for understanding and addressing user needs.
-    </motion.p>
-    <motion.p variants={itemVariants}>
-      <strong>Attention to Detail:</strong> Ensures accuracy and precision in
-      coding, documentation, and overall project execution, leading to
-      high-quality deliverables.
-    </motion.p>
+    <div className="w-full mt-12 grid lg:grid-cols-4 grid-cols-1 gap-10">
+      {strengthsData.map((strength) => (
+        <Button
+          key={strength.id}
+          duration={Math.floor(Math.random() * 10000) + 10000}
+          borderRadius="1.75rem"
+          style={{
+            background: "rgb(4,7,29)",
+            backgroundColor:
+              "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
+            borderRadius: `calc(1.75rem * 0.96)`,
+          }}
+          className="flex-1 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+        >
+          <motion.div
+            className="flex lg:flex-row flex-col lg:items-center p-3 py-6 md:p-5 lg:p-10 gap-2"
+            variants={itemVariants}
+          >
+            <img
+              src={strength.thumbnail}
+              alt={strength.title}
+              className="lg:w-32 md:w-20 w-16"
+            />
+            <div className="flex flex-col">
+              <h1 className="text-start text-xl md:text-2xl font-bold">
+                {strength.title}
+              </h1>
+              <p className="text-start text-white-100 mt-3 font-semibold">
+                {strength.description}
+              </p>
+            </div>
+          </motion.div>
+        </Button>
+      ))}
+    </div>
   </motion.div>
 );
 

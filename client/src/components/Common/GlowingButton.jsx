@@ -22,7 +22,7 @@ const GlowingButton = forwardRef(function GlowingButton(
 
   return (
     <button
-      onClick={onClick}
+      onClick={onClick} // Ensure onClick is used here
       ref={assignRefs(localRef, ref)}
       tabIndex={0}
       data-glow-animation={selectedPath}

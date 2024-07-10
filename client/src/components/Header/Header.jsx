@@ -2,9 +2,8 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { Avatar, Button, Dropdown } from "flowbite-react";
 import { Link } from "react-router-dom";
-import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleTheme } from "../../redux/theme/themeSlice";
 import { signoutSuccess } from "../../redux/user/userSlice";
 import { motion } from "framer-motion";
 import GlowingButton from "./GlowingButton";
@@ -43,7 +42,6 @@ const item = {
 export default function Header({ activeTab, setActiveTab }) {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
-  const { theme } = useSelector((state) => state.theme);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
@@ -56,8 +54,6 @@ export default function Header({ activeTab, setActiveTab }) {
     };
 
     window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -91,7 +87,6 @@ export default function Header({ activeTab, setActiveTab }) {
     }
   };
 
-
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
     setActiveTab(targetId);
@@ -102,18 +97,16 @@ export default function Header({ activeTab, setActiveTab }) {
         behavior: "smooth",
       });
     }
-    setIsNavbarOpen(false); // Close navbar on link click
+    setIsNavbarOpen(false);
   };
 
   const toggleNavbar = () => {
     if (isNavbarOpen) {
-      // Add close class to initiate the closing animation
       document.querySelector(".navbar").classList.add("close");
-      // Wait for the animation to complete before actually hiding the navbar
       setTimeout(() => {
         setIsNavbarOpen(false);
         document.querySelector(".navbar").classList.remove("close");
-      }, 500); // Duration of the slideOut animation
+      }, 500);
     } else {
       setIsNavbarOpen(true);
     }
@@ -166,6 +159,16 @@ export default function Header({ activeTab, setActiveTab }) {
             </motion.div>
             <motion.div variants={item}>
               <Link
+                to="#resume"
+                onClick={(e) => handleSmoothScroll(e, "resume")}
+              >
+                <GlowingButton selectedPath={activeTab === "resume"}>
+                  Resume
+                </GlowingButton>
+              </Link>
+            </motion.div>
+            <motion.div variants={item}>
+              <Link
                 to="#portfolio"
                 onClick={(e) => handleSmoothScroll(e, "portfolio")}
               >
@@ -181,16 +184,6 @@ export default function Header({ activeTab, setActiveTab }) {
               >
                 <GlowingButton selectedPath={activeTab === "timeline"}>
                   Timeline
-                </GlowingButton>
-              </Link>
-            </motion.div>
-            <motion.div variants={item}>
-              <Link
-                to="#resume"
-                onClick={(e) => handleSmoothScroll(e, "resume")}
-              >
-                <GlowingButton selectedPath={activeTab === "resume"}>
-                  Resume
                 </GlowingButton>
               </Link>
             </motion.div>
@@ -213,7 +206,6 @@ export default function Header({ activeTab, setActiveTab }) {
             </motion.div>
           </div>
           <div className="flex items-center gap-2">
-            
             {currentUser ? (
               <Dropdown
                 arrowIcon={false}

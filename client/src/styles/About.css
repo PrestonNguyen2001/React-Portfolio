@@ -48,21 +48,6 @@
 
 .social-link { color: var(--text-white); }
 
-.skills-container {
-  display: grid;
-  flex-direction: column;
-  gap: 40px;
-  padding: 20px;
-  grid-template-columns: 1fr 1fr;
-}
-
-.skills-section {
-  background-color: #1f2937; /* Tailwind's bg-gray-950 */
-  border-radius: 10px;
-  padding: 20px;
-  border: 2px solid #4ade80; /* Tailwind's border-lime-800 */
-  transition: border-color 0.5s;
-}
 
 .skills-section:hover {
   border-color: #a3e635; /* Tailwind's border-lime-600 */
@@ -102,6 +87,7 @@
   color: #d1d5db; /* Tailwind's text-gray-300 */
   font-size: 1rem;
 }
+
 
 /*-----------------------------------*\
   #MEDIA QUERIES

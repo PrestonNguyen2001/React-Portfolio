@@ -6,7 +6,10 @@ import { FaLocationArrow } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <div className="pb-20 pt-36" id="home">
+     <section className="relative pb-20 pt-36 animate-fadeIn" id="home">
+      <div className="h-screen w-full dark:bg-black-100 bg-white dark:bg-grid-white/[0.03] bg-grid-black-100/[0.2] absolute top-0 left-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center dark:bg-black-100 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] pointer-events-none" />
+      </div>
       <div>
         <Spotlight
           className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
@@ -21,7 +24,7 @@ const Hero = () => {
 
       <div className="relative flex flex-col items-center justify-center my-20 z-10">
         <p className="uppercase tracking-widest text-xs text-center text-blue-100 max-w-80">
-          Dynamic Web Magic with Next.js
+          Developer Portfolio With React
         </p>
 
         <TextGenerateEffect
@@ -39,7 +42,7 @@ const Hero = () => {
           />
         </a>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,9 +1,9 @@
 import { gridItems } from "../../data/index";
-import { BentoGrid, BentoGridItem } from "../Grid/BentoGrid";
+import { BentoGrid, BentoGridItem } from "./BentoGrid";
 
-const Interests = () => {
+const Grid = () => {
   return (
-    <section id="interests">
+    <section id="about">
       <BentoGrid className="w-full py-20">
         {gridItems.map((item, i) => (
           <BentoGridItem
@@ -16,7 +16,6 @@ const Interests = () => {
             imgClassName={item.imgClassName}
             titleClassName={item.titleClassName}
             spareImg={item.spareImg}
-            component={item.component} // Pass the component prop
           />
         ))}
       </BentoGrid>
@@ -24,4 +23,4 @@ const Interests = () => {
   );
 };
 
-export default Interests;
+export default Grid;

@@ -116,7 +116,7 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/posts/:slug" element={<Post />} />
           </Routes>
-          {isLoaded && heroLoaded && <Footer />}
+          {isLoaded && <Footer />}
         </BrowserRouter>
       </div>
     </>

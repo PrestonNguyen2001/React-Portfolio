@@ -1,8 +1,6 @@
-// client/src/components/AboutContent.jsx
-
 import { motion } from "framer-motion";
 import { BsFacebook, BsInstagram, BsTwitter, BsGithub } from "react-icons/bs";
-import aboutImg from "../../assets/images/about.png";
+import ProfileImage from "../../assets/images/ProfileImage.png";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,7 +21,7 @@ const itemVariants = {
   },
 };
 
-const AboutContent = () => (
+const Summary = () => (
   <motion.div className="grid-list" variants={containerVariants}>
     <motion.figure
       className="about-banner img-holder"
@@ -32,7 +30,7 @@ const AboutContent = () => (
       variants={itemVariants}
     >
       <img
-        src={aboutImg}
+        src={ProfileImage}
         width="370"
         height="220"
         loading="lazy"
@@ -43,13 +41,20 @@ const AboutContent = () => (
     <motion.div className="about-content" variants={containerVariants}>
       <motion.div className="about-details" variants={itemVariants}>
         <h2 className="h4 title section-title text-light-text dark:text-dark-text">
-          A very small stage in a vast cosmic.
+          Meet Preston Nguyen
         </h2>
 
         <p className="section-text text-gray-600 dark:text-gray-300">
-          A very small stage in a vast cosmic arena great turbulent clouds
-          encyclo-paedia galactica star stuff harvesting star light the carbon
-          in our apple pies realm of the galaxies
+          Hi, I'm Preston, a coding bootcamp student with a passion for
+          technology and creativity. My journey in tech began with a curiosity
+          for how things work and a desire to create solutions that make a
+          difference.
+        </p>
+        <p className="section-text text-gray-600 dark:text-gray-300">
+          Outside of coding, I love exploring new hobbies and activities that
+          keep me inspired and motivated. Whether it's experimenting with new
+          recipes, hiking trails, or diving into a good book, I believe in
+          maintaining a balanced lifestyle.
         </p>
 
         <motion.ul className="about-list" variants={containerVariants}>
@@ -84,7 +89,7 @@ const AboutContent = () => (
             <p className="list-title text-light-text dark:text-dark-text">
               Social Network
             </p>
-            <div className="social-list">
+            <div className="social-list flex space-x-3">
               <a
                 href="#"
                 className="social-link h6 text-light-text dark:text-dark-text"
@@ -121,4 +126,4 @@ const AboutContent = () => (
   </motion.div>
 );
 
-export default AboutContent;
+export default Summary;

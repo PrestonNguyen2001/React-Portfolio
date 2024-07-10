@@ -1,0 +1,96 @@
+import React from "react";
+import {
+  PythonIcon,
+  CSSIcon,
+  HTMLIcon,
+  JSIcon,
+  TypeScriptIcon,
+  FirebaseIcon,
+  MongoDBIcon,
+  MongooseIcon,
+  MySQLIcon,
+  PostGreSQLIcon,
+  ReactIcon,
+  ReduxIcon,
+  GraphqlIcon,
+  SequelizeIcon,
+  HandlebarsIcon,
+  BootstrapIcon,
+  TailwindIcon,
+  ReactBootstrapIcon,
+  NextJSIcon,
+  ExpressIcon,
+  GitIcon,
+  GitHubIcon,
+  GitLabIcon,
+  PostmanIcon,
+  JestIcon,
+  PyCharmIcon,
+  ViteIcon,
+  VSCodeIcon,
+  UnityIcon,
+  UnrealEngineIcon,
+} from "../../assets/icons/icons.js";
+
+export const skillsData = [
+  {
+    category: "Languages",
+    skills: [
+      { name: "Python", icon: <PythonIcon /> },
+      { name: "CSS", icon: <CSSIcon /> },
+      { name: "HTML", icon: <HTMLIcon /> },
+      { name: "JavaScript", icon: <JSIcon /> },
+      { name: "TypeScript", icon: <TypeScriptIcon /> },
+    ],
+  },
+  {
+    category: "Databases & Cloud",
+    skills: [
+      { name: "Firebase", icon: <FirebaseIcon /> },
+      { name: "MongoDB", icon: <MongoDBIcon /> },
+      { name: "Mongoose", icon: <MongooseIcon /> },
+      { name: "MySQL", icon: <MySQLIcon /> },
+      { name: "PostGreSQL", icon: <PostGreSQLIcon /> },
+    ],
+  },
+  {
+    category: "Libraries",
+    skills: [
+      { name: "React Js", icon: <ReactIcon /> },
+      { name: "Redux", icon: <ReduxIcon /> },
+      { name: "Graphql", icon: <GraphqlIcon /> },
+      { name: "Sequelize", icon: <SequelizeIcon /> },
+      { name: "Handlebars", icon: <HandlebarsIcon /> },
+    ],
+  },
+  {
+    category: "Frameworks",
+    skills: [
+      { name: "Bootstrap", icon: <BootstrapIcon /> },
+      { name: "Tailwind CSS", icon: <TailwindIcon /> },
+      { name: "React Bootstrap", icon: <ReactBootstrapIcon /> },
+      { name: "NextJS", icon: <NextJSIcon /> },
+      { name: "ExpressJS", icon: <ExpressIcon /> },
+    ],
+  },
+  {
+    category: "Version Control & Deployment",
+    skills: [
+      { name: "Git", icon: <GitIcon /> },
+      { name: "GitHub", icon: <GitHubIcon /> },
+      { name: "GitLab", icon: <GitLabIcon /> },
+      { name: "Postman", icon: <PostmanIcon /> },
+    ],
+  },
+  {
+    category: "Others",
+    skills: [
+      { name: "Jest", icon: <JestIcon /> },
+      { name: "PyCharm", icon: <PyCharmIcon /> },
+      { name: "Vite", icon: <ViteIcon /> },
+      { name: "VS Code", icon: <VSCodeIcon /> },
+      { name: "Unity", icon: <UnityIcon /> },
+      { name: "Unreal", icon: <UnrealEngineIcon /> },
+    ],
+  },
+];

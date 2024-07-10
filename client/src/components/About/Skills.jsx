@@ -1,38 +1,6 @@
-// client/src/components/Skills.jsx
-
 import { motion } from "framer-motion";
-import {
-  PythonIcon,
-  CSSIcon,
-  HTMLIcon,
-  JSIcon,
-  TypeScriptIcon,
-  FirebaseIcon,
-  MongoDBIcon,
-  MongooseIcon,
-  MySQLIcon,
-  PostGreSQLIcon,
-  ReactIcon,
-  ReduxIcon,
-  GraphqlIcon,
-  SequelizeIcon,
-  HandlebarsIcon,
-  BootstrapIcon,
-  TailwindIcon,
-  ReactBootstrapIcon,
-  NextJSIcon,
-  ExpressIcon,
-  GitIcon,
-  GitHubIcon,
-  GitLabIcon,
-  PostmanIcon,
-  JestIcon,
-  PyCharmIcon,
-  ViteIcon,
-  VSCodeIcon,
-  UnityIcon,
-  UnrealEngineIcon,
-} from "../../assets/icons/icons.js";
+import skills from "../../data/skillsData";
+import { Button } from "../Effects/MovingBorders.jsx";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -60,243 +28,52 @@ const Skills = () => (
     animate="visible"
     variants={containerVariants}
   >
-    <motion.div className="skills-section" variants={itemVariants}>
-      <h3 className="section-title text-light-text dark:text-dark-text">
-        Languages
-      </h3>
-      <motion.div className="skills-list" variants={containerVariants}>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={PythonIcon} alt="Python" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Python
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={CSSIcon} alt="CSS" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            CSS
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={HTMLIcon} alt="HTML" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            HTML
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={JSIcon} alt="JavaScript" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            JavaScript
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={TypeScriptIcon} alt="TypeScript" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            TypeScript
-          </span>
-        </motion.div>
-      </motion.div>
-    </motion.div>
-
-    <motion.div className="skills-section" variants={itemVariants}>
-      <h3 className="section-title text-light-text dark:text-dark-text">
-        Databases & Cloud
-      </h3>
-      <motion.div className="skills-list" variants={containerVariants}>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={FirebaseIcon} alt="Firebase" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Firebase
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={MongoDBIcon} alt="MongoDB" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            MongoDB
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={MongooseIcon} alt="Mongoose" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Mongoose
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={MySQLIcon} alt="MySQL" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            MySQL
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={PostGreSQLIcon} alt="PostGreSQL" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            PostGreSQL
-          </span>
-        </motion.div>
-      </motion.div>
-    </motion.div>
-
-    <motion.div className="skills-section" variants={itemVariants}>
-      <h3 className="section-title text-light-text dark:text-dark-text">
-        Libraries
-      </h3>
-      <motion.div className="skills-list" variants={containerVariants}>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={ReactIcon} alt="React Js" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            React Js
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={ReduxIcon} alt="Redux" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Redux
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={GraphqlIcon} alt="Graphql" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Graphql
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={SequelizeIcon} alt="Sequelize" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Sequelize
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={MongooseIcon} alt="Mongoose" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Mongoose
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={HandlebarsIcon} alt="Handlebars" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Handlebars
-          </span>
-        </motion.div>
-      </motion.div>
-    </motion.div>
-
-    <motion.div className="skills-section" variants={itemVariants}>
-      <h3 className="section-title text-light-text dark:text-dark-text">
-        Frameworks
-      </h3>
-      <motion.div className="skills-list" variants={containerVariants}>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={BootstrapIcon} alt="Bootstrap" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Bootstrap
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={TailwindIcon} alt="Tailwind CSS" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Tailwind CSS
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img
-            src={ReactBootstrapIcon}
-            alt="React Bootstrap"
-            className="icon"
-          />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            React Bootstrap
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={NextJSIcon} alt="NextJS" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            NextJS
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={ExpressIcon} alt="Express" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            ExpressJS
-          </span>
-        </motion.div>
-      </motion.div>
-    </motion.div>
-
-    <motion.div className="skills-section" variants={itemVariants}>
-      <h3 className="section-title text-light-text dark:text-dark-text">
-        Version Control & Deployment
-      </h3>
-      <motion.div className="skills-list" variants={containerVariants}>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={GitIcon} alt="Git" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Git
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={GitHubIcon} alt="GitHub" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            GitHub
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={GitLabIcon} alt="GitLab" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            GitLab
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={PostmanIcon} alt="Postman" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Postman
-          </span>
-        </motion.div>
-      </motion.div>
-    </motion.div>
-
-    <motion.div className="skills-section" variants={itemVariants}>
-      <h3 className="section-title text-light-text dark:text-dark-text">
-        Others
-      </h3>
-      <motion.div className="skills-list" variants={containerVariants}>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={JestIcon} alt="Jest" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Jest
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={PyCharmIcon} alt="PyCharm" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            PyCharm
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={ViteIcon} alt="Vite" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Vite
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={VSCodeIcon} alt="VS Code" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            VS Code
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={UnityIcon} alt="Unity" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Unity
-          </span>
-        </motion.div>
-        <motion.div className="skill-item" variants={itemVariants}>
-          <img src={UnrealEngineIcon} alt="Unreal Engine" className="icon" />
-          <span className="skill-text text-light-text dark:text-dark-text">
-            Unreal
-          </span>
-        </motion.div>
-      </motion.div>
-    </motion.div>
+    <div className="w-full mt-12 grid lg:grid-cols-4 grid-cols-1 gap-10">
+      {skills.map((card) => (
+        <Button
+          key={card.id}
+          duration={Math.floor(Math.random() * 10000) + 10000}
+          borderRadius="1.75rem"
+          style={{
+            background: "rgb(4,7,29)",
+            backgroundColor:
+              "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
+            borderRadius: `calc(1.75rem * 0.96)`,
+          }}
+          className="flex-1 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+        >
+          <motion.div
+            className="flex flex-col p-3 py-6 md:p-5 lg:p-10 gap-2"
+            variants={itemVariants}
+          >
+            <h3 className="section-title text-light-text dark:text-dark-text">
+              {card.title}
+            </h3>
+            <motion.div
+              className="skills-list grid grid-cols-2 gap-4"
+              variants={containerVariants}
+            >
+              {card.desc.map((skill, index) => (
+                <motion.div
+                  className="skill-item flex items-center gap-2"
+                  variants={itemVariants}
+                  key={index}
+                >
+                  <img
+                    src={skill.icon}
+                    alt={skill.name}
+                    className="icon w-6 h-6"
+                  />
+                  <span className="skill-text text-light-text dark:text-dark-text">
+                    {skill.name}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </Button>
+      ))}
+    </div>
   </motion.div>
 );
 
