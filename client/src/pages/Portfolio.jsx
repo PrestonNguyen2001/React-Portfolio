@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import ProjectCard from "../components/Portfolio/ProjectCard";
-import { CardContainer } from "../components/Portfolio/CardContainer";
+import { CardContainer } from "../components/Portfolio/Pin";
 
 const Portfolio = () => {
   const [projects, setProjects] = useState([]);
