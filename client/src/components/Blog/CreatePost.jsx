@@ -14,6 +14,8 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/authUtils";
+import MagicButton from "../Common/MagicButton";
+
 
 export default function CreatePost() {
   const { currentUser } = useSelector((state) => state.user);
@@ -23,6 +25,7 @@ export default function CreatePost() {
   const [imageUploadError, setImageUploadError] = useState(null);
   const [publishError, setPublishError] = useState(null);
   const [publishSuccess, setPublishSuccess] = useState(null);
+  const [isOtherCategory, setIsOtherCategory] = useState(false);
   const navigate = useNavigate();
 
   const quillRef = useRef(null); // Create a ref for ReactQuill
@@ -100,8 +103,19 @@ export default function CreatePost() {
     setFormData({ ...formData, content });
   };
 
+  const handleCategoryChange = (e) => {
+    const value = e.target.value;
+    if (value === "other") {
+      setIsOtherCategory(true);
+      setFormData({ ...formData, category: "" });
+    } else {
+      setIsOtherCategory(false);
+      setFormData({ ...formData, category: value });
+    }
+  };
+
   return (
-    <div className="p-3 max-w-3xl mx-auto min-h-screen">
+    <div className="py-20 max-w-3xl mx-auto min-h-screen">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -115,16 +129,26 @@ export default function CreatePost() {
               setFormData({ ...formData, title: e.target.value })
             }
           />
-          <Select
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-          >
-            <option value="uncategorized">Select a category</option>
-            <option value="javascript">JavaScript</option>
-            <option value="reactjs">React.js</option>
-            <option value="nextjs">Next.js</option>
-          </Select>
+          {isOtherCategory ? (
+            <TextInput
+              type="text"
+              placeholder="Enter category"
+              required
+              id="category"
+              className="flex-1"
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+            />
+          ) : (
+            <Select onChange={handleCategoryChange} className="flex-1">
+              <option value="uncategorized">Select a category</option>
+              <option value="javascript">JavaScript</option>
+              <option value="reactjs">React.js</option>
+              <option value="nextjs">Next.js</option>
+              <option value="other">Other</option>
+            </Select>
+          )}
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
           <FileInput
@@ -168,9 +192,11 @@ export default function CreatePost() {
           required
           onChange={handleQuillChange}
         />
-        <Button type="submit" gradientDuoTone="purpleToPink">
-          Publish
-        </Button>
+        <MagicButton
+          title="Publish"
+          handleClick={handleSubmit}
+          className="w-full"
+        />{" "}
         {publishError && (
           <Alert className="mt-5" color="failure">
             {publishError}

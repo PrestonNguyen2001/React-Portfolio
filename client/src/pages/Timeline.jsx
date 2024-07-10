@@ -64,8 +64,8 @@ const Timeline = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 simple-clean-container">
-      <h1 className="heading">
+    <div className="container mx-auto py-20 px-4 simple-clean-container">
+      <h1 className="heading py-10">
         My <span className="text-purple">Journey</span>
       </h1>
       <VerticalTimeline>

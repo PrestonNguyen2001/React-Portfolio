@@ -1,7 +1,7 @@
 import Spotlight from "../Effects/Spotlight"; // Ensure the import path is correct
 import Type from "../Common/Type";
 import { TextGenerateEffect } from "./TextGenerateEffect";
-import MagicButton from "./MagicButton";
+import MagicButton from "../Common/MagicButton";
 import { FaLocationArrow } from "react-icons/fa";
 
 const Hero = () => {

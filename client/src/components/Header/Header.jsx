@@ -131,7 +131,7 @@ export default function Header({ activeTab, setActiveTab }) {
             onClick={() => setActiveTab("home")}
           >
             <span className="px-2 py-1 bg-gradient-to-r from-gray-700 via-gray-500 to-gray-300 rounded-lg text-white">
-              Preston&apos;s
+              Preston&apos;s 
             </span>
             Portfolio
           </Link>

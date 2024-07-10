@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert, TextInput, Textarea } from "flowbite-react";
-import MagicButton from "../components/Hero/MagicButton";
+import MagicButton from "../components/Common/MagicButton";
 import { FaLocationArrow } from "react-icons/fa6";
 
 export default function Contact() {

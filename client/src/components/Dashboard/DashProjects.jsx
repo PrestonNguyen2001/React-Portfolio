@@ -1,4 +1,3 @@
-// client/src/components/Dashboard/DashProjects.jsx
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -23,6 +22,8 @@ import { app } from "../../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getToken } from "../../utils/authUtils";
+import MagicButton from "../Common/MagicButton";
+import { FaPen } from "react-icons/fa";
 
 export default function DashProjects() {
   const { currentUser } = useSelector((state) => state.user);
@@ -172,11 +173,10 @@ export default function DashProjects() {
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && (
-        <Button className="mb-4" onClick={() => setShowAddModal(true)}>
-          Add Project
-        </Button>
-      )}
+      <h1 className="heading mb-10">
+        Recent
+        <span className="text-purple"> Projects</span>
+      </h1>
       {currentUser.isAdmin && projects.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
@@ -262,6 +262,15 @@ export default function DashProjects() {
         </>
       ) : (
         <p>You have no projects yet!</p>
+      )}
+      {currentUser.isAdmin && (
+        <MagicButton
+          title="Add Project"
+          icon={<FaPen />}
+          position="right"
+          otherClasses="mb-4 w-full"
+          handleClick={() => setShowAddModal(true)}
+        />
       )}
       <Modal
         show={showModal}

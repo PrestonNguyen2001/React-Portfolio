@@ -7,6 +7,8 @@ import "react-quill/dist/quill.snow.css";
 import educationIcon from "../../assets/svg/education.svg";
 import personalIcon from "../../assets/svg/personal.svg";
 import workIcon from "../../assets/svg/work.svg";
+import MagicButton from "../Common/MagicButton";
+import { FaPen } from "react-icons/fa";
 
 export default function DashTimeline() {
   const { currentUser } = useSelector((state) => state.user);
@@ -248,12 +250,13 @@ export default function DashTimeline() {
         <p>You have no events yet!</p>
       )}
       {currentUser.isAdmin && (
-        <Button
-          className="mb-4 w-full mt-2"
-          onClick={() => setShowAddModal(true)}
-        >
-          Add Event
-        </Button>
+        <MagicButton
+          title="Add Event"
+          icon={<FaPen />}
+          position="right"
+          otherClasses="mb-4 w-full"
+          handleClick={() => setShowAddModal(true)}
+        />
       )}
       <Modal
         show={showModal}
