@@ -15,7 +15,12 @@ const BlogPost = ({ post }) => {
           <img src={post.image} alt={post.title} className="blog-post-image" />
         )}
         <h2 className="blog-post-title">{post.title}</h2>
-        <p className="blog-post-content">{post.content.substring(0, 100)}...</p>
+        <div
+          className="blog-post-content"
+          dangerouslySetInnerHTML={{
+            __html: post.content.substring(0, 100) + "...",
+          }}
+        />
       </Link>
     </div>
   );

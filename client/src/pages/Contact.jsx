@@ -68,8 +68,7 @@ export default function Contact() {
 
   return (
     <section className="relative pb-36 pt-24 " id="contact">
-      {/* Background Grid */}
-      <div className="absolute inset-0 flex items-center justify-center h-80 ">
+      <div className="absolute inset-x-0 bottom-0 h-80">
         <img
           src="/footer-grid.svg"
           alt="grid"
@@ -79,7 +78,7 @@ export default function Contact() {
       <h1 className="heading">
         Contact <span className="text-purple">Me</span>
       </h1>
-      <div className="mt-20 relative container mx-auto p-4 z-10 ">
+      <div className="mt-20 relative container mx-auto p-4 z-10">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label

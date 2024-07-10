@@ -1,8 +1,9 @@
+// client/src/components/Dashboard/DashPosts.jsx
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAuthHeaders } from "../../utils/authUtils";
 
 export default function DashPosts() {
@@ -10,6 +11,7 @@ export default function DashPosts() {
   const [posts, setPosts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -87,15 +89,23 @@ export default function DashPosts() {
             <div key={post._id} className="mb-4">
               <h2>{post.title}</h2>
               <p>{post.content}</p>
-              <Button
-                color="failure"
-                onClick={() => {
-                  setShowModal(true);
-                  setPostIdToDelete(post._id);
-                }}
-              >
-                Delete
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  color="failure"
+                  onClick={() => {
+                    setShowModal(true);
+                    setPostIdToDelete(post._id);
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button
+                  color="info"
+                  onClick={() => navigate(`/update-post/${post._id}`)}
+                >
+                  Edit
+                </Button>
+              </div>
             </div>
           ))}
         </>

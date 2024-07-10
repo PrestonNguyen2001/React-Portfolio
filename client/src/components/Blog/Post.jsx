@@ -48,13 +48,16 @@ const Post = () => {
       {post.image && (
         <img src={post.image} alt={post.title} className="post-image" />
       )}
-      <div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full  text-xs">
+      <div className="flex justify-between p-3 border-b border-slate-500 mx-auto w-full text-xs">
         <p className="post-author">By: {post.userId}</p>
         <p className="post-date">Published on: {formattedDate}</p>
       </div>
 
       <div className="post-content-container">
-        <p className="post-content">{post.content}</p>
+        <div
+          className="post-content"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
       </div>
       <CommentSection postId={post._id} />
     </div>
