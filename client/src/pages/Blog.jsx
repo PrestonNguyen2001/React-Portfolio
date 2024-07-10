@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts } from "../../redux/post/postSlice";
+import { getPosts } from "../redux/post/postSlice";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import BlogPost from "./BlogPost";
-import "../../styles/Blog.css";
+import BlogPost from "../components/Blog/BlogPost";
+import "../styles/Blog.css";
 
 const containerVariants = {
   hidden: { opacity: 0 },

@@ -213,14 +213,7 @@ export default function Header({ activeTab, setActiveTab }) {
             </motion.div>
           </div>
           <div className="flex items-center gap-2">
-            <Button
-              className="w-12 h-10 hidden sm:inline"
-              color="gray"
-              pill
-              onClick={() => dispatch(toggleTheme())}
-            >
-              {theme === "light" ? <FaSun /> : <FaMoon />}
-            </Button>
+            
             {currentUser ? (
               <Dropdown
                 arrowIcon={false}

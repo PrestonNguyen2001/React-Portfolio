@@ -1,87 +1,46 @@
-import { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import VanillaTilt from "vanilla-tilt";
-import Type from "../Type/Type";
-import profileImage from "../../assets/images/ProfileImage.png";
-import heroShape1 from "../../assets/images/hero-shape-1.png";
-import heroShape2 from "../../assets/images/hero-shape-2.png";
-import "../../styles/Hero.css";
+import Spotlight from "../Effects/Spotlight"; // Ensure the import path is correct
+import Type from "../Common/Type";
+import { TextGenerateEffect } from "./TextGenerateEffect";
+import MagicButton from "./MagicButton";
+import { FaLocationArrow } from "react-icons/fa";
 
-export default function Hero({ setHeroLoaded }) {
-  const tiltRef = useRef(null);
-
-  useEffect(() => {
-    VanillaTilt.init(tiltRef.current, {
-      max: 25,
-      speed: 400,
-    });
-
-    return () => {
-      if (tiltRef.current) {
-        tiltRef.current.vanillaTilt.destroy();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setHeroLoaded(true);
-    }, 500); 
-  }, [setHeroLoaded]);
-
+const Hero = () => {
   return (
-    <section className="section hero text-center animate-fadeIn" id="home">
-      <div className="absolute inset-0 bg-zinc-50 dark:bg-black opacity-50"></div>
-      <div className="hero-container">
-        <div className="hero-content">
-          <h1 className="h1 title animate-slideInLeft">Preston Nguyen</h1>
-          <Type />
-          <div className="wrapper">
-            <Link
-              to="/contact"
-              className="mt-20 btn bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition duration-200 animate-bounce"
-            >
-              Hire Me
-            </Link>
-          </div>
-        </div>
-        <div className="banner-outline has-after" ref={tiltRef} data-tilt>
-          <div
-            className="hero-banner img-holder has-after"
-            style={{ "--width": "400", "--height": "580" }}
-            ref={tiltRef}
-            data-tilt
-          >
-            <img
-              src={profileImage}
-              width="500"
-              height="680"
-              alt="Preston Nguyen"
-              className="img-cover"
-            />
-          </div>
-          <span className="span title">Preston Nguyen</span>
-        </div>
+    <div className="pb-20 pt-36" id="home">
+      <div>
+        <Spotlight
+          className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+          fill="white"
+        />
+        <Spotlight
+          className="h-[80vh] w-[50vw] top-10 left-full"
+          fill="purple"
+        />
+        <Spotlight className="left-80 top-28 h-[80vh] w-[50vw]" fill="blue" />
       </div>
-      <img
-        src={heroShape1}
-        width="559"
-        height="232"
-        alt="shape"
-        className="shape shape-1"
-      />
-      <img
-        src={heroShape2}
-        width="1358"
-        height="497"
-        alt="shape"
-        className="shape shape-2"
-      />
-    </section>
-  );
-}
 
-Hero.propTypes = {
-  setHeroLoaded: PropTypes.func.isRequired,
+      <div className="relative flex flex-col items-center justify-center my-20 z-10">
+        <p className="uppercase tracking-widest text-xs text-center text-blue-100 max-w-80">
+          Dynamic Web Magic with Next.js
+        </p>
+
+        <TextGenerateEffect
+          words="Hi there! I'm Preston. Welcome to my portfolio."
+          className="text-center text-[40px] md:text-5xl lg:text-6xl"
+        />
+
+        <p className="text-center md:tracking-wider mb-4 text-sm md:text-lg lg:text-2xl"></p>
+
+        <a href="#about">
+          <MagicButton
+            title="Show my work"
+            icon={<FaLocationArrow />}
+            position="right"
+          />
+        </a>
+      </div>
+    </div>
+  );
 };
+
+export default Hero;

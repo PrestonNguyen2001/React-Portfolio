@@ -45,7 +45,7 @@ export default function Resume() {
   return (
     <motion.div
       ref={ref}
-      className="bg-light-background dark:bg-dark-background py-10"
+      className="py-10"
       initial="hidden"
       animate={controls}
       variants={containerVariants}

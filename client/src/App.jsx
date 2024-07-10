@@ -1,16 +1,8 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {
-  Home,
-  About,
   SignIn,
   SignUp,
-  Dashboard,
-  Portfolio,
-  Timeline,
-  Blog,
-  Contact,
-  Resume,
   CreatePost,
   UpdatePost,
   Post,
@@ -21,6 +13,17 @@ import {
   Preloader,
   ScrollToTop,
 } from "./components";
+
+import {
+  About,
+  Portfolio,
+  Home,
+  Timeline,
+  Blog,
+  Contact,
+  Resume,
+  Dashboard,
+} from "./pages";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
