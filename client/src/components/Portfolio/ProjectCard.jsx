@@ -1,6 +1,5 @@
-// client/src/components/Portfolio/ProjectCard.jsx
 import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { FaLocationArrow } from "react-icons/fa6";
 
 const ProjectCard = ({
   imgPath,
@@ -8,59 +7,48 @@ const ProjectCard = ({
   description,
   ghLink,
   demoLink,
-  variants,
+  iconLists,
 }) => {
   return (
-    <motion.div
-      className="bg-light-background dark:bg-gray-800 rounded-lg shadow-glow p-5 text-center transform transition-transform duration-300 hover:scale-105 hover:shadow-glow-hover"
-      variants={variants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.img
-        src={imgPath}
-        alt={title}
-        className="rounded-md mb-4"
-        variants={variants}
-      />
-      <motion.h3
-        className="text-xl font-semibold text-light-text dark:text-dark-text"
-        variants={variants}
-      >
+    <div className="relative z-50">
+      <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10">
+        <div
+          className="relative w-full h-full overflow-hidden lg:rounded-3xl"
+          style={{ backgroundColor: "#13162D" }}
+        >
+          <img src="/bg.png" alt="bgimg" />
+        </div>
+        <img src={imgPath} alt="cover" className="z-10 absolute bottom-0" />
+      </div>
+      <h1 className="font-bold lg:text-2xl md:text-xl text-base line-clamp-1">
         {title}
-      </motion.h3>
-      <motion.p
-        className="text-gray-600 dark:text-gray-300 my-3"
-        variants={variants}
+      </h1>
+      <p
+        className="lg:text-xl lg:font-normal font-light text-sm line-clamp-2"
+        style={{ color: "#BEC1DD", margin: "1vh 0" }}
       >
         {description}
-      </motion.p>
-      <motion.div
-        className="flex justify-center gap-4 mt-4"
-        variants={variants}
-      >
-        <motion.a
-          href={ghLink}
-          className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition"
-          variants={variants}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </motion.a>
-        {demoLink && (
-          <motion.a
-            href={demoLink}
-            className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition"
-            variants={variants}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Demo
-          </motion.a>
-        )}
-      </motion.div>
-    </motion.div>
+      </p>
+      <div className="flex items-center justify-between mt-7 mb-3">
+        <div className="flex items-center">
+          {iconLists.map((icon, index) => (
+            <div
+              key={`icon-${index}`} // Unique key for each icon
+              className="border border-white/[.2] rounded-full bg-black lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center"
+              style={{ transform: `translateX(-${5 * index + 2}px)` }}
+            >
+              <img src={icon} alt={`icon-${index}`} className="p-2" />
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center items-center">
+          <p className="flex lg:text-xl md:text-xs text-sm text-purple">
+            Check Live Site
+          </p>
+          <FaLocationArrow className="ms-3" color="#CBACF9" />
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -70,7 +58,7 @@ ProjectCard.propTypes = {
   description: PropTypes.string.isRequired,
   ghLink: PropTypes.string.isRequired,
   demoLink: PropTypes.string,
-  variants: PropTypes.object.isRequired,
+  iconLists: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ProjectCard;
