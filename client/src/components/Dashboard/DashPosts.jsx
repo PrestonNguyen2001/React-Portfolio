@@ -15,19 +15,15 @@ export default function DashPosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("Fetching posts...");
         const headers = getAuthHeaders();
-        console.log("Auth headers:", headers);
         const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/posts`, {
           headers: {
             "Content-Type": "application/json",
-            ...getAuthHeaders(),
+            ...headers,
           },
           credentials: "include",
         });
-        console.log("Fetch posts response:", res);
         const data = await res.json();
-        console.log("Fetch posts data:", data);
         if (res.ok) {
           setPosts(data.posts || []);
         } else {
@@ -43,9 +39,7 @@ export default function DashPosts() {
   const handleDeletePost = async () => {
     setShowModal(false);
     try {
-      console.log("Deleting post with ID:", postIdToDelete);
       const headers = getAuthHeaders();
-      console.log("Auth headers:", headers);
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/posts/${postIdToDelete}/${
           currentUser._id
@@ -56,9 +50,7 @@ export default function DashPosts() {
           headers,
         }
       );
-      console.log("Delete post response:", res);
       const data = await res.json();
-      console.log("Delete post data:", data);
       if (res.ok) {
         setPosts((prev) => prev.filter((post) => post._id !== postIdToDelete));
       } else {
@@ -88,21 +80,23 @@ export default function DashPosts() {
             <div key={post._id} className="mb-4">
               <h2>{post.title}</h2>
               <p>{post.content}</p>
-              <Button
-                color="failure"
-                onClick={() => {
-                  setShowModal(true);
-                  setPostIdToDelete(post._id);
-                }}
-              >
-                Delete
-              </Button>
-              <Button
-                color="primary"
-                onClick={() => navigate(`/update-post/${post._id}`)}
-              >
-                Edit
-              </Button>
+              <div className="flex space-x-4">
+                <Button
+                  color="failure"
+                  onClick={() => {
+                    setShowModal(true);
+                    setPostIdToDelete(post._id);
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button
+                  color="warning"
+                  onClick={() => navigate(`/update-post/${post._id}`)}
+                >
+                  Edit
+                </Button>
+              </div>
             </div>
           ))}
         </>
