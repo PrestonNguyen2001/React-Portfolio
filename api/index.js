@@ -107,6 +107,8 @@ const startServer = async () => {
         throw new Error("GitHub token is not defined");
       }
 
+      console.log("GitHub token:", token); 
+
       // Fetch user profile data
       const profileResponse = await fetch("https://api.github.com/user", {
         headers: {
@@ -184,8 +186,10 @@ const startServer = async () => {
         totalContributions,
         totalProjects,
         totalStars,
-        totalIssues: userProfile.total_issues, // This requires additional API calls if not present
+        totalIssues: userProfile.total_issues || 0, // Default to 0 if not present
       };
+
+      console.log("Profile Data:", profileData); 
 
       res.json(profileData);
     } catch (error) {
@@ -193,6 +197,7 @@ const startServer = async () => {
       res.status(500).json({ error: error.message });
     }
   });
+
 
 
 
