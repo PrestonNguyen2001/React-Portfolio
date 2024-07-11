@@ -107,7 +107,7 @@ const startServer = async () => {
         throw new Error("GitHub token is not defined");
       }
 
-      console.log("GitHub token:", token); 
+      console.log("GitHub token:", token);
 
       // Fetch user profile data
       const profileResponse = await fetch("https://api.github.com/user", {
@@ -126,6 +126,7 @@ const startServer = async () => {
       }
 
       const userProfile = await profileResponse.json();
+      console.log("User Profile:", userProfile);
 
       // Fetch user events data
       const eventsResponse = await fetch(
@@ -147,6 +148,7 @@ const startServer = async () => {
       }
 
       const userEvents = await eventsResponse.json();
+      console.log("User Events:", userEvents);
 
       // Calculate total contributions
       const totalContributions = userEvents.length;
@@ -168,6 +170,8 @@ const startServer = async () => {
       }
 
       const userRepos = await reposResponse.json();
+      console.log("User Repos:", userRepos);
+
       const totalProjects = userRepos.length;
       const totalStars = userRepos.reduce(
         (acc, repo) => acc + repo.stargazers_count,
@@ -189,7 +193,7 @@ const startServer = async () => {
         totalIssues: userProfile.total_issues || 0, // Default to 0 if not present
       };
 
-      console.log("Profile Data:", profileData); 
+      console.log("Profile Data:", profileData);
 
       res.json(profileData);
     } catch (error) {
@@ -197,6 +201,7 @@ const startServer = async () => {
       res.status(500).json({ error: error.message });
     }
   });
+
 
 
 

@@ -14,6 +14,8 @@ const GitHubProfileStats = () => {
         const response = await axios.get("/api/github-profile");
         const data = response.data;
 
+        console.log("Fetched GitHub Profile Data:", data); // Add this line
+
         const profileData = {
           followers: data.followers || 0,
           following: data.following || 0,
