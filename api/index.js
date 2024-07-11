@@ -107,8 +107,6 @@ const startServer = async () => {
         throw new Error("GitHub token is not defined");
       }
 
-      console.log("GitHub token:", token);
-
       // Fetch user profile data
       const profileResponse = await fetch("https://api.github.com/user", {
         headers: {
@@ -117,8 +115,9 @@ const startServer = async () => {
       });
 
       if (!profileResponse.ok) {
+        const errorText = await profileResponse.text();
         console.error(
-          `GitHub API error: ${profileResponse.status} ${profileResponse.statusText}`
+          `GitHub API error: ${profileResponse.status} ${profileResponse.statusText} - ${errorText}`
         );
         throw new Error(
           `Network response was not ok: ${profileResponse.statusText}`
@@ -126,7 +125,6 @@ const startServer = async () => {
       }
 
       const userProfile = await profileResponse.json();
-      console.log("User Profile:", userProfile);
 
       // Fetch user events data
       const eventsResponse = await fetch(
@@ -139,8 +137,9 @@ const startServer = async () => {
       );
 
       if (!eventsResponse.ok) {
+        const errorText = await eventsResponse.text();
         console.error(
-          `GitHub API error: ${eventsResponse.status} ${eventsResponse.statusText}`
+          `GitHub API error: ${eventsResponse.status} ${eventsResponse.statusText} - ${errorText}`
         );
         throw new Error(
           `Network response was not ok: ${eventsResponse.statusText}`
@@ -148,7 +147,6 @@ const startServer = async () => {
       }
 
       const userEvents = await eventsResponse.json();
-      console.log("User Events:", userEvents);
 
       // Calculate total contributions
       const totalContributions = userEvents.length;
@@ -161,8 +159,9 @@ const startServer = async () => {
       });
 
       if (!reposResponse.ok) {
+        const errorText = await reposResponse.text();
         console.error(
-          `GitHub API error: ${reposResponse.status} ${reposResponse.statusText}`
+          `GitHub API error: ${reposResponse.status} ${reposResponse.statusText} - ${errorText}`
         );
         throw new Error(
           `Network response was not ok: ${reposResponse.statusText}`
@@ -170,8 +169,6 @@ const startServer = async () => {
       }
 
       const userRepos = await reposResponse.json();
-      console.log("User Repos:", userRepos);
-
       const totalProjects = userRepos.length;
       const totalStars = userRepos.reduce(
         (acc, repo) => acc + repo.stargazers_count,
@@ -201,10 +198,6 @@ const startServer = async () => {
       res.status(500).json({ error: error.message });
     }
   });
-
-
-
-
 
   app.use("/api/user", userRoutes);
   app.use("/api/auth", authRoutes);
