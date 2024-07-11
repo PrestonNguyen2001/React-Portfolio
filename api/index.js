@@ -18,11 +18,10 @@ dotenv.config();
 const startServer = async () => {
   try {
     console.log("Connecting to MongoDB...");
-       await mongoose.connect(process.env.MONGO, {
-         useNewUrlParser: true,
-         useUnifiedTopology: true,
-       });
-
+    await mongoose.connect(process.env.MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Connected to MongoDB!");
   } catch (err) {
     console.error("Failed to connect to MongoDB:", err);
@@ -83,16 +82,15 @@ const startServer = async () => {
         }
       );
 
-      const textResponse = await response.text();
-
       if (!response.ok) {
+        const errorText = await response.text();
         console.error(
-          `GitHub API error: ${response.status} ${response.statusText} - ${textResponse}`
+          `GitHub API error: ${response.status} ${response.statusText} - ${errorText}`
         );
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
 
-      const data = JSON.parse(textResponse);
+      const data = await response.json();
       res.json(data);
     } catch (error) {
       console.error("Error fetching GitHub activity:", error.message);
@@ -100,6 +98,7 @@ const startServer = async () => {
     }
   });
 
+  // Add GitHub profile route
   app.get("/api/github-profile", async (req, res) => {
     try {
       const token = process.env.GITHUB_TOKEN;
@@ -187,7 +186,7 @@ const startServer = async () => {
         totalContributions,
         totalProjects,
         totalStars,
-        totalIssues: userProfile.total_issues || 0, // Default to 0 if not present
+        totalIssues: userProfile.total_issues || 0,
       };
 
       console.log("Profile Data:", profileData);
