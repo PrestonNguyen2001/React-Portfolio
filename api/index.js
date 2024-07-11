@@ -18,10 +18,7 @@ dotenv.config();
 const startServer = async () => {
   try {
     console.log("Connecting to MongoDB...");
-    await mongoose.connect(process.env.MONGO, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGO);
     console.log("Connected to MongoDB!");
   } catch (err) {
     console.error("Failed to connect to MongoDB:", err);
@@ -34,7 +31,6 @@ const startServer = async () => {
   const allowedOrigins = [
     "https://preston-devfolio.netlify.app",
     "http://localhost:5173",
-    "https://test-devfolio.netlify.app",
   ];
 
   app.use(
@@ -66,6 +62,136 @@ const startServer = async () => {
   });
   console.log("Custom headers set for Cross-Origin policies");
 
+  // Add GitHub activity route
+  app.get("/api/github-activity", async (req, res) => {
+    try {
+      const token = process.env.GITHUB_TOKEN;
+      if (!token) {
+        throw new Error("GitHub token is not defined");
+      }
+
+      const response = await fetch(
+        "https://api.github.com/users/PrestonNguyen2001/events",
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      );
+
+      const textResponse = await response.text();
+
+      if (!response.ok) {
+        console.error(
+          `GitHub API error: ${response.status} ${response.statusText} - ${textResponse}`
+        );
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+
+      const data = JSON.parse(textResponse);
+      res.json(data);
+    } catch (error) {
+      console.error("Error fetching GitHub activity:", error.message);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/github-profile", async (req, res) => {
+    try {
+      const token = process.env.GITHUB_TOKEN;
+      if (!token) {
+        throw new Error("GitHub token is not defined");
+      }
+
+      // Fetch user profile data
+      const profileResponse = await fetch("https://api.github.com/user", {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
+
+      if (!profileResponse.ok) {
+        console.error(
+          `GitHub API error: ${profileResponse.status} ${profileResponse.statusText}`
+        );
+        throw new Error(
+          `Network response was not ok: ${profileResponse.statusText}`
+        );
+      }
+
+      const userProfile = await profileResponse.json();
+
+      // Fetch user events data
+      const eventsResponse = await fetch(
+        "https://api.github.com/users/PrestonNguyen2001/events",
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      );
+
+      if (!eventsResponse.ok) {
+        console.error(
+          `GitHub API error: ${eventsResponse.status} ${eventsResponse.statusText}`
+        );
+        throw new Error(
+          `Network response was not ok: ${eventsResponse.statusText}`
+        );
+      }
+
+      const userEvents = await eventsResponse.json();
+
+      // Calculate total contributions
+      const totalContributions = userEvents.length;
+
+      // Fetch user repositories data
+      const reposResponse = await fetch("https://api.github.com/user/repos", {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
+
+      if (!reposResponse.ok) {
+        console.error(
+          `GitHub API error: ${reposResponse.status} ${reposResponse.statusText}`
+        );
+        throw new Error(
+          `Network response was not ok: ${reposResponse.statusText}`
+        );
+      }
+
+      const userRepos = await reposResponse.json();
+      const totalProjects = userRepos.length;
+      const totalStars = userRepos.reduce(
+        (acc, repo) => acc + repo.stargazers_count,
+        0
+      );
+
+      const profileData = {
+        followers: userProfile.followers,
+        following: userProfile.following,
+        joinedDate: new Date(userProfile.created_at).toLocaleDateString(),
+        updatedAt: new Date(userProfile.updated_at).toLocaleDateString(),
+        totalRepositories:
+          userProfile.public_repos + userProfile.total_private_repos,
+        privateRepositories: userProfile.total_private_repos,
+        publicRepositories: userProfile.public_repos,
+        totalContributions,
+        totalProjects,
+        totalStars,
+        totalIssues: userProfile.total_issues, // This requires additional API calls if not present
+      };
+
+      res.json(profileData);
+    } catch (error) {
+      console.error("Error fetching GitHub profile:", error.message);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+
+
   app.use("/api/user", userRoutes);
   app.use("/api/auth", authRoutes);
   app.use("/api/timeline", timelineRoutes);
@@ -81,6 +207,7 @@ const startServer = async () => {
     path.join(__dirname, "/client/dist")
   );
 
+  // Move catch-all route handler to the end
   app.get("*", (req, res) => {
     console.log("Serving index.html for:", req.originalUrl);
     res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
@@ -99,39 +226,10 @@ const startServer = async () => {
   });
   console.log("Error handling middleware added");
 
-  const PORT = process.env.PORT || 3002;
+  const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}!`);
   });
-
-  // Add GitLab insights route
- app.get("/api/gitlab-insights", async (req, res) => {
-   try {
-     const token = process.env.GITLAB_TOKEN;
-     console.log("Using GitLab token:", token); // Log token (ensure this is not done in production for security)
-
-     const response = await fetch("https://gitlab.com/api/v4/users/24304", {
-       headers: {
-         "Private-Token": token,
-       },
-     });
-
-     if (!response.ok) {
-       const errorText = await response.text();
-       console.error(
-         `GitLab API error: ${response.status} ${response.statusText} - ${errorText}`
-       );
-       throw new Error(`Network response was not ok: ${response.statusText}`);
-     }
-
-     const data = await response.json();
-     res.json(data);
-   } catch (error) {
-     console.error("Error fetching GitLab insights:", error.message);
-     res.status(500).json({ error: error.message });
-   }
- });
-
 };
 
 startServer();

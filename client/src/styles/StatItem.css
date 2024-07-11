@@ -1,0 +1,43 @@
+:root {
+ 
+  --color-base: #333;
+  --color-primary: #fff;
+  --color-secondary: #000;
+  --color-action: #ef4c23;
+}
+
+.stat-item {
+  color: var(--color-secondary);
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background-color: hsla(0,0%,100%,.7);
+
+  position: relative;
+}
+
+.stat-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: -2px;
+  clip-path: inherit; 
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
+  z-index: -1;
+}
+
+
+
+.stat-item__icon {
+  margin-right: 10px;
+  color: var(--color-action);
+  font-size: 1.5rem;
+}

@@ -50,7 +50,7 @@ export default function Resume() {
       animate={controls}
       variants={containerVariants}
     >
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 py-20">
         <motion.div className="text-center mb-8" variants={itemVariants}>
           <h1 className="text-5xl font-bold text-light-text dark:text-dark-text">
             PRESTON NGUYEN

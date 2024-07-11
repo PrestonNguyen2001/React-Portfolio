@@ -1,0 +1,59 @@
+.activity-chart {
+  position: relative;
+  width: 100%;
+}
+
+.activity-body {
+  display: flex;
+  margin-top: 30px; /* Adjust based on your layout */
+}
+
+.activity-calendar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tooltip-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  color: black;
+}
+
+.activity-legend {
+  display: none;
+ 
+}
+
+.legend-label {
+  margin: 0 5px;
+}
+
+.legend-item {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: 0 2px;
+}
+
+.color-github-0 {
+  background-color: #ebedf0;
+}
+
+.color-github-1 {
+  background-color: #c6e48b;
+}
+
+.color-github-2 {
+  background-color: #7bc96f;
+}
+
+.color-github-3 {
+  background-color: #239a3b;
+}
+
+.color-github-4 {
+  background-color: #196127;
+}

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import ProjectCard from "../components/Portfolio/ProjectCard";
 import { CardContainer } from "../components/Portfolio/Pin";
+import HeatmapCalendar from "../components/Calendar/HeatmapCalendar";
+import GitHubProfileStats from "../components/GithubProfile/GitHubProfileStats";
 
 const Portfolio = () => {
   const [projects, setProjects] = useState([]);
@@ -64,6 +66,17 @@ const Portfolio = () => {
             </div>
           ))
         )}
+      </div>
+      <div className="mt-20">
+        <h2 className="heading">
+          Explore my <span className="text-purple">development journey</span>
+        </h2>
+        <p className="text-center text-gray-700 dark:text-gray-300 mt-4">
+          Here is an overview of my contributions and activity over the past
+          year.
+        </p>
+        <GitHubProfileStats />
+        <HeatmapCalendar />
       </div>
     </div>
   );

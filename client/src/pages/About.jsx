@@ -6,6 +6,8 @@ import Summary from "../components/About/Summary";
 import Skills from "../components/About/Skills";
 import Interests from "../components/About/Interests";
 import Strengths from "../components/About/Strengths";
+import HeatmapCalendar from "../components/Calendar/HeatmapCalendar";
+ 
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -77,17 +79,7 @@ export default function About() {
               Skills
             </motion.button>
           </li>
-          <li className="tab-btn-item">
-            <motion.button
-              className={`tab-btn title h6 ${
-                activeTab === "interests" ? "active" : ""
-              }`}
-              onClick={() => setActiveTab("interests")}
-              variants={itemVariants}
-            >
-              Interests
-            </motion.button>
-          </li>
+
           <li className="tab-btn-item">
             <motion.button
               className={`tab-btn title h6 ${
@@ -97,6 +89,17 @@ export default function About() {
               variants={itemVariants}
             >
               Strengths
+            </motion.button>
+          </li>
+          <li className="tab-btn-item">
+            <motion.button
+              className={`tab-btn title h6 ${
+                activeTab === "interests" ? "active" : ""
+              }`}
+              onClick={() => setActiveTab("interests")}
+              variants={itemVariants}
+            >
+              Interests
             </motion.button>
           </li>
         </ul>
