@@ -141,7 +141,7 @@ The application is deployed on Render. You can access the live application [here
 - **View Github Data**: The application fetches profile data and contributions from GitHub using the GitHub API.
 - **Dashboard for Users**: Signed-in users can access the dashboard to update their username, email, password, or profile image.
 
-### Dashboard for Users
+### User Dashboard
 
 Signed-in users can access the dashboard to manage their profile. The dashboard allows users to:
 
@@ -151,7 +151,7 @@ Signed-in users can access the dashboard to manage their profile. The dashboard 
 - Update Profile Image
 - Delete Profile
 
-### Dashboard Components for Admins
+### Admin Dashboard
 
 Admins have access to additional dashboard components to manage the application:
 
@@ -190,6 +190,40 @@ Admins have access to additional dashboard components to manage the application:
 
 The application uses JSON Web Tokens (JWT) for authentication and token verification. This ensures that only authorized users can access and perform actions within the admin dashboard.
 
+## Blog Functionality
+
+### Overview
+
+The blog functionality allows the admin to post blogs, which are displayed on the home page. Users can click on a blog to view its content, add comments, view other users' comments, and like comments.
+
+### Features
+
+- Post Blogs: Admins can create and post blogs from the dashboard.
+- Display Blogs on Home Page: Posted blogs are displayed on the home page.
+- View Blog Details: Users can click on a blog to view its full content.
+- Add Comments: Users can add comments to blogs.
+- View Comments: Users can view comments from other users.
+- Like Comments: Users can like comments on blogs.
+
+### Components
+
+**DashPosts.jsx**: Admin component to manage blog posts.
+
+- Create, edit, and delete blog posts.
+- Upload images and manage content using a rich text editor.
+
+**Blog.jsx**: Component to display individual blog posts.
+
+- Show blog content, comments, and like counts.
+- Allow users to add and like comments.
+
+**Blogs.jsx**: Component to display a list of all blog posts.
+
+- Show previews of blog posts.
+- Allow navigation to individual blog posts.
+
+
+
 ## Screenshots
 
 The following animation demonstrates the application functionality:
@@ -221,6 +255,7 @@ The following image shows the application's IndexedDB storage:
 - **User Dashboard**: Signed-in users can update their profile information.
 - **Admin Dashboard**: Admins can manage comments, posts, projects, users, and timeline events.
 - **JWT Authentication**: Secure token-based authentication for user sessions.
+- **Blog Functionality**: Admins can post blogs, and users can interact with blog content through comments and likes.
 
 
 

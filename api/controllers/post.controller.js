@@ -91,25 +91,34 @@ export const getPosts = async (req, res, next) => {
 export const getPostBySlug = async (req, res, next) => {
   try {
     const { slug } = req.params;
+    console.log(`Fetching post with slug: ${slug}`);
     const post = await Post.findOne({ slug });
     if (!post) {
+      console.error(`Post with slug "${slug}" not found`);
       return res.status(404).json({ message: "Post not found" });
     }
+    console.log(`Post found: ${post.title}`);
     res.status(200).json({ post });
   } catch (error) {
+    console.error("Error fetching post by slug:", error);
     next(error);
   }
 };
 
+
 export const getPostById = async (req, res, next) => {
   try {
     const { postId } = req.params;
+    console.log(`Fetching post with ID: ${postId}`);
     const post = await Post.findById(postId);
     if (!post) {
+      console.error(`Post with ID "${postId}" not found`);
       return res.status(404).json({ message: "Post not found" });
     }
+    console.log(`Post found: ${post.title}`);
     res.status(200).json({ post });
   } catch (error) {
+    console.error("Error fetching post by ID:", error);
     next(error);
   }
 };
