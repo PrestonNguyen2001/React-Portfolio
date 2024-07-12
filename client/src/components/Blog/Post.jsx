@@ -13,7 +13,7 @@ const Post = () => {
     const fetchPost = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/posts/${slug}`
+          `${import.meta.env.VITE_API_BASE_URL}/posts/slug/${slug}` // Ensure the endpoint is correct
         );
         if (!response.ok) {
           throw new Error("Failed to fetch post");

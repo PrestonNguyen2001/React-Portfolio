@@ -105,7 +105,6 @@ export const getPostBySlug = async (req, res, next) => {
   }
 };
 
-
 export const getPostById = async (req, res, next) => {
   try {
     const { postId } = req.params;
