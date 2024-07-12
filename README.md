@@ -11,7 +11,6 @@
 - [Installation](#installation)
 - [Deployment](#deployment)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
 - [Features](#features)
 - [Contributing](#contributing)
 - [License](#license)
@@ -27,7 +26,6 @@ This project is a React-based portfolio designed to showcase my work as a web de
 AS AN employer looking for candidates with experience building single-page applications
 I WANT to view a potential employee's deployed React portfolio of work samples
 SO THAT I can assess whether they're a good candidate for an open position
-
 ```
 
 ### Acceptance Criteria
@@ -58,7 +56,6 @@ WHEN I am presented with the Resume section
 THEN I see a link to a downloadable resume and a list of the developer’s proficiencies
 WHEN I view the footer
 THEN I am presented with text or icon links to the developer’s GitHub and LinkedIn profiles, and their profile on a third platform (Stack Overflow, Twitter)
-
 ```
 
 ## Requirements and Technologies Used
@@ -72,7 +69,7 @@ THEN I am presented with text or icon links to the developer’s GitHub and Link
 
 - **React**: For building the user interface.
 - **React Router**: For managing navigation.
-- V**ite: For building the application.
+- **Vite**: For building the application.
 - **Tailwind CSS**: For styling the application.
 - **Flowbite**: For pre-built components and utilities.
 - **Firebase**: For backend services.
@@ -84,15 +81,19 @@ THEN I am presented with text or icon links to the developer’s GitHub and Link
 - **GitHub API**: For fetching profile data and contributions.
 - **jsonwebtoken**: For token verification and authentication.
 
-![IndexedDB](https://img.shields.io/badge/IndexedDB-FFCA28?style=for-the-badge&logo=indexeddb&logoColor=black)
-![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
-![Babel](https://img.shields.io/badge/babel-%23323330.svg?style=for-the-badge&logo=babel&logoColor=%23F9DC3E)
-![Workbox](https://img.shields.io/badge/Workbox-3C873A?style=for-the-badge&logo=workbox&logoColor=white)
-![idb](https://img.shields.io/badge/idb-3178C6?style=for-the-badge&logo=indexeddb&logoColor=white)
-![Nodemon](https://img.shields.io/badge/NODEMON-%23323330.svg?style=for-the-badge&logo=nodemon&logoColor=%BBDEAD)
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-![Concurrently](https://img.shields.io/badge/Concurrently-000000?style=for-the-badge&logo=concurrently&logoColor=white)
-
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Flowbite](https://img.shields.io/badge/Flowbite-38B2AC?style=for-the-badge&logo=flowbite&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)
+![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=for-the-badge&logo=nodemon&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-404d59?style=for-the-badge&logo=express&logoColor=white)
+![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+![GitHub API](https://img.shields.io/badge/GitHub_API-181717?style=for-the-badge&logo=github&logoColor=white)
+![jsonwebtoken](https://img.shields.io/badge/JSON_Web_Tokens-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
 
 ## Installation
 
@@ -100,45 +101,45 @@ To install this application:
 
 1. Clone the Repository:
 
-```markdown
+```bash
 git clone https://github.com/PrestonNguyen2001/React-Portfolio.git
 ```
 
 2. Navigate to the Root Directory:
 
-```markdown
+```bash
 cd React-Portfolio
 ```
 
 3. Install Dependencies:
 
-```markdown
+```bash
 npm install
 ```
 
 4. Build the Client:
 
-```markdown
+```bash
 npm run build
 ```
 
 5. Start the Application:
 
-```markdown
+```bash
 npm run start:dev
 ```
 
 ## Deployment
 
-The application is deployed on Render. You can access the live application [here](https://pwa-text-editor-kpd5.onrender.com)
+The application is deployed on Render. You can access the live application [here](https://preston-devfolio.netlify.app).
 
 ## Usage
 
 - **Open the Application**: Open the application in your browser by going to the deployed URL.
-- **Navigate Through Sections**:  Use the navigation bar to switch between About Me, Portfolio, Contact, and Resume sections.
+- **Navigate Through Sections**: Use the navigation bar to switch between About Me, Portfolio, Contact, and Resume sections.
 - **Submit Contact Form**: Fill out the contact form to send a message. Form validation is in place to ensure required fields are filled out correctly.
-- **Download Resume**:  Go to the Resume section to download a copy of my resume.
-- **View Github Data**: The application fetches profile data and contributions from GitHub using the GitHub API.
+- **Download Resume**: Go to the Resume section to download a copy of my resume.
+- **View GitHub Data**: The application fetches profile data and contributions from GitHub using the GitHub API.
 - **Dashboard for Users**: Signed-in users can access the dashboard to update their username, email, password, or profile image.
 
 ### User Dashboard
@@ -209,7 +210,9 @@ The blog functionality allows the admin to post blogs, which are displayed on th
 
 **DashPosts.jsx**: Admin component to manage blog posts.
 
-- Create, edit, and delete blog posts.
+- Create, edit, and delete blog posts
+
+.
 - Upload images and manage content using a rich text editor.
 
 **Blog.jsx**: Component to display individual blog posts.
@@ -221,27 +224,6 @@ The blog functionality allows the admin to post blogs, which are displayed on th
 
 - Show previews of blog posts.
 - Allow navigation to individual blog posts.
-
-
-
-## Screenshots
-
-The following animation demonstrates the application functionality:
-
-![Demo of PWA Text Editor](./client/src/images/Demo.gif)
-
-The following image shows the application's `manifest.json` file:
-
-![Demo Manifest File](./client/src/images/Demo-Manifest.png)
-
-The following image shows the application's registered service worker:
-
-![Demo Service Worker](./client/src/images/Demo-Service.png)
-
-The following image shows the application's IndexedDB storage:
-
-![Demo IndexedDB](./client/src/images/Demo-IndexedDB.png)
-
 
 ## Features
 
@@ -257,8 +239,6 @@ The following image shows the application's IndexedDB storage:
 - **JWT Authentication**: Secure token-based authentication for user sessions.
 - **Blog Functionality**: Admins can post blogs, and users can interact with blog content through comments and likes.
 
-
-
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
@@ -269,9 +249,6 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 ## Contact
 
-- If you have any questions, feel free to reach out via: <https://github.com/PrestonNguyen2001>
-- For additional questions or support, contact me at <prestonnguyen2001@gmail.com>
-
-
-
+- If you have any questions, feel free to reach out via: [GitHub](https://github.com/PrestonNguyen2001)
+- For additional questions or support, contact me at [prestonnguyen2001@gmail.com](mailto:prestonnguyen2001@gmail.com)
 
