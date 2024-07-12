@@ -10,7 +10,7 @@ const createToken = (user) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    console.log("Generated token:", token); // Ensure token is generated
+    console.log("Generated token:", token); 
     return token;
   } catch (error) {
     console.error("Error generating token:", error);
@@ -28,7 +28,7 @@ const setCookie = (res, token) => {
       path: "/",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
-    console.log("Cookie set:", res.get("Set-Cookie")); // Ensure cookie is set
+    console.log("Cookie set:", res.get("Set-Cookie")); 
   } catch (error) {
     console.error("Error setting cookie:", error);
   }

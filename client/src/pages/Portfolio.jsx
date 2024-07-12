@@ -52,7 +52,11 @@ const Portfolio = () => {
               className="lg:min-h-[32.5rem] h-[25rem] flex items-center justify-center sm:w-96 w-[80vw]"
               key={`container-${project._id}`}
             >
-              <CardContainer title={project.title} href={project.demoLink}>
+              <CardContainer
+                title={project.title}
+                ghLink={project.ghLink}
+                demoLink={project.demoLink}
+              >
                 <ProjectCard
                   key={`project-${project._id}`}
                   imgPath={project.imgPath}

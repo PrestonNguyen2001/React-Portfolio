@@ -41,12 +41,28 @@ const ProjectCard = ({
             </div>
           ))}
         </div>
-        <div className="flex justify-center items-center">
-          <p className="flex lg:text-xl md:text-xs text-sm text-purple">
-            Check Live Site
-          </p>
+      </div>
+      <div className="flex justify-between items-center">
+        <a
+          href={ghLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex lg:text-xl md:text-xs text-sm text-purple"
+        >
+          View on GitHub
           <FaLocationArrow className="ms-3" color="#CBACF9" />
-        </div>
+        </a>
+        {demoLink && (
+          <a
+            href={demoLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex lg:text-xl md:text-xs text-sm text-purple"
+          >
+            Check Live Site
+            <FaLocationArrow className="ms-3" color="#CBACF9" />
+          </a>
+        )}
       </div>
     </div>
   );

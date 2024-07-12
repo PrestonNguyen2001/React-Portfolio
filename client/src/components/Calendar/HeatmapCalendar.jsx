@@ -2,7 +2,7 @@ import React from "react";
 import GitHubCalendar from "react-github-calendar";
 import Tippy from "@tippyjs/react";
 import { FaGithub } from "react-icons/fa";
-import "../../styles/HeatmapCalendar.css"; // Import the custom CSS file
+import "../../styles/HeatmapCalendar.css"; 
 
 const HeatmapCalendar = () => {
   const ensureFullYearData = (contributions) => {
