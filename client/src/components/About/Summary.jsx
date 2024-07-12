@@ -1,3 +1,5 @@
+import React from "react";
+
 import { motion } from "framer-motion";
 import { BsFacebook, BsInstagram, BsTwitter, BsGithub } from "react-icons/bs";
 import ProfileImage from "../../assets/images/ProfileImage.png";

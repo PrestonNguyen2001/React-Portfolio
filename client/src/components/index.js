@@ -1,3 +1,7 @@
+import Interests from "./About/Interests";
+import Skills from "./About/Skills";
+import Strengths from "./About/Strengths";
+import Summary from "./About/Summary";
 import CallToAction from "./CallToAction/CallToAction";
 import Comment from "./Comment/Comment";
 import FooterCom from "./Footer/Footer";
@@ -16,6 +20,10 @@ import OnlyAdminPrivateRoute from "./Routes/OnlyAdminPrivateRoute";
 import PrivateRoute from "./Routes/PrivateRoute";
 
 export {
+  Interests,
+  Skills,
+  Strengths,
+  Summary,
   CallToAction,
   Comment,
   FooterCom,

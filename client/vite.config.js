@@ -3,10 +3,15 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig({
+  test: {
+    environment: "jsdom",
+    setupFiles: "./src/tests/setup.js",
+    globals: true,
+  },
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3002", // Ensure this matches your backend server port
+        target: "http://localhost:3000",
         changeOrigin: true,
         secure: false,
       },

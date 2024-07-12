@@ -1,3 +1,4 @@
+import React from "react";
 import { gridItems } from "../../data/index";
 import { BentoGrid, BentoGridItem } from "../Grid/BentoGrid";
 

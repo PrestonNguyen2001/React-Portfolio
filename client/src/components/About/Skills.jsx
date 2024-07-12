@@ -1,3 +1,5 @@
+import React from "react";
+
 import { motion } from "framer-motion";
 import skills from "../../data/skillsData";
 import { Button } from "../Effects/MovingBorders.jsx";

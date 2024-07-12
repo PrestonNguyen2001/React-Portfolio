@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentSection from "../Comment/CommentSection";
 import "../../styles/Post.css";
